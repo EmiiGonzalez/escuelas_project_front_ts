@@ -10,16 +10,28 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { FormEvent, useRef } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasRequest";
 import { useValid } from "../../../util/hooks/useValid";
-import useAxios from "../../../util/hooks/crud/useAxios";
+import { postEscuela } from "../util/postEscuela";
 
 export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
   const { tema, open, handleClose, handleOpenToast, updateData, url } = props;
   const { string, setString, setError, error } = useValid();
   const textRef = useRef<HTMLInputElement>(null);
 
-  const { errorRequest, isLoading, httpRequest } = useAxios<EscuelasRequest>();
+  const mutation = useMutation({
+    mutationFn: postEscuela,
+    onSuccess: (data) => {
+      handleOpenToast("success", "Escuela agregada con éxito");
+      updateData(data);
+      handleClose();
+    },
+    onError: (error) => {
+      handleOpenToast("error", "Error al agregar la escuela");
+      console.error(error);
+    },
+  });
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
@@ -33,8 +45,10 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
       }
       return;
     }
-
-    
+    mutation.mutate({
+      nombre: string,
+      url: url,
+    });
   }
 
   const style = {
@@ -119,8 +133,9 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
               type="submit"
               color="success"
               endIcon={<SendIcon />}
+              disabled={mutation.isPending} // Deshabilitar botón mientras se envía la solicitud
             >
-              Enviar
+              {mutation.isPending ? "Enviando..." : "Enviar"}
             </Button>
           </Box>
         </Box>

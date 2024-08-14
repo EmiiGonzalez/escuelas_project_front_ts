@@ -11,8 +11,7 @@ import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasReque
  */
 export const AutoCompleteEscuela = (props: PropsAutoCompleteEscuela) => {
   const { data, setEscuela, setError, tema, error } = props;
-  console.log(data);
-  
+ 
   return (
     <Autocomplete
         freeSolo={false}

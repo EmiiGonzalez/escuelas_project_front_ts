@@ -7,6 +7,7 @@ import { AlertCustom } from "./components/shared/alerts/AlertCustom";
 import { useOpenToast } from "./util/hooks/useOpenToast";
 import { Inicio } from "./pages/inicio/Inicio";
 import { BoxTheme } from "./components/shared/boxTheme/BoxTheme";
+import { Escuela } from "./pages/escuela/Escuela";
 
 function App() {
   const [tema, setTema] = useLocalStorage<"light" | "dark">("tema", "dark");
@@ -32,6 +33,16 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Inicio url={url} tema={tema} handleOpenToast={handleOpenToast} />} />
+            <Route
+              path="/cursos/:escuelaId/:year"
+              element={
+                <Escuela
+                  url={url}
+                  tema={tema}
+                  handleOpenToast={handleOpenToast}
+                />
+              }
+            />
           </Routes>
         </Router>
         <BoxTheme tema={tema} setTema={setTema} />
