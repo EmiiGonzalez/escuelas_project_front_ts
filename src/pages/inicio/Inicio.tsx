@@ -12,8 +12,6 @@ interface PropsInicio {
 export const Inicio = (props: PropsInicio) => {
   const { url, tema, handleOpenToast } = props;
   const urlApi = url + import.meta.env.VITE_api_get_all_escuelas;
-  console.log(urlApi);
-  
   const { data, error, loading, updateData } = useFetchGlobal<EscuelasRequest>(urlApi);
 
   if (loading) {

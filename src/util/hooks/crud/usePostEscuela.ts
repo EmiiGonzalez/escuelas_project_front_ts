@@ -22,35 +22,22 @@ export const usePostEscuela = (
     [httpRequest]
   );
 
-  const openToast = useCallback(
-    (type: AlertColor, message: string) => {
-      handleOpenToast(type, message);
-    },
-    []
-  );
-
-  const update = useCallback(
-    (data: EscuelasRequest) => {
-      updateData(data);
-    },
-    [updateData]
-  );
-
-  // Maneja la respuesta
+  // Maneja la respuesta exitosa
   useEffect(() => {
     if (response && response.id && response.nombre) {
       handleOpenToast("success", `Escuela ${response.nombre} agregada`);
-      update(response);
+      updateData(response);
     }
-  }, [response, handleOpenToast, update]);
+  }, [response, handleOpenToast, updateData]);
 
   // Maneja los errores
   useEffect(() => {
     if (errorRequest) {
-      openToast("error", errorRequest);
+      handleOpenToast("error", errorRequest);
     }
-  }, [errorRequest, openToast]);
+  }, [errorRequest, handleOpenToast]);
 
+  // Indica que la solicitud está en progreso
   useEffect(() => {
     if (isLoading) {
       console.log("Loading...");

@@ -9,20 +9,32 @@ import {
   Typography,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { FormEvent } from "react";
+import { FormEvent, useRef } from "react";
 import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasRequest";
 import { useValid } from "../../../util/hooks/useValid";
-import { usePostEscuela } from "../../../util/hooks/crud/usePostEscuela";
+import useAxios from "../../../util/hooks/crud/useAxios";
 
 export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
   const { tema, open, handleClose, handleOpenToast, updateData, url } = props;
   const { string, setString, setError, error } = useValid();
-  const { postEscuela, isLoading } = usePostEscuela(
-    handleOpenToast,
-    updateData
-  );
+  const textRef = useRef<HTMLInputElement>(null);
+
+  const { errorRequest, isLoading, httpRequest } = useAxios<EscuelasRequest>();
+
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    console.log("submit");
+    event.preventDefault();
+    if (string === "") {
+      setError({
+        state: true,
+        message: "Por favor, ingrese una escuela",
+      });
+      if (textRef.current) {
+        textRef.current.focus();
+      }
+      return;
+    }
+
+    
   }
 
   const style = {
@@ -79,6 +91,7 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
             }}
           >
             <TextField
+              inputRef={textRef}
               id="outlined-basic"
               label="Escuela"
               variant={tema === "light" ? "filled" : "outlined"}
