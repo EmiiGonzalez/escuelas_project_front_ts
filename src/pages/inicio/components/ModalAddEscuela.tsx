@@ -1,7 +1,6 @@
 import {
   AlertColor,
   Backdrop,
-  Box,
   Button,
   Fade,
   Modal,
@@ -15,6 +14,7 @@ import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasReque
 import { useValid } from "../../../util/hooks/useValid";
 import { postEscuela } from "../util/postEscuela";
 import { AxiosError } from "axios";
+import { Box } from '@mui/material';
 
 export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
   const { tema, open, handleClose, handleOpenToast, updateData, url } = props;

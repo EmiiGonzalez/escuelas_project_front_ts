@@ -6,7 +6,6 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { AlertCustom } from "./components/shared/alerts/AlertCustom";
 import { useOpenToast } from "./util/hooks/useOpenToast";
 import { Inicio } from "./pages/inicio/Inicio";
-import { BoxTheme } from "./components/shared/boxTheme/BoxTheme";
 import { Escuela } from "./pages/escuela/Escuela";
 
 function App() {
@@ -32,7 +31,7 @@ function App() {
       >
         <Router>
           <Routes>
-            <Route path="/" element={<Inicio url={url} tema={tema} handleOpenToast={handleOpenToast} />} />
+            <Route path="/" element={<Inicio url={url} tema={tema} handleOpenToast={handleOpenToast} setTema={setTema} />} />
             <Route
               path="/cursos/:escuelaId/:year"
               element={
@@ -45,7 +44,6 @@ function App() {
             />
           </Routes>
         </Router>
-        <BoxTheme tema={tema} setTema={setTema} />
       </Container>
       <AlertCustom
         tema={tema}

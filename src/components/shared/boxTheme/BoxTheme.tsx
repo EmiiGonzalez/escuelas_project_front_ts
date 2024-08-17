@@ -1,8 +1,8 @@
 import { Fab, Fade, Zoom } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import Box from "@mui/material/Box/Box";
 import { useCallback } from "react";
+import { Box } from '@mui/material';
 
 /**
  * 
@@ -21,6 +21,7 @@ export const BoxTheme = (props: BoxThemeProps) => {
         position: "absolute",
         top: "90%",
         right: "50%",
+        transform: "translateX(50%)",
         zIndex: 1,
       }}
     >

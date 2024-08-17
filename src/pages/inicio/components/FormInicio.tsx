@@ -5,8 +5,8 @@ import { useHandleBoolean } from "../../../util/hooks/useHandleBoolean";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { AutoCompleteEscuela } from "./AutoCompleteEscuela";
-import Box from "@mui/material/Box";
 import { ModalAddEscuela } from "./ModalAddEscuela";
+import { Box } from '@mui/material';
 
 export const FormInicio = (props: PropsFormInicio) => {
   const { data, handleOpenToast, tema, url, updateData } = props;
