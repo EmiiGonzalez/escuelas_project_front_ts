@@ -30,7 +30,6 @@ export const Escuela = ({ url, handleOpenToast, tema }: PropsEscuela) => {
   return (
     <Box sx={{ width: "100%" }}>
       <EscuelaCard datosEscuela={datosEscuela.data} tema={tema} />
-
       <ul>
         {
           datosCursos.data.map((c) => <li key={c.id}>{c.nombre}</li>)

@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasRequest";
 import { useValid } from "../../../util/hooks/useValid";
 import { postEscuela } from "../util/postEscuela";
+import { AxiosError } from "axios";
 
 export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
   const { tema, open, handleClose, handleOpenToast, updateData, url } = props;
@@ -28,13 +29,16 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
       handleClose();
     },
     onError: (error) => {
-      handleOpenToast("error", "Error al agregar la escuela");
-      console.error(error);
+      console.log(error);
+      if (error instanceof AxiosError) {
+        handleOpenToast("error", error.response?.data.message ? error.response?.data.message : "Error al agregar la escuela");
+      }
     },
   });
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    event.stopPropagation();
     if (string === "") {
       setError({
         state: true,
@@ -49,6 +53,7 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
       nombre: string,
       url: url,
     });
+    setString("");
   }
 
   const style = {
@@ -105,6 +110,7 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
             }}
           >
             <TextField
+              aria-hidden={false}
               inputRef={textRef}
               id="outlined-basic"
               label="Escuela"

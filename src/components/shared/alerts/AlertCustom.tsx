@@ -1,5 +1,6 @@
 import { Alert, Snackbar } from "@mui/material";
 import { AlertCustomProps } from "./AlertCustomProps";
+import { useEffect, useState } from "react";
 
 export const AlertCustom = (props: AlertCustomProps) => {
   const { openToast, setOpenToast, variante, msg, tema } = props;
@@ -14,11 +15,21 @@ export const AlertCustom = (props: AlertCustomProps) => {
     setOpenToast(false);
   };
 
-  const widthWindow: number = window.innerWidth;
-  const positionY: "top" | "bottom" = widthWindow > 500 ? "bottom" : "top";
-  const positionX: "right" | "center" =
-    positionY === "bottom" ? "right" : "center";
-  const widthAlert: string = widthWindow > 500 ? `40vw` : "100%";
+  const [widthWindow, setWidthWindow] = useState(window.innerWidth);
+  const [positionY, setPositionY] = useState<"top" | "bottom">(
+    widthWindow > 500 ? "bottom" : "top"
+  );
+  const [positionX, setPositionX] = useState<"right" | "center">("right");
+  const [widthAlert, setWidthAlert] = useState<string>("40vw");
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setWidthWindow(window.innerWidth);
+      setPositionY(widthWindow > 670 ? "bottom" : "top");
+      setPositionX(widthWindow > 500 ? "right" : "center");
+      setWidthAlert(widthWindow > 500 ? "40vw" : "80vw");
+    })
+  });
 
   return (
     <Snackbar

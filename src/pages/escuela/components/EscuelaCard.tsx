@@ -1,6 +1,7 @@
 import { Button, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/material";
 import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasRequest";
 
@@ -29,8 +30,16 @@ export const EscuelaCard = ({ datosEscuela, tema }: PropsEscuelaCard) => {
         </Typography>
       </Box>
       <Box>
-        <IconButton color="success" aria-label="edit" component="label" >
+        <IconButton color="success" aria-label="edit" component="label">
           <EditIcon />
+        </IconButton>
+
+        <IconButton color="error" aria-label="delete" component="label">
+          <DeleteIcon />
+        </IconButton>
+
+        <IconButton color="success" aria-label="delete" component="label">
+          <AddIcon />
         </IconButton>
       </Box>
     </Box>
