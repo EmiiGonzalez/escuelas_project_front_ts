@@ -5,5 +5,4 @@ export interface AlertCustomProps {
     setOpenToast: (openToast: boolean) => void;
     variante: AlertColor;
     msg: string;
-    tema: "light" | "dark";
 }

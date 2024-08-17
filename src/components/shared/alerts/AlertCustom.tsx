@@ -1,10 +1,11 @@
 import { Alert, Snackbar } from "@mui/material";
 import { AlertCustomProps } from "./AlertCustomProps";
 import { useEffect, useState } from "react";
+import { useThemeStore } from "../../../util/context/useThemeStore";
 
 export const AlertCustom = (props: AlertCustomProps) => {
-  const { openToast, setOpenToast, variante, msg, tema } = props;
-
+  const { openToast, setOpenToast, variante, msg } = props;
+  const { tema } = useThemeStore();
   const handleClose = (
     _event?: React.SyntheticEvent | Event,
     reason?: string

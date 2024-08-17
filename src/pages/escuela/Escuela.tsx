@@ -9,9 +9,11 @@ import { fetchCursos } from "../../util/shared/fetchCurso";
 import { SpeedDialCustom } from "../../components/shared/speedDial/SpeedDialCustom";
 import { AlertColor } from "@mui/material";
 import { Box } from "@mui/material";
+import { useThemeStore } from "../../util/context/useThemeStore";
 
-export const Escuela = ({ url, handleOpenToast, tema }: PropsEscuela) => {
+export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
   const { escuelaId, year } = useParams();
+  const { tema } = useThemeStore();
 
   const datosEscuela = useQuery<EscuelasRequest, Error>({
     queryKey: ["escuela", escuelaId],
@@ -55,5 +57,4 @@ export const Escuela = ({ url, handleOpenToast, tema }: PropsEscuela) => {
 interface PropsEscuela {
   url: string;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
-  tema: "light" | "dark";
 }

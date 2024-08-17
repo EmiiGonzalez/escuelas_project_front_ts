@@ -5,16 +5,16 @@ import { fetchEscuelas } from "../../util/shared/fetchEscuela";
 import { useQuery } from "@tanstack/react-query";
 import { BoxTheme } from "../../components/shared/boxTheme/BoxTheme";
 import { Box } from '@mui/material';
+import { useThemeStore } from "../../util/context/useThemeStore";
 
 interface PropsInicio {
   url: string;
-  tema: "light" | "dark";
   handleOpenToast: (variante: AlertColor, msg: string) => void;
-  setTema: (tema: "light" | "dark") => void;
 }
 
 export const Inicio = (props: PropsInicio) => {
-  const { url, tema, handleOpenToast, setTema } = props;
+  const { url, handleOpenToast,  } = props;
+  const { tema, setTema } = useThemeStore();
   const query = useQuery<EscuelasRequest[], Error>({
     queryKey: ["escuelas"],
     queryFn: () => fetchEscuelas(url),

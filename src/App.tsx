@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@emotion/react";
-import { useLocalStorage } from "./util/hooks/useLocalStorage";
 import { themeOptions } from "./util/themeOptions";
 import { Container } from "@mui/material";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -7,9 +6,10 @@ import { AlertCustom } from "./components/shared/alerts/AlertCustom";
 import { useOpenToast } from "./util/hooks/useOpenToast";
 import { Inicio } from "./pages/inicio/Inicio";
 import { Escuela } from "./pages/escuela/Escuela";
+import { useThemeStore } from "./util/context/useThemeStore";
 
 function App() {
-  const [tema, setTema] = useLocalStorage<"light" | "dark">("tema", "dark");
+  const { tema } = useThemeStore();
   const temaOptions = themeOptions(tema);
   const url =
   import.meta.env.VITE_BASE_VERSION_API;
@@ -31,13 +31,12 @@ function App() {
       >
         <Router>
           <Routes>
-            <Route path="/" element={<Inicio url={url} tema={tema} handleOpenToast={handleOpenToast} setTema={setTema} />} />
+            <Route path="/" element={<Inicio url={url} handleOpenToast={handleOpenToast} />} />
             <Route
               path="/cursos/:escuelaId/:year"
               element={
                 <Escuela
                   url={url}
-                  tema={tema}
                   handleOpenToast={handleOpenToast}
                 />
               }
@@ -46,7 +45,6 @@ function App() {
         </Router>
       </Container>
       <AlertCustom
-        tema={tema}
         openToast={openToast}
         variante={variante}
         msg={msg}
