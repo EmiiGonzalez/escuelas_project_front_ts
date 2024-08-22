@@ -6,7 +6,7 @@ import { EscuelasRequest } from "../../util/interfaces/escuelas/EscuelasRequest"
 import { useQuery } from "@tanstack/react-query";
 import { CursosRequest } from "../../util/interfaces/cursos/CursoInterface";
 import { fetchCursos } from "../../util/shared/fetchCurso";
-import { SpeedDialCustom } from "../../components/shared/speedDial/SpeedDialCustom";
+import { SpeedDialCustom } from "./components/speedDial/SpeedDialCustom";
 import { AlertColor } from "@mui/material";
 import { Box } from "@mui/material";
 import { useThemeStore } from "../../util/context/useThemeStore";
@@ -19,6 +19,10 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
     queryKey: ["escuela", escuelaId],
     queryFn: () => fetchEscuela(url, Number(escuelaId)),
   });
+
+  const updateData = () => {
+    datosEscuela.refetch();
+  };
 
   const datosCursos = useQuery<CursosRequest[], Error>({
     queryKey: ["cursos", escuelaId, year],
@@ -49,7 +53,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
           ))}
         </ul>
       </Box>
-      <SpeedDialCustom />
+      <SpeedDialCustom escuela={datosEscuela.data} url={url} handleOpenToast={handleOpenToast} tema={tema} updateData={updateData} />
     </>
   );
 };
