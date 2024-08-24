@@ -8,9 +8,12 @@ import { AlertColor, Box } from "@mui/material";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRequest";
 import { ModalEditEscuela } from "../ModalEditEscuela";
+import { DialogDeleteCustom } from "../dialog/DialogDeleteCustom";
 
 export const SpeedDialCustom = ({ escuela, handleOpenToast, tema, url, updateData }: PropsSpeedDialCustom) => {
-  const { open, handleOpen, handleClose } = useHandleBoolean();
+  const { open, handleOpen: handleOpenEdit, handleClose: handleCloseEdit } = useHandleBoolean();
+  const { open: openSpeedDial, handleOpen : handleOpenSpeedDial, handleClose : handleCloseSpeedDial } = useHandleBoolean();
+  const { open: openDialog, handleOpen: handleOpenDialog, handleClose: handleCloseDialog } = useHandleBoolean();
 
   const actions = [
     {
@@ -21,12 +24,16 @@ export const SpeedDialCustom = ({ escuela, handleOpenToast, tema, url, updateDat
     {
       icon: <DeleteIcon />,
       name: "Eliminar Escuela",
-      onClick: () => console.log("hola"),
+      onClick: () => {handleOpenDialog();
+        handleCloseSpeedDial();
+      }
     },
     {
       icon: <EditIcon />,
       name: "Editar Escuela",
-      onClick: () => handleOpen(),
+      onClick: () => {handleOpenEdit();
+        handleCloseSpeedDial();
+      },
     },
   ];
 
@@ -36,6 +43,9 @@ export const SpeedDialCustom = ({ escuela, handleOpenToast, tema, url, updateDat
         ariaLabel="speedDial"
         sx={{ position: "absolute", bottom: 30, right: 30 }}
         icon={<SpeedDialIcon />}
+        onClick={() => handleOpenSpeedDial()}
+        open={openSpeedDial}
+        onClose={handleCloseSpeedDial}
       >
         {actions.map((action) => (
           <SpeedDialAction
@@ -48,7 +58,8 @@ export const SpeedDialCustom = ({ escuela, handleOpenToast, tema, url, updateDat
           />
         ))}
       </SpeedDial>
-      <ModalEditEscuela url={url} escuela={escuela} handleClose={handleClose} open={open} handleOpenToast={handleOpenToast} tema={tema} updateData={updateData}  />
+      <ModalEditEscuela url={url} escuela={escuela} handleClose={handleCloseEdit} open={open} handleOpenToast={handleOpenToast} tema={tema} updateData={updateData}  />
+      <DialogDeleteCustom open={openDialog} handleClose={handleCloseDialog} id={escuela.id} url={url} handleOpenToast={handleOpenToast} />
     </Box>
   );
 };
