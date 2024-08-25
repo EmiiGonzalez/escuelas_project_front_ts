@@ -40,18 +40,18 @@ export const FormInicio = (props: PropsFormInicio) => {
         sx={{ display: "flex", justifyContent: "space-around", width: "100%" }}
       >
         <Button
+          onClick={handleOpen}
+          variant={tema === "light" ? "contained" : "outlined"}
+          color="success"
+          endIcon={<AddIcon />}
+        >
+          Añadir
+        </Button>
+        <Button
           variant={tema === "light" ? "contained" : "outlined"}
           type="submit"
         >
           Buscar
-        </Button>
-        <Button
-          onClick={handleOpen}
-          variant={tema === "light" ? "contained" : "outlined"}
-          color="success"
-          startIcon={<AddIcon />}
-        >
-          Añadir
         </Button>
         <ModalAddEscuela
           open={open}
