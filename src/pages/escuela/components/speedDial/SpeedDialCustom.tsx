@@ -7,31 +7,61 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AlertColor, Box } from "@mui/material";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRequest";
-import { ModalEditEscuela } from "../ModalEditEscuela";
+import { ModalEditEscuela } from "../modals/ModalEditEscuela";
 import { DialogDeleteCustom } from "../dialog/DialogDeleteCustom";
+import { ModalAddCurso } from "../modals/ModalAddCurso";
 
-export const SpeedDialCustom = ({ escuela, handleOpenToast, tema, url, updateData }: PropsSpeedDialCustom) => {
-  const { open, handleOpen: handleOpenEdit, handleClose: handleCloseEdit } = useHandleBoolean();
-  const { open: openSpeedDial, handleOpen : handleOpenSpeedDial, handleClose : handleCloseSpeedDial } = useHandleBoolean();
-  const { open: openDialog, handleOpen: handleOpenDialog, handleClose: handleCloseDialog } = useHandleBoolean();
+export const SpeedDialCustom = ({
+  escuela,
+  handleOpenToast,
+  tema,
+  url,
+  updateDataEscuela,
+  updateDataCursos,
+}: PropsSpeedDialCustom) => {
+  const {
+    open,
+    handleOpen: handleOpenEdit,
+    handleClose: handleCloseEdit,
+  } = useHandleBoolean();
+  const {
+    open: openSpeedDial,
+    handleOpen: handleOpenSpeedDial,
+    handleClose: handleCloseSpeedDial,
+  } = useHandleBoolean();
+  const {
+    open: openDialog,
+    handleOpen: handleOpenDialog,
+    handleClose: handleCloseDialog,
+  } = useHandleBoolean();
+  const {
+    open: openModalAddCurso,
+    handleOpen: handleOpenModalAddCurso,
+    handleClose: handleCloseModalAddCurso,
+  } = useHandleBoolean();
 
   const actions = [
     {
       icon: <AddIcon />,
       name: "Añadir Curso",
-      onClick: () => console.log("hola"),
+      onClick: () => {
+        handleOpenModalAddCurso();
+        handleCloseSpeedDial();
+      },
     },
     {
       icon: <DeleteIcon />,
       name: "Eliminar Escuela",
-      onClick: () => {handleOpenDialog();
+      onClick: () => {
+        handleOpenDialog();
         handleCloseSpeedDial();
-      }
+      },
     },
     {
       icon: <EditIcon />,
       name: "Editar Escuela",
-      onClick: () => {handleOpenEdit();
+      onClick: () => {
+        handleOpenEdit();
         handleCloseSpeedDial();
       },
     },
@@ -58,8 +88,31 @@ export const SpeedDialCustom = ({ escuela, handleOpenToast, tema, url, updateDat
           />
         ))}
       </SpeedDial>
-      <ModalEditEscuela url={url} escuela={escuela} handleClose={handleCloseEdit} open={open} handleOpenToast={handleOpenToast} tema={tema} updateData={updateData}  />
-      <DialogDeleteCustom open={openDialog} handleClose={handleCloseDialog} id={escuela.id} url={url} handleOpenToast={handleOpenToast} />
+      <ModalEditEscuela
+        url={url}
+        escuela={escuela}
+        handleClose={handleCloseEdit}
+        open={open}
+        handleOpenToast={handleOpenToast}
+        tema={tema}
+        updateData={updateDataEscuela}
+      />
+      <ModalAddCurso
+        handleClose={handleCloseModalAddCurso}
+        open={openModalAddCurso}
+        handleOpenToast={handleOpenToast}
+        idEscuela={escuela.id}
+        tema={tema}
+        updateData={updateDataCursos}
+        url={url}
+      />
+      <DialogDeleteCustom
+        open={openDialog}
+        handleClose={handleCloseDialog}
+        id={escuela.id}
+        url={url}
+        handleOpenToast={handleOpenToast}
+      />
     </Box>
   );
 };
@@ -69,5 +122,6 @@ interface PropsSpeedDialCustom {
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   tema: "light" | "dark";
   url: string;
-  updateData : () => void;
+  updateDataEscuela: () => void;
+  updateDataCursos: () => void;
 }

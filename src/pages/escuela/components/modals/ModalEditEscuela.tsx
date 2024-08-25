@@ -10,11 +10,11 @@ import {
   import SendIcon from "@mui/icons-material/Send";
   import { FormEvent, useEffect, useRef } from "react";
   import { useMutation } from "@tanstack/react-query";
-  import { useValid } from "../../../util/hooks/useValid";
+  import { useValid } from "../../../../util/hooks/useValid";
   import { AxiosError } from "axios";
   import { Box } from '@mui/material';
-import { putEscuela } from "../util/putEscuela";
-import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasRequest";
+import { putEscuela } from "../../util/putEscuela";
+import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRequest";
   
   export const ModalEditEscuela = ({ tema, open, handleClose, handleOpenToast, url, escuela, updateData } : PropsModalEditEscuela) => {
     const { string, setString, setError, error } = useValid();

@@ -20,9 +20,13 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
     queryFn: () => fetchEscuela(url, Number(escuelaId)),
   });
 
-  const updateData = () => {
+  const updateDataEscuela = () => {
     datosEscuela.refetch();
   };
+
+  const updateDataCursos = () => {
+    datosCursos.refetch();
+  }
 
   const datosCursos = useQuery<CursosRequest[], Error>({
     queryKey: ["cursos", escuelaId, year],
@@ -53,7 +57,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
           ))}
         </ul>
       </Box>
-      <SpeedDialCustom escuela={datosEscuela.data} url={url} handleOpenToast={handleOpenToast} tema={tema} updateData={updateData} />
+      <SpeedDialCustom escuela={datosEscuela.data} url={url} handleOpenToast={handleOpenToast} tema={tema} updateDataEscuela={updateDataEscuela} updateDataCursos={updateDataCursos} />
     </>
   );
 };
