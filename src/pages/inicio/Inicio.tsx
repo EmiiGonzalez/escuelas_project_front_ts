@@ -37,9 +37,9 @@ export const Inicio = (props: PropsInicio) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100%",
         alignItems: "center",
         justifyContent: "center",
+        height: "100%",
       }}
     >
       <FormInicio

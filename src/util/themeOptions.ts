@@ -11,6 +11,9 @@ export const themeOptions = (theme: string): Theme => {
             primary: {
               main: "#1976d2",
             },
+            secondary: {
+              main: "#ff4081",
+            },
             text: {
               primary: "#fff",
               secondary: "rgba(255, 255, 255, 0.7)",
@@ -24,6 +27,9 @@ export const themeOptions = (theme: string): Theme => {
         : {
             primary: {
               main: "#6976d2",
+            },
+            secondary: {
+              main: "#d81b60",
             },
             text: {
               primary: "rgba(0, 0, 0, 0.87)",

@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import { EscuelasRequest } from "../../../util/interfaces/escuelas/EscuelasRequest";
+import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRequest";
 import { Box } from '@mui/material';
 
-export const EscuelaCard = ({ datosEscuela, tema }: PropsEscuelaCard) => {
+export const EscuelaCard = ({ datosEscuela }: PropsEscuelaCard) => {
   return (
     <Box
       sx={{
@@ -15,14 +15,13 @@ export const EscuelaCard = ({ datosEscuela, tema }: PropsEscuelaCard) => {
     >
       <Box
         sx={{
-          marginRight: "2rem",
           height: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <Typography variant="h2" color={"text.primary"}>
+        <Typography variant="h1" color={"text.primary"}>
           {datosEscuela.nombre}
         </Typography>
       </Box>
@@ -34,5 +33,4 @@ export const EscuelaCard = ({ datosEscuela, tema }: PropsEscuelaCard) => {
 
 interface PropsEscuelaCard {
   datosEscuela: EscuelasRequest;
-  tema: "light" | "dark";
 }

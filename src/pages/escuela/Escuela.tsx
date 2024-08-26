@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { EscuelaCard } from "./components/EscuelaCard";
+import { EscuelaCard } from "./components/card/EscuelaCard";
 import { fetchEscuela } from "../../util/shared/fetchEscuela";
 import { EscuelasRequest } from "../../util/interfaces/escuelas/EscuelasRequest";
 import { useQuery } from "@tanstack/react-query";
@@ -10,10 +10,11 @@ import { SpeedDialCustom } from "./components/speedDial/SpeedDialCustom";
 import { AlertColor } from "@mui/material";
 import { Box } from "@mui/material";
 import { useThemeStore } from "../../util/context/useThemeStore";
+import { CardCurso } from "./components/card/CardCurso";
 
 export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
   const { escuelaId, year } = useParams();
-  const { tema } = useThemeStore();
+  const { tema, setTema } = useThemeStore();
 
   const datosEscuela = useQuery<EscuelasRequest, Error>({
     queryKey: ["escuela", escuelaId],
@@ -26,7 +27,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
 
   const updateDataCursos = () => {
     datosCursos.refetch();
-  }
+  };
 
   const datosCursos = useQuery<CursosRequest[], Error>({
     queryKey: ["cursos", escuelaId, year],
@@ -49,15 +50,34 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
 
   return (
     <>
-      <Box sx={{ width: "100%" }}>
-        <EscuelaCard datosEscuela={datosEscuela.data} tema={tema} />
-        <ul>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <EscuelaCard datosEscuela={datosEscuela.data} />
+        <Box
+          component={"ul"}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-around",
+            padding: "0",
+            width: "100%",
+          }}
+        >
           {datosCursos.data.map((c) => (
-            <li key={c.id}>{c.nombre}</li>
+            <CardCurso key={c.id} tittle={c.nombre} />
           ))}
-        </ul>
+        </Box>
       </Box>
-      <SpeedDialCustom escuela={datosEscuela.data} url={url} handleOpenToast={handleOpenToast} tema={tema} updateDataEscuela={updateDataEscuela} updateDataCursos={updateDataCursos} />
+      <SpeedDialCustom
+        escuela={datosEscuela.data}
+        url={url}
+        handleOpenToast={handleOpenToast}
+        tema={tema}
+        updateDataEscuela={updateDataEscuela}
+        updateDataCursos={updateDataCursos}
+        setTema={setTema}
+      />
     </>
   );
 };

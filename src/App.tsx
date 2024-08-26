@@ -20,12 +20,12 @@ function App() {
       <Container
         sx={{
           border: "1px solid black",
-          height: "100vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
           bgcolor: "background.default",
+          minHeight: "100vh",
         }}
         maxWidth="xl"
       >

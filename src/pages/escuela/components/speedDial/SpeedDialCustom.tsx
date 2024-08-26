@@ -4,6 +4,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ContrastIcon from '@mui/icons-material/Contrast';
 import { AlertColor, Box } from "@mui/material";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRequest";
@@ -18,6 +19,7 @@ export const SpeedDialCustom = ({
   url,
   updateDataEscuela,
   updateDataCursos,
+  setTema,
 }: PropsSpeedDialCustom) => {
   const {
     open,
@@ -65,10 +67,18 @@ export const SpeedDialCustom = ({
         handleCloseSpeedDial();
       },
     },
+    {
+      icon: <ContrastIcon />,
+      name: "Cambiar Tema",
+      onClick: () => {
+        setTema(tema === "light" ? "dark" : "light");
+        handleCloseSpeedDial();
+      },
+    }
   ];
 
   return (
-    <Box sx={{ height: 320, flexGrow: 1 }}>
+    <Box sx={{ height: 320, flexGrow: 1 , position: "fixed", bottom: 0, right: 0}}>
       <SpeedDial
         ariaLabel="speedDial"
         sx={{ position: "absolute", bottom: 30, right: 30 }}
@@ -124,4 +134,5 @@ interface PropsSpeedDialCustom {
   url: string;
   updateDataEscuela: () => void;
   updateDataCursos: () => void;
+  setTema: (t: "light" | "dark") => void;
 }
