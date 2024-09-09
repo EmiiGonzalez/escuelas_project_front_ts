@@ -11,6 +11,7 @@ export const EscuelaCard = ({ datosEscuela }: PropsEscuelaCard) => {
         flexDirection: "row",
         alignItems: "center",
         height: "15vh",
+        marginBottom: "2rem",
       }}
     >
       <Box

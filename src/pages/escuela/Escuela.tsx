@@ -50,7 +50,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
 
   return (
     <>
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "column",  alignItems: "center", minHeight: "100vh" }}>
         <EscuelaCard datosEscuela={datosEscuela.data} />
         <Box
           component={"ul"}
@@ -65,7 +65,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
           }}
         >
           {datosCursos.data.map((c) => (
-            <CardCurso key={c.id} tittle={c.nombre} />
+            <CardCurso key={c.id} tittle={c.nombre} materia={c.materia} />
           ))}
         </Box>
       </Box>

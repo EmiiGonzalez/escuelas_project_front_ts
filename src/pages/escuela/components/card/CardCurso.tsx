@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-export const CardCurso = ({ tittle }: PropsCardCurso) => {
+export const CardCurso = ({ tittle, materia }: PropsCardCurso) => {
   return (
     <Box
       component={"li"}
@@ -24,9 +24,23 @@ export const CardCurso = ({ tittle }: PropsCardCurso) => {
         marginX: "1rem",
       }}
     >
-      <Typography variant="h3" sx={{ textWrap: "wrap", textAlign: "center", marginRight: "1rem", width: "80%" }}>{tittle}</Typography>
-      <Box sx={{width: "20%" }}>
-        <AddCircleIcon sx={{ fontSize: "3rem"}} />
+      <Box sx={{ width: "80%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}> 
+      <Typography
+        variant="h3"
+        sx={{
+          textWrap: "wrap",
+          textAlign: "center",
+          marginRight: "1rem",
+          width: "80%",
+          userSelect: "none",
+        }}
+      >
+        {tittle}
+      </Typography>
+      <Typography variant="subtitle2" sx={{ color: "text.primary", userSelect: "none" }}>{materia}</Typography>
+      </Box>
+      <Box sx={{ width: "20%" }}>
+        <AddCircleIcon sx={{ fontSize: "3rem", cursor: "pointer" }}  onClick={() => console.log("click")} />
       </Box>
     </Box>
   );
@@ -34,4 +48,5 @@ export const CardCurso = ({ tittle }: PropsCardCurso) => {
 
 interface PropsCardCurso {
   tittle: string;
+  materia: string;
 }

@@ -24,8 +24,10 @@ export const ModalAddCurso = ({
   idEscuela,
   updateData,
 }: PropsModalEditEscuela) => {
-  const { string, setString, setError, error } = useValid();
-  const textRef = useRef<HTMLInputElement>(null);
+  const { string: cursoNombre, setString : setCursoNombre, setError : setErrorCurso, error : errorCurso } = useValid();
+  const { string: materiaNombre, setString : setMateriaNombre, setError : setErrorMateria, error : errorMateria } = useValid();
+  const cursoRef = useRef<HTMLInputElement>(null);
+  const materiaRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
     mutationFn: postCurso,
@@ -50,22 +52,35 @@ export const ModalAddCurso = ({
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     event.stopPropagation();
-    if (string === "") {
-      setError({
+    if (cursoNombre === "") {
+      setErrorCurso({
         state: true,
         message: "Por favor, ingrese un curso",
       });
-      if (textRef.current) {
-        textRef.current.focus();
+      if (cursoRef.current) {
+        cursoRef.current.focus();
+      }
+      return;
+    }
+
+    if (materiaNombre === "") {
+      setErrorMateria({
+        state: true,
+        message: "Por favor, ingrese una materia",
+      });
+      if (materiaRef.current) {
+        materiaRef.current.focus();
       }
       return;
     }
     mutation.mutate({
-      nombre: string,
+      nombre: cursoNombre,
       url,
       idEscuela,
+      materia: materiaNombre
     });
-    setString("");
+    setCursoNombre("");
+    setMateriaNombre("");
   }
 
   const style = {
@@ -123,24 +138,48 @@ export const ModalAddCurso = ({
           >
             <TextField
               aria-hidden={false}
-              inputRef={textRef}
+              inputRef={cursoRef}
               id="outlined-basic"
               label="Curso"
               variant={tema === "light" ? "filled" : "outlined"}
               sx={{ width: "100%", mb: 2 }}
-              error={error.state}
-              helperText={error.message}
-              value={string}
+              error={errorCurso.state}
+              helperText={errorCurso.message}
+              value={cursoNombre}
               autoComplete="off"
               onChange={(event) => {
-                setString(event.target.value);
-                setError({ state: false, message: "" });
+                setCursoNombre(event.target.value);
+                setErrorCurso({ state: false, message: "" });
               }}
               onBlur={(e) => {
                 if (e.target.value === "") {
-                  setError({
+                  setErrorCurso({
                     state: true,
-                    message: "Por favor, ingrese una escuela",
+                    message: "Por favor, ingrese el nombre del curso",
+                  });
+                }
+              }}
+            />
+            <TextField
+              aria-hidden={false}
+              inputRef={materiaRef}
+              id="outlined-basic"
+              label="Materia"
+              variant={tema === "light" ? "filled" : "outlined"}
+              sx={{ width: "100%", mb: 2 }}
+              error={errorMateria.state}
+              helperText={errorMateria.message}
+              value={materiaNombre}
+              autoComplete="off"
+              onChange={(event) => {
+                setMateriaNombre(event.target.value);
+                setErrorMateria({ state: false, message: "" });
+              }}
+              onBlur={(e) => {
+                if (e.target.value === "") {
+                  setErrorMateria({
+                    state: true,
+                    message: "Por favor, ingrese el nombre de la materia",
                   });
                 }
               }}
