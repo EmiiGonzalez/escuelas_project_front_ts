@@ -65,7 +65,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
           }}
         >
           {datosCursos.data.map((c) => (
-            <CardCurso key={c.id} tittle={c.nombre} materia={c.materia} />
+            <CardCurso key={c.id} {...c} />
           ))}
         </Box>
       </Box>

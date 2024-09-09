@@ -1,7 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useNavigate } from "react-router-dom";
+import { CursosRequest } from "../../../../util/interfaces/cursos/CursoInterface";
 
-export const CardCurso = ({ tittle, materia }: PropsCardCurso) => {
+export const CardCurso = ({ nombre, materia, id }: CursosRequest) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/curso/${id}`);
+  }
+
   return (
     <Box
       component={"li"}
@@ -35,18 +43,14 @@ export const CardCurso = ({ tittle, materia }: PropsCardCurso) => {
           userSelect: "none",
         }}
       >
-        {tittle}
+        {nombre}
       </Typography>
       <Typography variant="subtitle2" sx={{ color: "text.primary", userSelect: "none" }}>{materia}</Typography>
       </Box>
       <Box sx={{ width: "20%" }}>
-        <AddCircleIcon sx={{ fontSize: "3rem", cursor: "pointer" }}  onClick={() => console.log("click")} />
+        <AddCircleIcon sx={{ fontSize: "3rem", cursor: "pointer" }}  onClick={handleClick} />
       </Box>
     </Box>
   );
 };
 
-interface PropsCardCurso {
-  tittle: string;
-  materia: string;
-}

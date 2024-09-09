@@ -7,6 +7,7 @@ import { useOpenToast } from "./util/hooks/useOpenToast";
 import { Inicio } from "./pages/inicio/Inicio";
 import { Escuela } from "./pages/escuela/Escuela";
 import { useThemeStore } from "./util/context/useThemeStore";
+import { Curso } from "./pages/curso/Curso";
 
 function App() {
   const { tema } = useThemeStore();
@@ -41,6 +42,7 @@ function App() {
                 />
               }
             />
+            <Route path="/curso/:id" element={<Curso url={url} handleOpenToast={handleOpenToast}/>}/>
           </Routes>
         </Router>
       </Container>
