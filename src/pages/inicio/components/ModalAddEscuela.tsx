@@ -29,7 +29,6 @@ export const ModalAddEscuela = (props: PropsModalAddEscuela) => {
       handleClose();
     },
     onError: (error) => {
-      console.log(error);
       if (error instanceof AxiosError) {
         handleOpenToast("error", error.response?.data.message ? error.response?.data.message : "Error al agregar la escuela");
       }

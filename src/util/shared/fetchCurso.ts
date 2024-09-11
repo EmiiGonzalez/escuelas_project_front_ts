@@ -23,7 +23,5 @@ export const fetchCursos = async (url: string, escuelaId: number, year: number):
 export const fetchCurso = async (url: string, id: number): Promise<CursosRequest> => {
     const urlApi = url + import.meta.env.VITE_API_GET_CURSO + "/" + id 
     const response = await axiosInstance.get(urlApi);
-    console.log(response);
-    
     return response.data;
 }
