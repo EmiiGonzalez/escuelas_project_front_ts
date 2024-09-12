@@ -3,9 +3,11 @@ import { useThemeStore } from "../../util/context/useThemeStore";
 import { CursosRequest } from "../../util/interfaces/cursos/CursoInterface";
 import { fetchCurso } from "../../util/shared/fetchCurso";
 import { useParams } from "react-router-dom";
-import { AlertColor, Box, CircularProgress } from "@mui/material";
+import { AlertColor, Box, CircularProgress, Typography } from "@mui/material";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { CursoCard } from "./components/cards/CursoCard";
 import { AxiosError } from "axios";
+import { useEffect } from "react";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   const { id } = useParams();
@@ -16,10 +18,8 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     queryFn: () => fetchCurso(url, Number(id)),
   });
 
-  if (!id || datosCurso.isLoading) return <CircularProgress />;
-
-  if (!datosCurso.data) {
-    if (datosCurso.error instanceof AxiosError) {
+  useEffect(() => {
+    if (!datosCurso.data && datosCurso.error instanceof AxiosError) {
       handleOpenToast(
         "error",
         datosCurso.error.response?.data.message
@@ -27,7 +27,17 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
           : "Error al cargar el curso"
       );
     }
-    return <Box sx={{ marginTop: "100px" }}>No se encontro el curso</Box>;
+  }, [datosCurso.data, datosCurso.error, handleOpenToast]);
+
+  if (!id || datosCurso.isLoading) return <CircularProgress />;
+
+  if (!datosCurso.data) {
+    return (
+      <Box>
+        <ReportProblemIcon sx={{ color: "red" }} />
+        <Typography >Curso con ID {id} no encontrado</Typography>
+      </Box>
+    );
   }
 
   return (
