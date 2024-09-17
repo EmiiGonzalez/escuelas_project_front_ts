@@ -10,7 +10,6 @@ export const CursoCard = ({ curso }: CursoCardProps) => {
         justifyContent: "center",
         flexDirection: "row",
         alignItems: "center",
-        height: "15vh",
         marginBottom: "2rem",
       }}
     >

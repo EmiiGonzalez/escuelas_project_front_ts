@@ -8,6 +8,8 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { CursoCard } from "./components/cards/CursoCard";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
+import { CardGeneric } from "./components/cards/CardGeneric";
+import { DashBoardCard } from "./components/cards/DashBoardCard";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   const { id } = useParams();
@@ -35,15 +37,27 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     return (
       <Box>
         <ReportProblemIcon sx={{ color: "red" }} />
-        <Typography >Curso con ID {id} no encontrado</Typography>
+        <Typography>Curso con ID {id} no encontrado</Typography>
       </Box>
     );
   }
 
   return (
-    <>
-      <CursoCard curso={datosCurso.data} />
-    </>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column",  alignItems: "center", minHeight: "100vh" }}>
+      <Box>
+        <CursoCard curso={datosCurso.data} />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          width: "100%",
+        }}
+      >
+        <CardGeneric children={<DashBoardCard />} />
+      </Box>
+    </Box>
   );
 };
 
