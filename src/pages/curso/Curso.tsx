@@ -55,7 +55,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
           width: "100%",
         }}
       >
-        <CardGeneric children={<DashBoardCard />} />
+        <CardGeneric children={<DashBoardCard url={url} idCurso={Number(id)}/>} />
       </Box>
     </Box>
   );
