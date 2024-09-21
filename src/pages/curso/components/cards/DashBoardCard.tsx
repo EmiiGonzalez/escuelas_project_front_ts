@@ -5,8 +5,19 @@ import { ClasesCountRequest } from "../../../../util/interfaces/clases/ClasesCou
 import { fetchCountClasesForCurso } from "../../../../util/shared/fetchCurso";
 import { useQuery } from "@tanstack/react-query";
 import { DashBoardCardSkeleton } from "../skeletons/cards/DashBoardCardSkeleton";
+import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
+import { ModalAddClase } from "../modals/ModalAddClase";
 
 export const DashBoardCard = ({ url, idCurso }: PropsDashBoardCard) => {
+
+  const {
+    open: openModalAddClase,
+    handleOpen: handleOpenModalAddClase,
+    handleClose: handleCloseModalAddClase,
+  } = useHandleBoolean();
+
+
+
   const cantClases = useQuery<ClasesCountRequest, Error>({
     queryKey: ["curso", idCurso],
     queryFn: () => fetchCountClasesForCurso(url, Number(idCurso)),
@@ -34,6 +45,7 @@ export const DashBoardCard = ({ url, idCurso }: PropsDashBoardCard) => {
         Pasar Asistencia
         </Button>
       </Box>
+      <ModalAddClase updateData={() => cantClases.refetch()} handleClose={handleCloseModalAddClase} url={url} idCurso={Number(idCurso)} />
     </>
   );
 };
