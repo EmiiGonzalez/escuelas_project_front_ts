@@ -22,10 +22,10 @@ export const CursoCard = ({ curso }: CursoCardProps) => {
           flexDirection: "column",
         }}
       >
-        <Typography variant="h1" color={"text.primary"}>
+        <Typography variant="h1" color={"text.primary"} sx={{userSelect: "none"}}>
           {curso.nombre}
         </Typography>
-        <Typography variant="h5" color={"text.primary"}>
+        <Typography variant="h5" color={"text.primary"} sx={{userSelect: "none"}}>
           {curso.materia}
         </Typography>
       </Box>

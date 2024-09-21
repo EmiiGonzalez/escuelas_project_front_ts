@@ -10,6 +10,7 @@ import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { CardGeneric } from "./components/cards/CardGeneric";
 import { DashBoardCard } from "./components/cards/DashBoardCard";
+import { ClasesListCard } from "./components/cards/ClasesListCard";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   const { id } = useParams();
@@ -50,12 +51,16 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
       <Box
         sx={{
           display: "flex",
+          alignItems: "center",
           flexDirection: "row",
-          justifyContent: "space-around",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
           width: "100%",
         }}
       >
         <CardGeneric children={<DashBoardCard url={url} idCurso={Number(id)}/>} />
+        <CardGeneric children={<ClasesListCard url={url} idCurso={Number(id)}/>}/>
+        <CardGeneric />
       </Box>
     </Box>
   );
