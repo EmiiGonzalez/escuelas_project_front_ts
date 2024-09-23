@@ -1,28 +1,13 @@
 import Typography from "@mui/material/Typography/Typography";
 import Box from "@mui/material/Box/Box";
-import { fetchClases } from "../../../../util/shared/fetchClase";
 import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest";
-import { useQuery } from "@tanstack/react-query";
-import { ClasesListCardSkeleton } from "../skeletons/cards/ClasesListCardSkeleton";
 
-export const ClasesListCard = ({ url, idCurso }: ClasesListCardProps) => {
-  const listClases = useQuery<ClasesRequest[], Error>({
-    queryKey: ["curso", idCurso],
-    queryFn: () => fetchClases(url, Number(idCurso)),
-  });
-
-  if (listClases.isLoading) {
-    return <ClasesListCardSkeleton />;
-  }
-
-  if (listClases.error) {
-    console.log(listClases.error);
-  }
+export const ClasesListCard = ({ data }: ClasesListCardProps) => {
 
   return (
     <>
       <Typography variant="h5" color={"text.primary"}>
-        Total de clases dictadas
+        Clases dictadas
       </Typography>
       <Box
         sx={{
@@ -33,9 +18,10 @@ export const ClasesListCard = ({ url, idCurso }: ClasesListCardProps) => {
           marginTop: "1.5rem",
         }}
       >
-        {listClases.data?.length > 0 ? (
-          listClases.data?.map((clase) => (
+        {data.length > 0 ? (
+          data.map((clase) => (
             <Typography
+              key={clase.id} 
               color={"text.primary"}
               sx={{
                 marginBottom: "1rem",
@@ -66,6 +52,5 @@ export const ClasesListCard = ({ url, idCurso }: ClasesListCardProps) => {
 };
 
 interface ClasesListCardProps {
-  url: string;
-  idCurso: number;
+  data: ClasesRequest[];
 }
