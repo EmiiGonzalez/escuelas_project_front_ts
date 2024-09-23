@@ -8,6 +8,10 @@ import { Inicio } from "./pages/inicio/Inicio";
 import { Escuela } from "./pages/escuela/Escuela";
 import { useThemeStore } from "./util/context/useThemeStore";
 import { Curso } from "./pages/curso/Curso";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { esES } from "@mui/x-date-pickers/locales/esES";
+import 'dayjs/locale/es-mx';
 
 function App() {
   const { tema } = useThemeStore();
@@ -17,6 +21,7 @@ function App() {
   const { variante, msg, handleOpenToast, openToast, setOpenToast } =
     useOpenToast();
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es-mx" localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}>
     <ThemeProvider theme={temaOptions}>
       <Container
         sx={{
@@ -54,6 +59,7 @@ function App() {
         key={msg}
       ></AlertCustom>
     </ThemeProvider>
+    </LocalizationProvider>
   );
 }
 

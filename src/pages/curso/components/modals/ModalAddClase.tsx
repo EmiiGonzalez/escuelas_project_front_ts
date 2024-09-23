@@ -14,6 +14,9 @@ import { useValid } from "../../../../util/hooks/useValid";
 import { AxiosError } from "axios";
 import { Box } from "@mui/material";
 import { postClase } from "../../util/postClase";
+import { useThemeStore } from "../../../../util/context/useThemeStore";
+import { DatePicker } from "@mui/x-date-pickers";
+import { esES } from "@mui/x-date-pickers/locales/esES";
 
 export const ModalAddClase = ({
   open,
@@ -21,9 +24,10 @@ export const ModalAddClase = ({
   url,
   idCurso,
   updateData,
+  handleOpenToast,
 }: PropsModalEditEscuela) => {
+  const { tema } = useThemeStore();
 
-    
   const {
     string: claseDescripcion,
     setString: setClaseDescripcion,
@@ -132,7 +136,7 @@ export const ModalAddClase = ({
               aria-hidden={false}
               inputRef={cursoRef}
               id="outlined-basic"
-              label="Curso"
+              label="Tema de la Clase"
               variant={tema === "light" ? "filled" : "outlined"}
               sx={{ width: "100%", mb: 2 }}
               error={errorClase.state}
@@ -152,6 +156,11 @@ export const ModalAddClase = ({
                 }
               }}
             />
+            <DatePicker label="Fecha de Clase" sx={{ width: "100%", mb: 2 }} 
+            format="DD-MM-YYYY"
+            localeText={{
+              clearButtonLabel: 'Vider',
+            }}/>
             <Button
               sx={{ ml: 2 }}
               variant={tema === "light" ? "contained" : "outlined"}
@@ -175,4 +184,5 @@ interface PropsModalEditEscuela {
   idCurso: number;
   url: string;
   updateData: () => void;
+  handleOpenToast: (variante: AlertColor, msg: string) => void;
 }

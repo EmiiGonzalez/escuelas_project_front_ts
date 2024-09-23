@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useThemeStore } from "../../util/context/useThemeStore";
 import { CursosRequest } from "../../util/interfaces/cursos/CursoInterface";
 import { fetchCurso } from "../../util/shared/fetchCurso";
 import { useParams } from "react-router-dom";
@@ -14,7 +13,6 @@ import { ClasesListCard } from "./components/cards/ClasesListCard";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   const { id } = useParams();
-  const { tema, setTema } = useThemeStore();
 
   const datosCurso = useQuery<CursosRequest, Error>({
     queryKey: ["curso", id],
@@ -58,9 +56,8 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
           width: "100%",
         }}
       >
-        <CardGeneric children={<DashBoardCard url={url} idCurso={Number(id)}/>} />
+        <CardGeneric children={<DashBoardCard url={url} idCurso={Number(id)} handleOpenToast={handleOpenToast}/>} />
         <CardGeneric children={<ClasesListCard url={url} idCurso={Number(id)}/>}/>
-        <CardGeneric />
       </Box>
     </Box>
   );

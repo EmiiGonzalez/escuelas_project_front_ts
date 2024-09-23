@@ -1,6 +1,6 @@
-import { Box, Button, Typography } from "@mui/material";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import { AlertColor, Box, Button, Typography } from "@mui/material";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import { ClasesCountRequest } from "../../../../util/interfaces/clases/ClasesCountInterface";
 import { fetchCountClasesForCurso } from "../../../../util/shared/fetchCurso";
 import { useQuery } from "@tanstack/react-query";
@@ -8,15 +8,21 @@ import { DashBoardCardSkeleton } from "../skeletons/cards/DashBoardCardSkeleton"
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { ModalAddClase } from "../modals/ModalAddClase";
 
-export const DashBoardCard = ({ url, idCurso }: PropsDashBoardCard) => {
-
+export const DashBoardCard = ({
+  url,
+  idCurso,
+  handleOpenToast,
+}: PropsDashBoardCard) => {
   const {
     open: openModalAddClase,
     handleOpen: handleOpenModalAddClase,
     handleClose: handleCloseModalAddClase,
   } = useHandleBoolean();
 
-
+  const openModal = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    handleOpenModalAddClase();
+  };
 
   const cantClases = useQuery<ClasesCountRequest, Error>({
     queryKey: ["curso", idCurso],
@@ -32,20 +38,62 @@ export const DashBoardCard = ({ url, idCurso }: PropsDashBoardCard) => {
       <Typography variant="h5" color={"text.primary"}>
         Total de clases dictadas
       </Typography>
-      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", width: "100%", marginTop: "1.5rem" }}>
-        <Typography color={"text.primary"} sx={{ marginBottom: "1rem", width: "100%", fontWeight: "bold", fontSize: "1.5rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          width: "100%",
+          marginTop: "1.5rem",
+        }}
+      >
+        <Typography
+          color={"text.primary"}
+          sx={{
+            marginBottom: "1rem",
+            width: "100%",
+            fontWeight: "bold",
+            fontSize: "1.5rem",
+          }}
+        >
           {cantClases.data?.count}
         </Typography>
-        <Button variant="contained" size="large" color="primary" sx={{ marginTop: "1rem", width: "100%", backgroundColor: "background.default" }}>
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          sx={{
+            marginTop: "1rem",
+            width: "100%",
+            backgroundColor: "background.default",
+          }}
+          onClick={openModal}
+        >
           <ControlPointIcon />
-        Agregar clase
+          Agregar clase
         </Button>
-        <Button variant="contained" size="large" color="primary" sx={{ marginTop: "1rem", width: "100%", backgroundColor: "background.default" }}>
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          sx={{
+            marginTop: "1rem",
+            width: "100%",
+            backgroundColor: "background.default",
+          }}
+        >
           <LibraryBooksIcon />
-        Pasar Asistencia
+          Pasar Asistencia
         </Button>
       </Box>
-      <ModalAddClase updateData={() => cantClases.refetch()} handleClose={handleCloseModalAddClase} url={url} idCurso={Number(idCurso)} />
+      <ModalAddClase
+        updateData={() => cantClases.refetch()}
+        open={openModalAddClase}
+        handleClose={handleCloseModalAddClase}
+        url={url}
+        idCurso={Number(idCurso)}
+        handleOpenToast={handleOpenToast}
+      />
     </>
   );
 };
@@ -53,4 +101,5 @@ export const DashBoardCard = ({ url, idCurso }: PropsDashBoardCard) => {
 interface PropsDashBoardCard {
   url: string;
   idCurso: number;
+  handleOpenToast: (variante: AlertColor, msg: string) => void;
 }
