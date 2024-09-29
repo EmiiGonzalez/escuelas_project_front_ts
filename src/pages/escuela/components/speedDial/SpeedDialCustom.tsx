@@ -52,7 +52,7 @@ export const SpeedDialCustom = ({
       },
     },
     {
-      icon: <DeleteIcon />,
+      icon: <DeleteIcon sx={{ color: tema === "light" ? "#D91656" : "#B8001F" }} />,
       name: "Eliminar Escuela",
       onClick: () => {
         handleOpenDialog();
@@ -60,7 +60,7 @@ export const SpeedDialCustom = ({
       },
     },
     {
-      icon: <EditIcon />,
+      icon: <EditIcon sx={{ color: tema === "light" ? "#117554" : "#347928" }} />,
       name: "Editar Escuela",
       onClick: () => {
         handleOpenEdit();
@@ -93,7 +93,7 @@ export const SpeedDialCustom = ({
             icon={action.icon}
             tooltipTitle={action.name}
             tooltipOpen
-            sx={{ color: "primary.main", textWrap: "nowrap" }}
+            sx={{ color: "primary.main", textWrap: "nowrap",}}
             onClick={action.onClick}
           />
         ))}

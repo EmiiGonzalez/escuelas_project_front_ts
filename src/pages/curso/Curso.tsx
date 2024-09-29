@@ -9,6 +9,7 @@ import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { CardGeneric } from "./components/cards/CardGeneric";
 import { DashBoardCard } from "./components/cards/DashBoardCard";
+import Grid from "@mui/material/Grid2";
 import { ClasesListCard } from "./components/cards/ClasesListCard";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
@@ -42,23 +43,41 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
   }
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column",  alignItems: "center", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        minHeight: "100vh",
+      }}
+    >
       <Box>
         <CursoCard curso={datosCurso.data} />
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
+      <Grid
+        container
+        spacing={2}
+        sx={{ width: "100%" }}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
-        <CardGeneric children={<DashBoardCard url={url} idCurso={Number(id)} handleOpenToast={handleOpenToast}/>} />
-        <CardGeneric children={<ClasesListCard url={url} idCurso={Number(id)}/>}/>
-      </Box>
+        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+          <CardGeneric
+            children={
+              <DashBoardCard
+                url={url}
+                idCurso={Number(id)}
+                handleOpenToast={handleOpenToast}
+              />
+            }
+          />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+          <CardGeneric
+            children={<ClasesListCard url={url} idCurso={Number(id)} />}
+          />
+        </Grid>
+      </Grid>
     </Box>
   );
 };

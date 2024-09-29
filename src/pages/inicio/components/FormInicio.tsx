@@ -25,7 +25,7 @@ export const FormInicio = (props: PropsFormInicio) => {
         e.currentTarget.reset();
         return;
       }
-      navigate(`/cursos/${escuela.id}/${new Date().getFullYear()}`);
+      navigate(`/escuela/${escuela.id}/${new Date().getFullYear()}`);
   }
 
   return (

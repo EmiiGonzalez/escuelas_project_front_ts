@@ -39,7 +39,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Inicio url={url} handleOpenToast={handleOpenToast} />} />
             <Route
-              path="/cursos/:escuelaId/:year"
+              path="/escuela/:escuelaId/:year"
               element={
                 <Escuela
                   url={url}

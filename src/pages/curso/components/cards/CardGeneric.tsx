@@ -10,7 +10,7 @@ export const CardGeneric = ({ children }: CardGenericProps) => {
         alignItems: "flex-start",
         minWidth: "250px",
         width: "100%",
-        maxWidth: "calc(50% - 2rem)",
+        height: "100%",
         marginBottom: "2rem",
         bgcolor: "secondary.main",
         borderRadius: "10px",
@@ -22,7 +22,6 @@ export const CardGeneric = ({ children }: CardGenericProps) => {
         },
         padding: "1.5rem",
         minHeight: "200px",
-        marginX: "1rem",
 
         transition: "0.5s ease",
 

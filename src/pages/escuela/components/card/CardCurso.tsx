@@ -1,5 +1,11 @@
-import { Box, Typography } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import AddchartIcon from "@mui/icons-material/Addchart";
 import { useNavigate } from "react-router-dom";
 import { CursosRequest } from "../../../../util/interfaces/cursos/CursoInterface";
 
@@ -8,49 +14,54 @@ export const CardCurso = ({ nombre, materia, id }: CursosRequest) => {
 
   const handleClick = () => {
     navigate(`/curso/${id}`);
-  }
+  };
 
   return (
-    <Box
-      component={"li"}
+    <Card
+      raised
       sx={{
-        listStyle: "none",
-        marginBottom: "3rem",
-        display: "flex",
-        alignItems: "center",
-        minWidth: "300px",
-        minHeight: "100px",
-        bgcolor: "secondary.main",
-        borderRadius: "10px",
-        width: "350px",
-        boxShadow:
-          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        bgcolor: "secondary.dark",
+        color: "secondary.contrastText",
+        transition: "0.3s",
         "&:hover": {
-          boxShadow:
-            "0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          bgcolor: "secondary.A100",
+          boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
         },
-        marginX: "1rem",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <Box sx={{ width: "80%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}> 
-      <Typography
-        variant="h3"
-        sx={{
-          textWrap: "wrap",
-          textAlign: "center",
-          marginRight: "1rem",
-          width: "80%",
-          userSelect: "none",
-        }}
-      >
-        {nombre}
-      </Typography>
-      <Typography variant="subtitle2" sx={{ color: "text.primary", userSelect: "none" }}>{materia}</Typography>
-      </Box>
-      <Box sx={{ width: "20%" }}>
-        <AddCircleIcon sx={{ fontSize: "3rem", cursor: "pointer" }}  onClick={handleClick} />
-      </Box>
-    </Box>
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography
+          variant="h5"
+          component="h2"
+          sx={{ userSelect: "none", fontWeight: "bold" }}
+        >
+          {nombre}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{ userSelect: "none", fontWeight: "bold" }}
+        >
+          {materia}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button
+          size="small"
+          startIcon={<AddchartIcon />}
+          sx={{
+            color: "primary.contrastText",
+            fontWeight: "bold",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.7)" },
+          }}
+          onClick={handleClick}
+        >
+          Mas Informacion
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
-

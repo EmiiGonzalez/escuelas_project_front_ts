@@ -13,6 +13,10 @@ export const themeOptions = (theme: string): Theme => {
             },
             secondary: {
               main: "#ff4081",
+              dark: "#9C27B0",
+              contrastText: "#121212",
+              "A100": "#D870E8",
+
             },
             text: {
               primary: "#fff",
@@ -30,6 +34,10 @@ export const themeOptions = (theme: string): Theme => {
             },
             secondary: {
               main: "#d81b60",
+              dark: "#9C27B0",
+              contrastText: "#fff",
+              "100": "#121212",
+              "A100": "#7850A8",
             },
             text: {
               primary: "rgba(0, 0, 0, 0.87)",

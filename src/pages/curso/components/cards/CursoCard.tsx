@@ -9,7 +9,7 @@ export const CursoCard = ({ curso }: CursoCardProps) => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "center", 
         marginBottom: "2rem",
       }}
     >
@@ -22,7 +22,7 @@ export const CursoCard = ({ curso }: CursoCardProps) => {
           flexDirection: "column",
         }}
       >
-        <Typography variant="h1" color={"text.primary"} sx={{userSelect: "none"}}>
+        <Typography variant="h1" color={"text.primary"} sx={{userSelect: "none", fontWeight: "500"}}>
           {curso.nombre}
         </Typography>
         <Typography variant="h5" color={"text.primary"} sx={{userSelect: "none"}}>

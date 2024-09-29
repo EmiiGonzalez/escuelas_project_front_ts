@@ -1,4 +1,5 @@
 import { CircularProgress } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import { useParams } from "react-router-dom";
 import { EscuelaCard } from "./components/card/EscuelaCard";
 import { fetchEscuela } from "../../util/shared/fetchEscuela";
@@ -50,24 +51,20 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
 
   return (
     <>
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "column",  alignItems: "center", minHeight: "100vh" }}>
+      <Box sx={{ minHeight: "100vh", bgcolor: "background.default", width: "100%" }}>
         <EscuelaCard datosEscuela={datosEscuela.data} />
-        <Box
-          component={"ul"}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "space-around",
-            padding: "0",
-            width: "100%",
-          }}
-        >
-          {datosCursos.data.map((c) => (
-            <CardCurso key={c.id} {...c} />
+        <Grid container spacing={3} justifyContent="center">
+          {datosCursos.data?.map((course) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={course.id}>
+              <CardCurso
+                materia={course.materia}
+                id={course.id}
+                nombre={course.nombre}
+                escuela={course.escuela}
+              />
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Box>
       <SpeedDialCustom
         escuela={datosEscuela.data}

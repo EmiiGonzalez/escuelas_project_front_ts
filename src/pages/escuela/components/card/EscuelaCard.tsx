@@ -10,7 +10,6 @@ export const EscuelaCard = ({ datosEscuela }: PropsEscuelaCard) => {
         justifyContent: "center",
         flexDirection: "row",
         alignItems: "center",
-        height: "15vh",
         marginBottom: "2rem",
       }}
     >
@@ -22,7 +21,7 @@ export const EscuelaCard = ({ datosEscuela }: PropsEscuelaCard) => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h1" color={"text.primary"}>
+        <Typography variant="h1" color={"text.primary"} sx={{userSelect: "none", fontWeight: "500"}}>
           {datosEscuela.nombre}
         </Typography>
       </Box>
