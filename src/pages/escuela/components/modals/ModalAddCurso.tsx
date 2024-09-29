@@ -14,6 +14,7 @@ import { useValid } from "../../../../util/hooks/useValid";
 import { AxiosError } from "axios";
 import { Box } from "@mui/material";
 import { postCurso } from "../../util/postCurso";
+import { styleModal } from "../../../../util/shared/styles/modal/modalStyle";
 
 export const ModalAddCurso = ({
   tema,
@@ -83,20 +84,6 @@ export const ModalAddCurso = ({
     setMateriaNombre("");
   }
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "90%",
-    maxWidth: "400px",
-    maxHeight: "80vh",
-    bgcolor: "background.paper",
-    border: "1px solid #000",
-    borderRadius: "10px",
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <Modal
@@ -113,7 +100,7 @@ export const ModalAddCurso = ({
       }}
     >
       <Fade in={open}>
-        <Box sx={style} component={"form"} onSubmit={handleSubmit}>
+        <Box sx={styleModal} component={"form"} onSubmit={handleSubmit}>
           <Typography
             id="transition-modal-title"
             variant="h6"

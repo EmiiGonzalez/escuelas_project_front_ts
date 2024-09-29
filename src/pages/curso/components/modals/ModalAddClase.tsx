@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useValid } from "../../../../util/hooks/useValid";
 import { AxiosError } from "axios";
@@ -16,7 +16,8 @@ import { Box } from "@mui/material";
 import { postClase } from "../../util/postClase";
 import { useThemeStore } from "../../../../util/context/useThemeStore";
 import { DatePicker } from "@mui/x-date-pickers";
-import { esES } from "@mui/x-date-pickers/locales/esES";
+import { styleModal } from "../../../../util/shared/styles/modal/modalStyle";
+import dayjs, { Dayjs } from "dayjs";
 
 export const ModalAddClase = ({
   open,
@@ -25,6 +26,8 @@ export const ModalAddClase = ({
   idCurso,
   updateData,
   handleOpenToast,
+  lastClase,
+  updateListClases,
 }: PropsModalEditEscuela) => {
   const { tema } = useThemeStore();
 
@@ -35,6 +38,8 @@ export const ModalAddClase = ({
     error: errorClase,
   } = useValid();
 
+  const [fecha, setFecha] = useState<Dayjs | null>(dayjs());
+
   const cursoRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
@@ -42,6 +47,7 @@ export const ModalAddClase = ({
     onSuccess: () => {
       handleOpenToast("success", "Clase agregado con éxito");
       updateData();
+      updateListClases();
       handleClose();
     },
     onError: (error) => {
@@ -71,28 +77,28 @@ export const ModalAddClase = ({
       return;
     }
 
+    if (!fecha) {
+      mutation.mutate({
+        url,
+        idCurso,
+        descripcion: claseDescripcion,
+        numeroDeClase: lastClase ==  1 ? 1 : lastClase + 1,
+      });
+      setClaseDescripcion("");
+      return;
+    }
+
     mutation.mutate({
       url,
       idCurso,
       descripcion: claseDescripcion,
+      fecha: dayjs(fecha).format("DD-MM-YYYY"),
+      numeroDeClase: lastClase ==  1 ? 1 : lastClase + 1,
     });
     setClaseDescripcion("");
+    setFecha(null);
+  
   }
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "90%",
-    maxWidth: "400px",
-    maxHeight: "80vh",
-    bgcolor: "background.paper",
-    border: "1px solid #000",
-    borderRadius: "10px",
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <Modal
@@ -109,7 +115,7 @@ export const ModalAddClase = ({
       }}
     >
       <Fade in={open}>
-        <Box sx={style} component={"form"} onSubmit={handleSubmit}>
+        <Box sx={styleModal} component={"form"} onSubmit={handleSubmit}>
           <Typography
             id="transition-modal-title"
             variant="h6"
@@ -157,6 +163,8 @@ export const ModalAddClase = ({
               }}
             />
             <DatePicker label="Fecha de Clase" sx={{ width: "100%", mb: 2 }} 
+            value={fecha}
+            onChange={(date) => {setFecha(date)}}
             format="DD-MM-YYYY"
             localeText={{
               clearButtonLabel: 'Vider',
@@ -184,5 +192,7 @@ interface PropsModalEditEscuela {
   idCurso: number;
   url: string;
   updateData: () => void;
+  updateListClases: () => void;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
+  lastClase: number;
 }

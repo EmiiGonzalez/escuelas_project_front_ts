@@ -15,6 +15,7 @@ import {
   import { Box } from '@mui/material';
 import { putEscuela } from "../../util/putEscuela";
 import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRequest";
+import { styleModal } from "../../../../util/shared/styles/modal/modalStyle";
   
   export const ModalEditEscuela = ({ tema, open, handleClose, handleOpenToast, url, escuela, updateData } : PropsModalEditEscuela) => {
     const { string, setString, setError, error } = useValid();
@@ -61,21 +62,6 @@ import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRe
       setString("");
     }
   
-    const style = {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: "90%",
-      maxWidth: "400px",
-      maxHeight: "80vh",
-      bgcolor: "background.paper",
-      border: "1px solid #000",
-      borderRadius: "10px",
-      boxShadow: 24,
-      p: 4,
-    };
-  
     return (
       <Modal
         aria-labelledby="transition-modal-title"
@@ -91,7 +77,7 @@ import { EscuelasRequest } from "../../../../util/interfaces/escuelas/EscuelasRe
         }}
       >
         <Fade in={open}>
-          <Box sx={style} component={"form"} onSubmit={handleSubmit}>
+          <Box sx={styleModal} component={"form"} onSubmit={handleSubmit}>
             <Typography
               id="transition-modal-title"
               variant="h6"

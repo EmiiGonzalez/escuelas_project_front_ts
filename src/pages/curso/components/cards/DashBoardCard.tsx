@@ -12,6 +12,8 @@ export const DashBoardCard = ({
   url,
   idCurso,
   handleOpenToast,
+  lastClase,
+  updateListClases,
 }: PropsDashBoardCard) => {
   const {
     open: openModalAddClase,
@@ -93,6 +95,8 @@ export const DashBoardCard = ({
         url={url}
         idCurso={Number(idCurso)}
         handleOpenToast={handleOpenToast}
+        lastClase={lastClase}
+        updateListClases={updateListClases}
       />
     </>
   );
@@ -102,4 +106,6 @@ interface PropsDashBoardCard {
   url: string;
   idCurso: number;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
+  lastClase: number;
+  updateListClases: () => void;
 }

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import axiosInstance from "../../../api/axiosInstance";
 
 export const postCurso = async ({
@@ -6,12 +7,7 @@ export const postCurso = async ({
   idEscuela,
   materia
 }: PostCursoParams) => {
-  const date = new Date();
-
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-
-  const dateParse: string = `${day}-${month}-${date.getFullYear()}`;
+  const dateParse: string = dayjs().format("DD-MM-YYYY");
 
   const response = await axiosInstance.post(
     url + import.meta.env.VITE_API_POST_CURSO + "/" + idEscuela,
