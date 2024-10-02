@@ -14,9 +14,12 @@ import { ClasesListCard } from "./components/cards/ClasesListCard";
 import { ClasesRequest } from "../../util/interfaces/clases/ClasesRequest";
 import { fetchClases } from "../../util/shared/fetchClase";
 import { ClasesListCardSkeleton } from "./components/skeletons/cards/ClasesListCardSkeleton";
+import { SpeedDialCursoCustom } from "./components/speedDial/SpeedDialCursoCustom";
+import { useThemeStore } from "../../util/context/useThemeStore";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   const { id } = useParams();
+  const { tema, setTema } = useThemeStore();
 
   const datosCurso = useQuery<CursosRequest, Error>({
     queryKey: ["curso", id],
@@ -100,6 +103,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         )}
         </Grid>
       </Grid>
+      <SpeedDialCursoCustom curso={datosCurso.data} handleOpenToast={handleOpenToast} setTema={setTema} tema={tema} updateDataCurso={() => datosCurso.refetch()} url={url}/>
     </Box>
   );
 };

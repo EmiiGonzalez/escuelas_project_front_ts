@@ -3,4 +3,5 @@ export interface CursosRequest {
     nombre: string;
     escuela: string;
     materia: string;
+    escuelaId?: number;
 }
