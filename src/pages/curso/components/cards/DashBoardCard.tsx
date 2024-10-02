@@ -63,11 +63,10 @@ export const DashBoardCard = ({
         <Button
           variant="contained"
           size="large"
-          color="primary"
           sx={{
             marginTop: "1rem",
             width: "100%",
-            backgroundColor: "background.default",
+            backgroundColor: "#121212",
           }}
           onClick={openModal}
         >
@@ -77,11 +76,10 @@ export const DashBoardCard = ({
         <Button
           variant="contained"
           size="large"
-          color="primary"
           sx={{
             marginTop: "1rem",
             width: "100%",
-            backgroundColor: "background.default",
+            backgroundColor: "#121212",
           }}
         >
           <LibraryBooksIcon />

@@ -16,7 +16,6 @@ export const themeOptions = (theme: string): Theme => {
               dark: "#9C27B0",
               contrastText: "#121212",
               "A100": "#D870E8",
-
             },
             text: {
               primary: "#fff",
