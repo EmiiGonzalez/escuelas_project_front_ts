@@ -36,18 +36,18 @@ export const CardCurso = ({ nombre, materia, id }: CursosRequest) => {
         <Typography
           variant="h5"
           component="h2"
-          sx={{ userSelect: "none", fontWeight: "bold" }}
+          sx={{ userSelect: "none", fontWeight: "bold", color: "primary.contrastText" }}
         >
           {nombre}
         </Typography>
         <Typography
           variant="body2"
-          sx={{ userSelect: "none", fontWeight: "bold" }}
+          sx={{ userSelect: "none", fontWeight: "bold", color: "primary.contrastText" }}
         >
           {materia}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ justifyContent: "flex-end" }}>
         <Button
           size="small"
           startIcon={<AddchartIcon />}

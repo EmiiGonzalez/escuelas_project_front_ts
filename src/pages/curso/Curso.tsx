@@ -19,6 +19,10 @@ import { useThemeStore } from "../../util/context/useThemeStore";
 import { Page } from "../../util/interfaces/PageInterface";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
+  
   const { id } = useParams();
   const { tema, setTema } = useThemeStore();
 

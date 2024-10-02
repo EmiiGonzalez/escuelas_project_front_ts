@@ -69,8 +69,8 @@ export const DashBoardCard = ({
             backgroundColor: "#121212",
           }}
           onClick={openModal}
+          startIcon={<ControlPointIcon />}
         >
-          <ControlPointIcon />
           Agregar clase
         </Button>
         <Button
@@ -81,8 +81,8 @@ export const DashBoardCard = ({
             width: "100%",
             backgroundColor: "#121212",
           }}
+          startIcon={<LibraryBooksIcon />}
         >
-          <LibraryBooksIcon />
           Pasar Asistencia
         </Button>
       </Box>

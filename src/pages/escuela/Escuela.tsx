@@ -12,8 +12,13 @@ import { AlertColor } from "@mui/material";
 import { Box } from "@mui/material";
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { CardCurso } from "./components/card/CardCurso";
+import { useEffect } from "react";
 
 export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
+  
   const { escuelaId, year } = useParams();
   const { tema, setTema } = useThemeStore();
 

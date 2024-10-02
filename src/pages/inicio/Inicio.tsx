@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BoxTheme } from "../../components/shared/boxTheme/BoxTheme";
 import { Box } from '@mui/material';
 import { useThemeStore } from "../../util/context/useThemeStore";
+import { useEffect } from "react";
 
 interface PropsInicio {
   url: string;
@@ -23,6 +24,10 @@ export const Inicio = (props: PropsInicio) => {
   const updateData = () => {
     query.refetch();
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
 
   if (query.isLoading) {
     return <CircularProgress />;
