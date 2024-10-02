@@ -6,7 +6,7 @@ import { AlertColor, Box, CircularProgress, Typography } from "@mui/material";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { CursoCard } from "./components/cards/CursoCard";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CardGeneric } from "./components/cards/CardGeneric";
 import { DashBoardCard } from "./components/cards/DashBoardCard";
 import Grid from "@mui/material/Grid2";
@@ -16,6 +16,7 @@ import { fetchClases } from "../../util/shared/fetchClase";
 import { ClasesListCardSkeleton } from "./components/skeletons/cards/ClasesListCardSkeleton";
 import { SpeedDialCursoCustom } from "./components/speedDial/SpeedDialCursoCustom";
 import { useThemeStore } from "../../util/context/useThemeStore";
+import { Page } from "../../util/interfaces/PageInterface";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   const { id } = useParams();
@@ -39,19 +40,26 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
 
   const [lastClase, setLastClase] = useState<number>(1);
 
-  const listClases = useQuery<ClasesRequest[], Error>({
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const listClases = useQuery<Page<ClasesRequest>, Error>({
     queryKey: ["clases", id],
-    queryFn: () => fetchClases(url, Number(id)),
+    queryFn: () => fetchClases(url, Number(id), pageNumber),
   });
 
   useEffect(() => {
-    if (listClases.data && listClases.data.length > 0) {
+    if (listClases.data && listClases.data.content.length > 0) {
       const maxNumero = Math.max(
-        ...listClases.data.map((clase) => clase.numeroDeClase)
+        ...listClases.data.content.map((clase) => clase.numeroDeClase)
       );
       setLastClase(maxNumero);
     }
   }, [listClases.data, setLastClase]);
+
+  const refetchListClases = useMemo(() => listClases.refetch, [listClases]);
+  useEffect(() => {
+    refetchListClases();
+  }, [pageNumber, refetchListClases]);
 
   if (!id || datosCurso.isLoading) return <CircularProgress />;
 
@@ -99,7 +107,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
         {listClases.isLoading && <ClasesListCardSkeleton />}
         {listClases.data && (
-          <CardGeneric children={<ClasesListCard data={listClases.data} />} />
+          <CardGeneric children={<ClasesListCard data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
         )}
         </Grid>
       </Grid>
