@@ -11,6 +11,7 @@ export const CardGeneric = ({ children }: CardGenericProps) => {
         minWidth: "250px",
         width: "100%",
         height: "100%",
+        maxHeight: "360px",
         marginBottom: "2rem",
         bgcolor: "secondary.main",
         borderRadius: "10px",

@@ -36,20 +36,11 @@ export const DashBoardCard = ({
   }
 
   return (
-    <>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-around", width: "100%", height: "90%"}}>
       <Typography variant="h5" color={"text.primary"}>
         Total de clases dictadas
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          width: "100%",
-          marginTop: "1.5rem",
-        }}
-      >
-        <Typography
+      <Typography
           color={"text.primary"}
           sx={{
             marginBottom: "1rem",
@@ -60,6 +51,16 @@ export const DashBoardCard = ({
         >
           {cantClases.data?.count}
         </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          width: "100%",
+          marginTop: "1.5rem",
+        }}
+      >
+        
         <Button
           variant="contained"
           size="large"
@@ -96,7 +97,7 @@ export const DashBoardCard = ({
         lastClase={lastClase}
         updateListClases={updateListClases}
       />
-    </>
+    </Box>
   );
 };
 

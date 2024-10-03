@@ -111,7 +111,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
         {listClases.isLoading && <ClasesListCardSkeleton />}
         {listClases.data && (
-          <CardGeneric children={<ClasesListCard data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
+          <CardGeneric children={<ClasesListCard url={url} updateData={() => listClases.refetch()} handleOpenToast={handleOpenToast} data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
         )}
         </Grid>
       </Grid>
