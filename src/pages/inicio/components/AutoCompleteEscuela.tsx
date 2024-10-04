@@ -16,6 +16,7 @@ export const AutoCompleteEscuela = (props: PropsAutoCompleteEscuela) => {
     <Autocomplete
         freeSolo={false}
         options={data}
+        noOptionsText="No se encontraron escuelas"
         getOptionLabel={(option) => option?.nombre || ""}
         onChange={(_event : React.SyntheticEvent , newValue) => {
           // newValue será null si se borra la selección
