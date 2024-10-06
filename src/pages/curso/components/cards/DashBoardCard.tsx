@@ -62,6 +62,7 @@ export const DashBoardCard = ({
       >
         
         <Button
+        aria-hidden="true"
           variant="contained"
           size="large"
           sx={{
@@ -75,6 +76,7 @@ export const DashBoardCard = ({
           Agregar clase
         </Button>
         <Button
+        aria-hidden="true"
           variant="contained"
           size="large"
           sx={{

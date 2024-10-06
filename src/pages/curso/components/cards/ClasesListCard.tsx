@@ -59,7 +59,7 @@ export const ClasesListCard = ({
                     fontSize: "1.5rem",
                   }}
                 >
-                  {clase.contenido}
+                  {clase.contenido.length > 10 ? clase.contenido.substring(0, 10) + "..." : clase.contenido}
                 </Typography>
                 <Typography color="#FFFF99" variant="subtitle2">Fecha: {clase.fecha}</Typography>
               </Box>
