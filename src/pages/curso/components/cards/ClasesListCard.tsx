@@ -30,6 +30,33 @@ export const ClasesListCard = ({
     handleClose: handleCloseDialogDelete,
   } = useHandleBoolean();
 
+  const icons = [
+    {
+      icon: <DeleteForeverIcon sx={{ color: "whitesmoke" }} />,
+      name: "Eliminar Clase",
+      onClick: (id: number) => {
+        setIdAction(id);
+        handleOpenDialogDelete();
+      }
+    },
+    {
+      icon: <EditIcon sx={{ color: "whitesmoke" }} />,
+      name: "Editar Clase",
+      onClick: (id: number) => {
+        setIdAction(id);
+        handleOpenDialogDelete();
+      }
+    },
+    {
+      icon: <InfoIcon sx={{ color: "whitesmoke" }} />,
+      name: "Ver Clase",
+      onClick: (id: number) => {
+        setIdAction(id);
+        handleOpenDialogDelete();
+      }
+    }
+  ]
+
   return (
     <>
       <Typography variant="h5" color={"text.primary"} sx={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"}}>
@@ -64,12 +91,11 @@ export const ClasesListCard = ({
                 <Typography color="#FFFF99" variant="subtitle2">Fecha: {clase.fecha}</Typography>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-                  <IconButton  aria-label="delete" onClick={() => {
-                    setIdAction(clase.id);
-                    handleOpenDialogDelete();
-                  }} sx={{color: "whitesmoke"}}> <DeleteForeverIcon /> </IconButton>
-                  <IconButton  aria-label="edit" onClick={() => {}} sx={{color: "whitesmoke"}}> <EditIcon /> </IconButton>
-                  <IconButton  aria-label="info" onClick={() => {}} sx={{color: "whitesmoke"}}> <InfoIcon /> </IconButton>
+                {icons.map((icon) => (
+                  <IconButton key={icon.name} onClick={() => icon.onClick(clase.id)}>
+                    {icon.icon}
+                  </IconButton>
+                ))}
               </Box>
             </Box>
           ))
