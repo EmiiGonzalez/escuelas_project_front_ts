@@ -3,13 +3,14 @@ import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest"
 import Stack from "@mui/material/Stack/Stack";
 import Pagination from "@mui/material/Pagination/Pagination";
 import Box from "@mui/material/Box/Box";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from '@mui/icons-material/Info';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from "@mui/icons-material/Info";
 import { AlertColor, IconButton } from "@mui/material";
 import { DialogDeleteClase } from "../dialog/DialogDeleteClase";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { useState } from "react";
+import { ModalInfoClase } from "../modals/ModalInfoClase";
 
 export const ClasesListCard = ({
   data,
@@ -23,43 +24,28 @@ export const ClasesListCard = ({
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
   };
+  const [claseAction, setClaseAction] = useState<ClasesRequest>(
+    {} as ClasesRequest
+  );
   const [idAction, setIdAction] = useState<number>(0);
   const {
     open: openDialogDelete,
     handleOpen: handleOpenDialogDelete,
     handleClose: handleCloseDialogDelete,
   } = useHandleBoolean();
-
-  const icons = [
-    {
-      icon: <DeleteForeverIcon sx={{ color: "whitesmoke" }} />,
-      name: "Eliminar Clase",
-      onClick: (id: number) => {
-        setIdAction(id);
-        handleOpenDialogDelete();
-      }
-    },
-    {
-      icon: <EditIcon sx={{ color: "whitesmoke" }} />,
-      name: "Editar Clase",
-      onClick: (id: number) => {
-        setIdAction(id);
-        handleOpenDialogDelete();
-      }
-    },
-    {
-      icon: <InfoIcon sx={{ color: "whitesmoke" }} />,
-      name: "Ver Clase",
-      onClick: (id: number) => {
-        setIdAction(id);
-        handleOpenDialogDelete();
-      }
-    }
-  ]
+  const {
+    open: openDialogEdit,
+    handleOpen: handleOpenDialogEdit,
+    handleClose: handleCloseDialogEdit,
+  } = useHandleBoolean();
 
   return (
     <>
-      <Typography variant="h5" color={"text.primary"} sx={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"}}>
+      <Typography
+        variant="h5"
+        color={"text.primary"}
+        sx={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
+      >
         Clases dictadas
       </Typography>
       <Box
@@ -75,8 +61,15 @@ export const ClasesListCard = ({
       >
         {data.length > 0 ? (
           data.map((clase) => (
-            <Box key={clase.id} sx={{ display: "flex", justifyContent: "space-between", width: "100%"}}>
-              <Box sx={{ display: "flex", flexDirection: "column"}}>
+            <Box
+              key={clase.id}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography
                   variant="h6"
                   color={"text.primary"}
@@ -86,16 +79,52 @@ export const ClasesListCard = ({
                     fontSize: "1.5rem",
                   }}
                 >
-                  {clase.contenido.length > 10 ? clase.contenido.substring(0, 10) + "..." : clase.contenido}
+                  {clase.contenido.length > 10
+                    ? clase.contenido.substring(0, 10) + "..."
+                    : clase.contenido}
                 </Typography>
-                <Typography color="#FFFF99" variant="subtitle2">Fecha: {clase.fecha}</Typography>
+                <Typography color="#FFFF99" variant="subtitle2">
+                  Fecha: {clase.fecha}
+                </Typography>
               </Box>
-              <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-                {icons.map((icon) => (
-                  <IconButton key={icon.name} onClick={() => icon.onClick(clase.id)}>
-                    {icon.icon}
-                  </IconButton>
-                ))}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => {
+                    setIdAction(clase.id);
+                    handleOpenDialogDelete();
+                  }}
+                  sx={{ color: "whitesmoke" }}
+                >
+                  {" "}
+                  <DeleteForeverIcon />{" "}
+                </IconButton>
+                <IconButton
+                  aria-label="edit"
+                  onClick={() => {}}
+                  sx={{ color: "whitesmoke" }}
+                >
+                  {" "}
+                  <EditIcon />{" "}
+                </IconButton>
+                <IconButton
+                  aria-label="info"
+                  onClick={() => {
+                    setClaseAction(clase);
+                    handleOpenDialogEdit();
+                  }}
+                  sx={{ color: "whitesmoke" }}
+                >
+                  {" "}
+                  <InfoIcon />{" "}
+                </IconButton>
               </Box>
             </Box>
           ))
@@ -120,7 +149,19 @@ export const ClasesListCard = ({
           />
         </Stack>
       </Box>
-      <DialogDeleteClase handleOpenToast={handleOpenToast} open={openDialogDelete} handleClose={handleCloseDialogDelete} url={url} id={idAction} updateData={updateData} />
+      <DialogDeleteClase
+        handleOpenToast={handleOpenToast}
+        open={openDialogDelete}
+        handleClose={handleCloseDialogDelete}
+        url={url}
+        id={idAction}
+        updateData={updateData}
+      />
+      <ModalInfoClase
+        handleClose={handleCloseDialogEdit}
+        open={openDialogEdit}
+        clase={claseAction}
+      />
     </>
   );
 };

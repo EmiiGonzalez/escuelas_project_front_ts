@@ -8,8 +8,6 @@ export const postClase = async ({
   numeroDeClase,
   fecha
 }: PostCursoParams) => {
-  console.log("FECHA", fecha, "NUMERO", numeroDeClase, "DESCRIPCION", descripcion, "IDCURSO", idCurso);
-  
   if (fecha) {
     const response = await axiosInstance.post(
       url + import.meta.env.VITE_API_POST_CLASE + "/" + idCurso,

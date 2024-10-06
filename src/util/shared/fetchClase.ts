@@ -12,7 +12,6 @@ export const fetchClases = async (url: string, cursoId: number, pageNumber: numb
     //El back comienza con la página 0 en vez de 1, por eso se resta 1
     const urlApi = url + import.meta.env.VITE_API_GET_ALL_CLASES + "/" + cursoId + "?page=" + (pageNumber - 1) + "&size=" + import.meta.env.VITE_PAGE_SIZE;
     const response = await axiosInstance.get(urlApi);
-    console.log(response.data);
     
     return response.data;
 }
