@@ -2,11 +2,10 @@ import { AlertColor, Box, Button, Typography } from "@mui/material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import { ClasesCountRequest } from "../../../../util/interfaces/clases/ClasesCountInterface";
-import { fetchCountClasesForCurso } from "../../../../util/shared/fetchCurso";
-import { useQuery } from "@tanstack/react-query";
 import { DashBoardCardSkeleton } from "../skeletons/cards/DashBoardCardSkeleton";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { ModalAddClase } from "../modals/ModalAddClase";
+import { UseQueryResult } from "@tanstack/react-query";
 
 export const DashBoardCard = ({
   url,
@@ -14,6 +13,7 @@ export const DashBoardCard = ({
   handleOpenToast,
   lastClase,
   updateListClases,
+  cantClases,
 }: PropsDashBoardCard) => {
   const {
     open: openModalAddClase,
@@ -25,11 +25,6 @@ export const DashBoardCard = ({
     event.preventDefault();
     handleOpenModalAddClase();
   };
-
-  const cantClases = useQuery<ClasesCountRequest, Error>({
-    queryKey: ["curso", idCurso],
-    queryFn: () => fetchCountClasesForCurso(url, Number(idCurso)),
-  });
 
   if (cantClases.isLoading) {
     return <DashBoardCardSkeleton />;
@@ -109,4 +104,6 @@ interface PropsDashBoardCard {
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   lastClase: number;
   updateListClases: () => void;
+  cantClases: UseQueryResult<ClasesCountRequest, Error>
+  ;
 }

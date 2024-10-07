@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { CursosRequest } from "../../util/interfaces/cursos/CursoInterface";
-import { fetchCurso } from "../../util/shared/fetchCurso";
+import { fetchCountClasesForCurso, fetchCurso } from "../../util/shared/fetchCurso";
 import { useParams } from "react-router-dom";
 import { AlertColor, Box, CircularProgress, Typography } from "@mui/material";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
@@ -17,6 +17,7 @@ import { ClasesListCardSkeleton } from "./components/skeletons/cards/ClasesListC
 import { SpeedDialCursoCustom } from "./components/speedDial/SpeedDialCursoCustom";
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { Page } from "../../util/interfaces/PageInterface";
+import { ClasesCountRequest } from "../../util/interfaces/clases/ClasesCountInterface";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   useEffect(() => {
@@ -47,8 +48,9 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
   const [pageNumber, setPageNumber] = useState(1);
 
   const listClases = useQuery<Page<ClasesRequest>, Error>({
-    queryKey: ["clases", id],
+    queryKey: ["clases", pageNumber],
     queryFn: () => fetchClases(url, Number(id), pageNumber),
+    placeholderData: keepPreviousData
   });
 
   useEffect(() => {
@@ -58,7 +60,12 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
       );
       setLastClase(maxNumero);
     }
-  }, [listClases.data, setLastClase]);
+  }, [listClases.data]);
+
+  const cantClases = useQuery<ClasesCountRequest, Error>({
+    queryKey: ["cursoCantClases", id],
+    queryFn: () => fetchCountClasesForCurso(url, Number(id)),
+  });  
 
   const refetchListClases = useMemo(() => listClases.refetch, [listClases]);
   useEffect(() => {
@@ -99,6 +106,8 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <CardGeneric
           children={
             <DashBoardCard
+              cantClases={cantClases}
+
               lastClase={lastClase}
               url={url}
               idCurso={Number(id)}
@@ -111,7 +120,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
         {listClases.isLoading && <ClasesListCardSkeleton />}
         {listClases.data && (
-          <CardGeneric children={<ClasesListCard url={url} updateData={() => listClases.refetch()} handleOpenToast={handleOpenToast} data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
+          <CardGeneric children={<ClasesListCard url={url} updateCountClases={() => cantClases.refetch()} updateData={() => listClases.refetch()} handleOpenToast={handleOpenToast} data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
         )}
         </Grid>
       </Grid>

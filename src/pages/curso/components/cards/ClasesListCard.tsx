@@ -20,6 +20,7 @@ export const ClasesListCard = ({
   handleOpenToast,
   url,
   updateData,
+  updateCountClases,
 }: ClasesListCardProps) => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
@@ -156,6 +157,7 @@ export const ClasesListCard = ({
         url={url}
         id={idAction}
         updateData={updateData}
+        updateCountClases={updateCountClases}
       />
       <ModalInfoClase
         handleClose={handleCloseDialogEdit}
@@ -174,4 +176,5 @@ interface ClasesListCardProps {
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   url: string;
   updateData: () => void;
+  updateCountClases: () => void;
 }
