@@ -11,6 +11,7 @@ import { DialogDeleteClase } from "../dialog/DialogDeleteClase";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { useState } from "react";
 import { ModalInfoClase } from "../modals/ModalInfoClase";
+import { ModalEditClase } from "../modals/ModalEditClase";
 
 export const ClasesListCard = ({
   data,
@@ -33,6 +34,11 @@ export const ClasesListCard = ({
     open: openDialogDelete,
     handleOpen: handleOpenDialogDelete,
     handleClose: handleCloseDialogDelete,
+  } = useHandleBoolean();
+  const {
+    open: openDialogInfo,
+    handleOpen: handleOpenDialogInfo,
+    handleClose: handleCloseDialogInfo,
   } = useHandleBoolean();
   const {
     open: openDialogEdit,
@@ -109,7 +115,10 @@ export const ClasesListCard = ({
                 </IconButton>
                 <IconButton
                   aria-label="edit"
-                  onClick={() => {}}
+                  onClick={() => {
+                    handleOpenDialogEdit();
+                    setClaseAction(clase);
+                  }}
                   sx={{ color: "whitesmoke" }}
                 >
                   {" "}
@@ -119,7 +128,7 @@ export const ClasesListCard = ({
                   aria-label="info"
                   onClick={() => {
                     setClaseAction(clase);
-                    handleOpenDialogEdit();
+                    handleOpenDialogInfo();
                   }}
                   sx={{ color: "whitesmoke" }}
                 >
@@ -159,9 +168,17 @@ export const ClasesListCard = ({
         updateData={updateData}
         updateCountClases={updateCountClases}
       />
-      <ModalInfoClase
+      <ModalEditClase
+        clase={claseAction}
         handleClose={handleCloseDialogEdit}
+        handleOpenToast={handleOpenToast}
+        url={url}
         open={openDialogEdit}
+        updateListClases={updateData}
+      />
+      <ModalInfoClase
+        handleClose={handleCloseDialogInfo}
+        open={openDialogInfo}
         clase={claseAction}
       />
     </>
