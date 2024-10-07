@@ -43,8 +43,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     }
   }, [datosCurso.data, datosCurso.error, handleOpenToast]);
 
-  const [lastClase, setLastClase] = useState<number>(1);
-
   const [pageNumber, setPageNumber] = useState(1);
 
   const listClases = useQuery<Page<ClasesRequest>, Error>({
@@ -52,15 +50,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     queryFn: () => fetchClases(url, Number(id), pageNumber),
     placeholderData: keepPreviousData
   });
-
-  useEffect(() => {
-    if (listClases.data && listClases.data.content.length > 0) {
-      const maxNumero = Math.max(
-        ...listClases.data.content.map((clase) => clase.numeroDeClase)
-      );
-      setLastClase(maxNumero);
-    }
-  }, [listClases.data]);
 
   const cantClases = useQuery<ClasesCountRequest, Error>({
     queryKey: ["cursoCantClases", id],
@@ -107,8 +96,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
           children={
             <DashBoardCard
               cantClases={cantClases}
-
-              lastClase={lastClase}
               url={url}
               idCurso={Number(id)}
               handleOpenToast={handleOpenToast}

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useValid } from "../../../../util/hooks/useValid";
 import { AxiosError } from "axios";
@@ -18,6 +18,7 @@ import { useThemeStore } from "../../../../util/context/useThemeStore";
 import { DatePicker } from "@mui/x-date-pickers";
 import { styleModal } from "../../../../util/shared/styles/modal/modalStyle";
 import dayjs, { Dayjs } from "dayjs";
+import { customNumberInputStyles } from "../../../../util/shared/styles/input/numberScroll";
 
 export const ModalAddClase = ({
   open,
@@ -26,8 +27,8 @@ export const ModalAddClase = ({
   idCurso,
   updateData,
   handleOpenToast,
-  lastClase,
   updateListClases,
+  cantClases,
 }: PropsModalEditEscuela) => {
   const { tema } = useThemeStore();
 
@@ -37,6 +38,11 @@ export const ModalAddClase = ({
     setError: setErrorClase,
     error: errorClase,
   } = useValid();
+  const [numeroDeClase, setNumeroDeClase] = useState<number>(cantClases + 1);
+
+  useEffect(() => {
+    setNumeroDeClase(cantClases + 1);
+  }, [cantClases]);
 
   const [fecha, setFecha] = useState<Dayjs | null>(dayjs());
 
@@ -82,7 +88,7 @@ export const ModalAddClase = ({
         url,
         idCurso,
         descripcion: claseDescripcion,
-        numeroDeClase: lastClase ==  1 ? 1 : lastClase + 1,
+        numeroDeClase: numeroDeClase == 0 ? cantClases : numeroDeClase,
       });
       setClaseDescripcion("");
       return;
@@ -93,11 +99,10 @@ export const ModalAddClase = ({
       idCurso,
       descripcion: claseDescripcion,
       fecha: dayjs(fecha).format("DD-MM-YYYY"),
-      numeroDeClase: lastClase ==  1 ? 1 : lastClase + 1,
+      numeroDeClase: numeroDeClase == 0 ? cantClases : numeroDeClase,
     });
     setClaseDescripcion("");
     setFecha(null);
-  
   }
 
   return (
@@ -141,7 +146,6 @@ export const ModalAddClase = ({
             <TextField
               aria-hidden={false}
               inputRef={cursoRef}
-              id="outlined-basic"
               label="Tema de la Clase"
               variant={tema === "light" ? "filled" : "outlined"}
               sx={{ width: "100%", mb: 2 }}
@@ -162,13 +166,41 @@ export const ModalAddClase = ({
                 }
               }}
             />
-            <DatePicker label="Fecha de Clase" sx={{ width: "100%", mb: 2 }} 
-            value={fecha}
-            onChange={(date) => {setFecha(date)}}
-            format="DD-MM-YYYY"
-            localeText={{
-              clearButtonLabel: 'Vider',
-            }}/>
+            <DatePicker
+              label="Fecha de Clase"
+              sx={{ width: "100%", mb: 2 }}
+              value={fecha}
+              onChange={(date) => {
+                setFecha(date);
+              }}
+              format="DD-MM-YYYY"
+              localeText={{
+                clearButtonLabel: "Vider",
+              }}
+            />
+            <TextField
+              type="number"
+              aria-hidden={false}
+              inputRef={cursoRef}
+              label=" Número de Clase"
+              variant={tema === "light" ? "filled" : "outlined"}
+              sx={{
+                width: "100%",
+                mb: 2,
+                ...customNumberInputStyles,
+              }}
+              helperText={
+                "Por defecto, se creará con el último numero de clase"
+              }
+              value={numeroDeClase}
+              autoComplete="off"
+              onChange={(event) => {
+                Number(event.target.value) < 0
+                  ? setNumeroDeClase(0)
+                  : setNumeroDeClase(Number(event.target.value));
+              }}
+            />
+
             <Button
               sx={{ ml: 2 }}
               variant={tema === "light" ? "contained" : "outlined"}
@@ -194,5 +226,5 @@ interface PropsModalEditEscuela {
   updateData: () => void;
   updateListClases: () => void;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
-  lastClase: number;
+  cantClases: number;
 }

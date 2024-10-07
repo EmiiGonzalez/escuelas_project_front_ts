@@ -8,18 +8,20 @@ export const postClase = async ({
   numeroDeClase,
   fecha
 }: PostCursoParams) => {
+  console.log(numeroDeClase);
   if (fecha) {
+    
     const response = await axiosInstance.post(
       url + import.meta.env.VITE_API_POST_CLASE + "/" + idCurso,
-      { contenido: descripcion, fecha, numero: numeroDeClase }
+      { contenido: descripcion, fecha, numeroDeClase }
     );
     return response.data;
   }
   const dateParse: string = dayjs().format("DD-MM-YYYY");
-  
+
   const response = await axiosInstance.post(
     url + import.meta.env.VITE_API_POST_CLASE + "/" + idCurso,
-    {contenido: descripcion, fecha: dateParse, numero: numeroDeClase}
+    {contenido: descripcion, fecha: dateParse, numeroDeClase}
   );
   return response.data;
 };

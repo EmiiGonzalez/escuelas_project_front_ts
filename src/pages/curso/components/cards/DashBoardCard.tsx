@@ -11,7 +11,6 @@ export const DashBoardCard = ({
   url,
   idCurso,
   handleOpenToast,
-  lastClase,
   updateListClases,
   cantClases,
 }: PropsDashBoardCard) => {
@@ -31,21 +30,30 @@ export const DashBoardCard = ({
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", justifyContent: "space-around", width: "100%", height: "90%"}}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "space-around",
+        width: "100%",
+        height: "90%",
+      }}
+    >
       <Typography variant="h5" color={"text.primary"}>
         Total de clases dictadas
       </Typography>
       <Typography
-          color={"text.primary"}
-          sx={{
-            marginBottom: "1rem",
-            width: "100%",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-          }}
-        >
-          {cantClases.data?.count}
-        </Typography>
+        color={"text.primary"}
+        sx={{
+          marginBottom: "1rem",
+          width: "100%",
+          fontWeight: "bold",
+          fontSize: "1.5rem",
+        }}
+      >
+        {cantClases.data?.count}
+      </Typography>
       <Box
         sx={{
           display: "flex",
@@ -55,9 +63,8 @@ export const DashBoardCard = ({
           marginTop: "1.5rem",
         }}
       >
-        
         <Button
-        aria-hidden="true"
+          aria-hidden="true"
           variant="contained"
           size="large"
           sx={{
@@ -71,7 +78,7 @@ export const DashBoardCard = ({
           Agregar clase
         </Button>
         <Button
-        aria-hidden="true"
+          aria-hidden="true"
           variant="contained"
           size="large"
           sx={{
@@ -89,9 +96,9 @@ export const DashBoardCard = ({
         open={openModalAddClase}
         handleClose={handleCloseModalAddClase}
         url={url}
+        cantClases={cantClases.data?.count || 0}
         idCurso={Number(idCurso)}
         handleOpenToast={handleOpenToast}
-        lastClase={lastClase}
         updateListClases={updateListClases}
       />
     </Box>
@@ -102,8 +109,6 @@ interface PropsDashBoardCard {
   url: string;
   idCurso: number;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
-  lastClase: number;
   updateListClases: () => void;
-  cantClases: UseQueryResult<ClasesCountRequest, Error>
-  ;
+  cantClases: UseQueryResult<ClasesCountRequest, Error>;
 }
