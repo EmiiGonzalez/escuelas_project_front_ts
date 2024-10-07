@@ -52,7 +52,7 @@ export const ModalEditClase = ({
   const mutation = useMutation({
     mutationFn: putClase,
     onSuccess: () => {
-      handleOpenToast("success", "Clase agregado con éxito");
+      handleOpenToast("success", "Clase actualizada con éxito");
       updateListClases();
       handleClose();
     },
