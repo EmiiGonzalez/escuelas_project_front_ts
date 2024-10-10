@@ -18,6 +18,8 @@ import { SpeedDialCursoCustom } from "./components/speedDial/SpeedDialCursoCusto
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { Page } from "../../util/interfaces/PageInterface";
 import { ClasesCountRequest } from "../../util/interfaces/clases/ClasesCountInterface";
+import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { fetchAlumnos } from "./util/fetchAlumno";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   useEffect(() => {
@@ -31,6 +33,14 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     queryKey: ["curso", id],
     queryFn: () => fetchCurso(url, Number(id)),
   });
+
+  const datosAlumnos = useQuery<AlumnoResponseDtoWithAsistencia[], Error>({
+    queryKey: ["alumnos", id],
+    queryFn: () => fetchAlumnos(url, Number(id)),
+  });
+
+  console.log("alumnos", datosAlumnos.data);
+  
 
   useEffect(() => {
     if (!datosCurso.data && datosCurso.error instanceof AxiosError) {
