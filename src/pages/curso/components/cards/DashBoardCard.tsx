@@ -1,11 +1,13 @@
 import { AlertColor, Box, Button, Typography } from "@mui/material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { ClasesCountRequest } from "../../../../util/interfaces/clases/ClasesCountInterface";
 import { DashBoardCardSkeleton } from "../skeletons/cards/DashBoardCardSkeleton";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { ModalAddClase } from "../modals/ModalAddClase";
 import { UseQueryResult } from "@tanstack/react-query";
+import { ModalAddAlumno } from "../modals/ModalAddAlumno";
 
 export const DashBoardCard = ({
   url,
@@ -19,9 +21,15 @@ export const DashBoardCard = ({
     handleOpen: handleOpenModalAddClase,
     handleClose: handleCloseModalAddClase,
   } = useHandleBoolean();
+  const {
+    open: openModalAddAlumno,
+    handleOpen: handleOpenModalAddAlumno,
+    handleClose: handleCloseModalAddAlumno,
+  } = useHandleBoolean();
 
-  const openModal = (event: React.SyntheticEvent) => {
+  const openModalClaseEvent = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    event.stopPropagation();
     handleOpenModalAddClase();
   };
 
@@ -64,7 +72,6 @@ export const DashBoardCard = ({
         }}
       >
         <Button
-          aria-hidden="true"
           variant="contained"
           size="large"
           sx={{
@@ -72,13 +79,12 @@ export const DashBoardCard = ({
             width: "100%",
             backgroundColor: "#121212",
           }}
-          onClick={openModal}
+          onClick={openModalClaseEvent}
           startIcon={<ControlPointIcon />}
         >
           Agregar clase
         </Button>
         <Button
-          aria-hidden="true"
           variant="contained"
           size="large"
           sx={{
@@ -89,6 +95,19 @@ export const DashBoardCard = ({
           startIcon={<LibraryBooksIcon />}
         >
           Pasar Asistencia
+        </Button>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{
+            marginTop: "1rem",
+            width: "100%",
+            backgroundColor: "#121212",
+          }}
+          startIcon={<PersonAddIcon />}
+          onClick={() => handleOpenModalAddAlumno()}
+        >
+          Añadir alumno
         </Button>
       </Box>
       <ModalAddClase
@@ -101,6 +120,7 @@ export const DashBoardCard = ({
         handleOpenToast={handleOpenToast}
         updateListClases={updateListClases}
       />
+      <ModalAddAlumno handleClose={handleCloseModalAddAlumno} open={openModalAddAlumno} url={url} idCurso={Number(idCurso)} handleOpenToast={handleOpenToast} />
     </Box>
   );
 };
