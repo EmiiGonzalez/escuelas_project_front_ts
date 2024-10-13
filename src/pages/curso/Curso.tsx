@@ -39,9 +39,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     queryFn: () => fetchAlumnos(url, Number(id)),
   });
 
-  console.log("alumnos", datosAlumnos.data);
-  
-
   useEffect(() => {
     if (!datosCurso.data && datosCurso.error instanceof AxiosError) {
       handleOpenToast(
@@ -105,6 +102,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <CardGeneric
           children={
             <DashBoardCard
+            datosAlumnos={datosAlumnos}
               cantClases={cantClases}
               url={url}
               idCurso={Number(id)}

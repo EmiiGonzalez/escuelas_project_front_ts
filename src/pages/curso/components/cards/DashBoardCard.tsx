@@ -8,6 +8,8 @@ import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import { ModalAddClase } from "../modals/ModalAddClase";
 import { UseQueryResult } from "@tanstack/react-query";
 import { ModalAddAlumno } from "../modals/ModalAddAlumno";
+import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { DialogAsistencia } from "../dialog/DialogAsistencia";
 
 export const DashBoardCard = ({
   url,
@@ -15,6 +17,7 @@ export const DashBoardCard = ({
   handleOpenToast,
   updateListClases,
   cantClases,
+  datosAlumnos
 }: PropsDashBoardCard) => {
   const {
     open: openModalAddClase,
@@ -26,6 +29,11 @@ export const DashBoardCard = ({
     handleOpen: handleOpenModalAddAlumno,
     handleClose: handleCloseModalAddAlumno,
   } = useHandleBoolean();
+  const {
+    open: openDialogAsistencia,
+    handleOpen: handleOpenDialogAsistencia,
+    handleClose: handleCloseDialogAsistencia,
+  } = useHandleBoolean();
 
   const openModalClaseEvent = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -33,7 +41,13 @@ export const DashBoardCard = ({
     handleOpenModalAddClase();
   };
 
-  if (cantClases.isLoading) {
+  const openDialogAsistenciaEvent = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleOpenDialogAsistencia();
+  }
+
+  if (cantClases.isLoading || datosAlumnos.isLoading) {
     return <DashBoardCardSkeleton />;
   }
 
@@ -93,6 +107,7 @@ export const DashBoardCard = ({
             backgroundColor: "#121212",
           }}
           startIcon={<LibraryBooksIcon />}
+          onClick={openDialogAsistenciaEvent}
         >
           Pasar Asistencia
         </Button>
@@ -121,6 +136,7 @@ export const DashBoardCard = ({
         updateListClases={updateListClases}
       />
       <ModalAddAlumno handleClose={handleCloseModalAddAlumno} open={openModalAddAlumno} url={url} idCurso={Number(idCurso)} handleOpenToast={handleOpenToast} />
+      <DialogAsistencia open={openDialogAsistencia} handleClose={handleCloseDialogAsistencia} dataAlumnos={datosAlumnos.data || []} url={url} />
     </Box>
   );
 };
@@ -131,4 +147,5 @@ interface PropsDashBoardCard {
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   updateListClases: () => void;
   cantClases: UseQueryResult<ClasesCountRequest, Error>;
+  datosAlumnos: UseQueryResult<AlumnoResponseDtoWithAsistencia[], Error>;
 }
