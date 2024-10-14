@@ -15,5 +15,9 @@ export const useIncremental = (max: number) => {
         }
     }
 
-    return {count, increment, decrement}
+    const reset = () => {
+        setCount(0)
+    }
+
+    return {count, increment, decrement, reset}
 }

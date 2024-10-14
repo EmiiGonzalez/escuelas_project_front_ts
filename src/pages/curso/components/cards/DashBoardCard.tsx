@@ -1,7 +1,7 @@
 import { AlertColor, Box, Button, Typography } from "@mui/material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { ClasesCountRequest } from "../../../../util/interfaces/clases/ClasesCountInterface";
 import { DashBoardCardSkeleton } from "../skeletons/cards/DashBoardCardSkeleton";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
@@ -17,7 +17,7 @@ export const DashBoardCard = ({
   handleOpenToast,
   updateListClases,
   cantClases,
-  datosAlumnos
+  datosAlumnos,
 }: PropsDashBoardCard) => {
   const {
     open: openModalAddClase,
@@ -45,85 +45,87 @@ export const DashBoardCard = ({
     event.preventDefault();
     event.stopPropagation();
     handleOpenDialogAsistencia();
-  }
+  };
 
   if (cantClases.isLoading || datosAlumnos.isLoading) {
     return <DashBoardCardSkeleton />;
   }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "space-around",
-        width: "100%",
-        height: "90%",
-      }}
-    >
-      <Typography variant="h5" color={"text.primary"}>
-        Total de clases dictadas
-      </Typography>
-      <Typography
-        color={"text.primary"}
-        sx={{
-          marginBottom: "1rem",
-          width: "100%",
-          fontWeight: "bold",
-          fontSize: "1.5rem",
-        }}
-      >
-        {cantClases.data?.count}
-      </Typography>
+    <>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
+          justifyContent: "space-around",
           width: "100%",
-          marginTop: "1.5rem",
+          height: "90%",
         }}
       >
-        <Button
-          variant="contained"
-          size="large"
+        <Typography variant="h5" color={"text.primary"}>
+          Total de clases dictadas
+        </Typography>
+        <Typography
+          color={"text.primary"}
           sx={{
-            marginTop: "1rem",
+            marginBottom: "1rem",
             width: "100%",
-            backgroundColor: "#121212",
+            fontWeight: "bold",
+            fontSize: "1.5rem",
           }}
-          onClick={openModalClaseEvent}
-          startIcon={<ControlPointIcon />}
         >
-          Agregar clase
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
+          {cantClases.data?.count}
+        </Typography>
+        <Box
           sx={{
-            marginTop: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
             width: "100%",
-            backgroundColor: "#121212",
+            marginTop: "1.5rem",
           }}
-          startIcon={<LibraryBooksIcon />}
-          onClick={openDialogAsistenciaEvent}
         >
-          Pasar Asistencia
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            marginTop: "1rem",
-            width: "100%",
-            backgroundColor: "#121212",
-          }}
-          startIcon={<PersonAddIcon />}
-          onClick={() => handleOpenModalAddAlumno()}
-        >
-          Añadir alumno
-        </Button>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              marginTop: "1rem",
+              width: "100%",
+              backgroundColor: "#121212",
+            }}
+            onClick={openModalClaseEvent}
+            startIcon={<ControlPointIcon />}
+          >
+            Agregar clase
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              marginTop: "1rem",
+              width: "100%",
+              backgroundColor: "#121212",
+            }}
+            startIcon={<LibraryBooksIcon />}
+            onClick={openDialogAsistenciaEvent}
+          >
+            Pasar Asistencia
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              marginTop: "1rem",
+              width: "100%",
+              backgroundColor: "#121212",
+            }}
+            startIcon={<PersonAddIcon />}
+            onClick={() => handleOpenModalAddAlumno()}
+          >
+            Añadir alumno
+          </Button>
+        </Box>
       </Box>
       <ModalAddClase
         updateData={() => cantClases.refetch()}
@@ -135,9 +137,20 @@ export const DashBoardCard = ({
         handleOpenToast={handleOpenToast}
         updateListClases={updateListClases}
       />
-      <ModalAddAlumno handleClose={handleCloseModalAddAlumno} open={openModalAddAlumno} url={url} idCurso={Number(idCurso)} handleOpenToast={handleOpenToast} />
-      <DialogAsistencia open={openDialogAsistencia} handleClose={handleCloseDialogAsistencia} dataAlumnos={datosAlumnos.data || []} url={url} />
-    </Box>
+      <ModalAddAlumno
+        handleClose={handleCloseModalAddAlumno}
+        open={openModalAddAlumno}
+        url={url}
+        idCurso={Number(idCurso)}
+        handleOpenToast={handleOpenToast}
+      />
+      <DialogAsistencia
+        open={openDialogAsistencia}
+        handleClose={handleCloseDialogAsistencia}
+        dataAlumnos={datosAlumnos.data || []}
+        url={url}
+      />
+    </>
   );
 };
 
