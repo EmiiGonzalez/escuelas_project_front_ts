@@ -14,10 +14,13 @@ export const DialogAsistencia = ( { open, handleClose, url, dataAlumnos }: Props
   const currentAlumno = dataAlumnos[index]
 
   const handleAttendance = (asistio: boolean) => {
-    setAsistenciaRecord([...asistenciaRecord, {id: currentAlumno.id, asistio}])
-    if (index < dataAlumnos.length - 1) {
+    if(asistenciaRecord[index]){
+      asistenciaRecord[index].asistio = asistio
       increment()
+      return
     }
+    setAsistenciaRecord([...asistenciaRecord, {id: currentAlumno.id, asistio}])
+    increment()
   }
 
   const handlePrevious = () => {
@@ -34,8 +37,6 @@ export const DialogAsistencia = ( { open, handleClose, url, dataAlumnos }: Props
   const handleSubmit = () => {
     console.log(asistenciaRecord);
   }
-
-
 
   return (
     <Dialog open={open} onClose={handleClose} >
