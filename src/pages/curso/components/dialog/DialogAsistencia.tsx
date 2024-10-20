@@ -23,6 +23,7 @@ export const DialogAsistencia = ({
   open,
   handleClose,
   url,
+  idClase,
   dataAlumnos,
 }: PropsDialogAsistencia) => {
   const {
@@ -133,4 +134,5 @@ interface PropsDialogAsistencia {
   handleClose: () => void;
   url: string;
   dataAlumnos: AlumnoResponseDtoWithAsistencia[];
+  idClase: number;
 }

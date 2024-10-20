@@ -12,6 +12,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { esES } from "@mui/x-date-pickers/locales/esES";
 import 'dayjs/locale/es-mx';
+import { AnimatePresence } from "framer-motion";
+import { Clase } from "./pages/clase/Clase";
 
 function App() {
   const { tema } = useThemeStore();
@@ -23,6 +25,7 @@ function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es-mx" localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}>
     <ThemeProvider theme={temaOptions}>
+      <AnimatePresence mode="sync">
       <Container
         sx={{
           border: "1px solid black",
@@ -48,6 +51,7 @@ function App() {
               }
             />
             <Route path="/curso/:id" element={<Curso url={url} handleOpenToast={handleOpenToast}/>}/>
+            <Route path="/clase/:id" element={<Clase url={url} handleOpenToast={handleOpenToast}/>}/>
           </Routes>
         </Router>
       </Container>
@@ -56,8 +60,9 @@ function App() {
         variante={variante}
         msg={msg}
         setOpenToast={setOpenToast}
-        key={msg}
+        key={`${msg}-${Math.random()}`}
       ></AlertCustom>
+      </AnimatePresence>
     </ThemeProvider>
     </LocalizationProvider>
   );

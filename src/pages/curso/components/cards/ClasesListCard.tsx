@@ -3,32 +3,34 @@ import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest"
 import Stack from "@mui/material/Stack/Stack";
 import Pagination from "@mui/material/Pagination/Pagination";
 import Box from "@mui/material/Box/Box";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import { AlertColor, IconButton } from "@mui/material";
-import { DialogDeleteClase } from "../dialog/DialogDeleteClase";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
+import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import { DialogAsistencia } from "../dialog/DialogAsistencia";
+import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
-import { ModalInfoClase } from "../modals/ModalInfoClase";
-import { ModalEditClase } from "../modals/ModalEditClase";
+import { useNavigate } from "react-router-dom";
 
 export const ClasesListCard = ({
   data,
   totalPages,
   pageNumber,
   setPageNumber,
-  handleOpenToast,
   url,
-  updateData,
-  updateCountClases,
+  datosAlumnos,
 }: ClasesListCardProps) => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
   };
-  const [claseAction, setClaseAction] = useState<ClasesRequest>(
-    {} as ClasesRequest
-  );
+  const [claseAction, setClaseAction] = useState<number>(0);
+  const navigate = useNavigate();
+
+  const handleInfoClase = (id: number): void => {
+    navigate("/clase/" + id);
+  };
+  /*
   const [idAction, setIdAction] = useState<number>(0);
   const {
     open: openDialogDelete,
@@ -44,6 +46,12 @@ export const ClasesListCard = ({
     open: openDialogEdit,
     handleOpen: handleOpenDialogEdit,
     handleClose: handleCloseDialogEdit,
+  } = useHandleBoolean();*/
+
+  const {
+    open: openDialogAsistencia,
+    handleOpen: handleOpenDialogAsistencia,
+    handleClose: handleCloseDialogAsistencia,
   } = useHandleBoolean();
 
   return (
@@ -103,37 +111,24 @@ export const ClasesListCard = ({
                 }}
               >
                 <IconButton
-                  aria-label="delete"
-                  onClick={() => {
-                    setIdAction(clase.id);
-                    handleOpenDialogDelete();
-                  }}
-                  sx={{ color: "whitesmoke" }}
-                >
-                  {" "}
-                  <DeleteForeverIcon />{" "}
-                </IconButton>
-                <IconButton
-                  aria-label="edit"
-                  onClick={() => {
-                    handleOpenDialogEdit();
-                    setClaseAction(clase);
-                  }}
-                  sx={{ color: "whitesmoke" }}
-                >
-                  {" "}
-                  <EditIcon />{" "}
-                </IconButton>
-                <IconButton
                   aria-label="info"
                   onClick={() => {
-                    setClaseAction(clase);
-                    handleOpenDialogInfo();
+                    handleInfoClase(clase.id);
                   }}
                   sx={{ color: "whitesmoke" }}
                 >
                   {" "}
                   <InfoIcon />{" "}
+                </IconButton>
+                <IconButton
+                  aria-label="asistencia"
+                  onClick={() => {
+                    setClaseAction(clase.id);
+                    handleOpenDialogAsistencia();
+                  }}
+                  sx={{ color: "whitesmoke" }}
+                >
+                  <ChecklistRtlIcon />
                 </IconButton>
               </Box>
             </Box>
@@ -159,7 +154,7 @@ export const ClasesListCard = ({
           />
         </Stack>
       </Box>
-      <DialogDeleteClase
+      {/* <DialogDeleteClase
         handleOpenToast={handleOpenToast}
         open={openDialogDelete}
         handleClose={handleCloseDialogDelete}
@@ -175,11 +170,13 @@ export const ClasesListCard = ({
         url={url}
         open={openDialogEdit}
         updateListClases={updateData}
-      />
-      <ModalInfoClase
-        handleClose={handleCloseDialogInfo}
-        open={openDialogInfo}
-        clase={claseAction}
+      /> */}
+      <DialogAsistencia
+        dataAlumnos={datosAlumnos.data ? datosAlumnos.data : []}
+        handleClose={handleCloseDialogAsistencia}
+        open={openDialogAsistencia}
+        url={url}
+        idClase={claseAction}
       />
     </>
   );
@@ -194,4 +191,5 @@ interface ClasesListCardProps {
   url: string;
   updateData: () => void;
   updateCountClases: () => void;
+  datosAlumnos: UseQueryResult<AlumnoResponseDtoWithAsistencia[], Error>;
 }

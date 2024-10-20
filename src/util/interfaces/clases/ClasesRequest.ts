@@ -3,4 +3,5 @@ export interface ClasesRequest {
     fecha: string
     contenido: string
     numeroDeClase : number
+    asistencia : boolean
 }

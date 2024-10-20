@@ -102,7 +102,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <CardGeneric
           children={
             <DashBoardCard
-            datosAlumnos={datosAlumnos}
               cantClases={cantClases}
               url={url}
               idCurso={Number(id)}
@@ -115,7 +114,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
         {listClases.isLoading && <ClasesListCardSkeleton />}
         {listClases.data && (
-          <CardGeneric children={<ClasesListCard url={url} updateCountClases={() => cantClases.refetch()} updateData={() => listClases.refetch()} handleOpenToast={handleOpenToast} data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
+          <CardGeneric children={<ClasesListCard datosAlumnos={datosAlumnos} url={url} updateCountClases={() => cantClases.refetch()} updateData={() => listClases.refetch()} handleOpenToast={handleOpenToast} data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
         )}
         </Grid>
       </Grid>

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { AutoCompleteEscuela } from "./AutoCompleteEscuela";
 import { ModalAddEscuela } from "./ModalAddEscuela";
-import SearchIcon from '@mui/icons-material/Search';
-import { Box } from '@mui/material';
+import SearchIcon from "@mui/icons-material/Search";
+import { Box } from "@mui/material";
 
 export const FormInicio = (props: PropsFormInicio) => {
   const { data, handleOpenToast, tema, url, updateData } = props;
@@ -19,15 +19,15 @@ export const FormInicio = (props: PropsFormInicio) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (escuela.nombre == "") {
-        setError({
-          state: true,
-          message: "Por favor, ingrese una escuela de la lista",
-        });
-        e.currentTarget.reset();
-        return;
-      }
-      navigate(`/escuela/${escuela.id}/${new Date().getFullYear()}`);
-  }
+      setError({
+        state: true,
+        message: "Por favor, ingrese una escuela de la lista",
+      });
+      e.currentTarget.reset();
+      return;
+    }
+    navigate(`/escuela/${escuela.id}/${new Date().getFullYear()}`);
+  };
 
   const buttonStyle = {
     display: "flex",
@@ -35,7 +35,7 @@ export const FormInicio = (props: PropsFormInicio) => {
     justifyContent: "center",
     flexDirection: "row",
     lineHeight: "1",
-  }
+  };
 
   return (
     <Box
@@ -43,9 +43,14 @@ export const FormInicio = (props: PropsFormInicio) => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       onSubmit={handleSubmit}
     >
-        <AutoCompleteEscuela
-        data={data} setEscuela={setEscuela} setError={setError} tema={tema} error={error} />
-        <Box
+      <AutoCompleteEscuela
+        data={data}
+        setEscuela={setEscuela}
+        setError={setError}
+        tema={tema}
+        error={error}
+      />
+      <Box
         sx={{ display: "flex", justifyContent: "space-around", width: "100%" }}
       >
         <Button
@@ -83,5 +88,5 @@ interface PropsFormInicio {
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   tema: "light" | "dark";
   url: string;
-  updateData: ( d: EscuelasRequest ) => void;
+  updateData: (d: EscuelasRequest) => void;
 }

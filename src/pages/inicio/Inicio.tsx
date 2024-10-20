@@ -1,10 +1,10 @@
-import { Alert, AlertColor,  CircularProgress } from "@mui/material";
+import { Alert, AlertColor, CircularProgress } from "@mui/material";
 import { EscuelasRequest } from "../../util/interfaces/escuelas/EscuelasRequest";
 import { FormInicio } from "./components/FormInicio";
 import { fetchEscuelas } from "../../util/shared/fetchEscuela";
 import { useQuery } from "@tanstack/react-query";
 import { BoxTheme } from "../../components/shared/boxTheme/BoxTheme";
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ interface PropsInicio {
 }
 
 export const Inicio = (props: PropsInicio) => {
-  const { url, handleOpenToast,  } = props;
+  const { url, handleOpenToast } = props;
   const { tema, setTema } = useThemeStore();
   const query = useQuery<EscuelasRequest[], Error>({
     queryKey: ["escuelas"],
@@ -27,7 +27,7 @@ export const Inicio = (props: PropsInicio) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  })
+  });
 
   if (query.isLoading) {
     return <CircularProgress />;
@@ -38,6 +38,7 @@ export const Inicio = (props: PropsInicio) => {
   }
 
   return (
+    
     <Box
       sx={{
         display: "flex",
@@ -47,14 +48,17 @@ export const Inicio = (props: PropsInicio) => {
         height: "100%",
       }}
     >
-      <FormInicio
-        data={data}
-        handleOpenToast={handleOpenToast}
-        tema={tema}
-        url={url}
-        updateData={updateData}
-      />
-      <BoxTheme tema={tema} setTema={setTema} />
+      
+        <FormInicio
+          data={data}
+          handleOpenToast={handleOpenToast}
+          tema={tema}
+          url={url}
+          updateData={updateData}
+        />
+        <BoxTheme tema={tema} setTema={setTema} />
+     
     </Box>
+    
   );
 };

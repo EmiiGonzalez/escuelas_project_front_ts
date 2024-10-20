@@ -15,3 +15,16 @@ export const fetchClases = async (url: string, cursoId: number, pageNumber: numb
     
     return response.data;
 }
+
+/**
+ * @description Busca un solo clase por id
+ * @param url base url de la API
+ * @param id id de la clase
+ * @returns la clase
+ */
+export const fetchClase = async (url: string, id: number): Promise<ClasesRequest> => {
+    const urlApi = url + import.meta.env.VITE_API_GET_CLASE + "/" + id;
+    const response = await axiosInstance.get(urlApi);
+    
+    return response.data;
+}

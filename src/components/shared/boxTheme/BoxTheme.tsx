@@ -2,6 +2,7 @@ import { Fab, Fade, Zoom } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { useCallback } from "react";
+import { motion } from "framer-motion"
 import { Box } from '@mui/material';
 
 /**
@@ -25,6 +26,7 @@ export const BoxTheme = (props: BoxThemeProps) => {
         zIndex: 1,
       }}
     >
+      <motion.div initial={{ y: -100, }} animate={{ y: 0, }}>
       <Zoom in timeout={500}>
         <Fab
           onClick={handleClick}
@@ -52,6 +54,7 @@ export const BoxTheme = (props: BoxThemeProps) => {
           </Fade>
         </Fab>
       </Zoom>
+      </motion.div>
     </Box>
   );
 };
