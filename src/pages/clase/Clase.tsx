@@ -5,6 +5,9 @@ import { fetchClase } from "../../util/shared/fetchClase";
 import { ClasesRequest } from "../../util/interfaces/clases/ClasesRequest";
 import { useQuery } from "@tanstack/react-query";
 
+import { motion } from "framer-motion";
+import { PaperClase } from "./components/paper/PaperClase";
+
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,18 +19,20 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
     queryFn: () => fetchClase(url, Number(id)),
   });
 
-  console.log(datosCurso.data);
-
   return (
+    <motion.div style={{ minHeight: "100vh", width: "100%" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
     <Box
-      sx={{
-        width: "100%",
+    sx={{
+      width: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         minHeight: "100vh",
       }}
-    ></Box>
+    >
+     <PaperClase url={url} handleOpenToast={handleOpenToast} datosCurso={datosCurso} /> 
+    </Box>
+    </motion.div>
   );
 };
 
