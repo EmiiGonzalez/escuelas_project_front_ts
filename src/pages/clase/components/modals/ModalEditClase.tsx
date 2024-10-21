@@ -42,18 +42,21 @@ export const ModalEditClase = React.memo(({
     error: errorClase,
   } = useValid();
 
-  useEffect(() => {
-    setClaseDescripcion(clase.contenido);
-  }, [clase, setClaseDescripcion]);
-
+  
   const [numeroDeClase, setNumeroDeClase] = useState<number>(
     clase.numeroDeClase
   );
-
+  
   const [fecha, setFecha] = useState<Dayjs | null>(
     dayjs(clase.fecha, "DD-MM-YYYY", true)
   );
-
+  
+  useEffect(() => {
+    setClaseDescripcion(clase.contenido);
+    setNumeroDeClase(clase.numeroDeClase);
+    setFecha(dayjs(clase.fecha, "DD-MM-YYYY", true));
+  }, [clase, setClaseDescripcion, setFecha, setNumeroDeClase]);
+  
   const cursoRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
