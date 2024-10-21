@@ -1,15 +1,14 @@
 import { AlertColor, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { deleteClase } from "../../util/deleteClase";
+import { deleteClase } from "../../../clase/util/deleteClase";
 
-export const DialogDeleteClase = ({ open, handleClose, url, id, handleOpenToast, updateData, updateCountClases }: PropsDialogDeleteCustom) => {
+export const DialogDeleteClase = ({ open, handleClose, url, id, handleOpenToast, updateData }: PropsDialogDeleteCustom) => {
 
   const mutation = useMutation({
     mutationFn: deleteClase,
     onSuccess: () => {
       updateData();
-      updateCountClases();
     },
     onError: (error) => {
       console.log(error);
@@ -48,5 +47,4 @@ interface PropsDialogDeleteCustom {
   id: number
   updateData: () => void
   handleOpenToast: (variante: AlertColor, msg: string) => void
-  updateCountClases: () => void
 }

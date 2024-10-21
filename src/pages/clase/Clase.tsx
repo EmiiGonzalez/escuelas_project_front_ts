@@ -11,7 +11,7 @@ import { PaperClase } from "./components/paper/PaperClase";
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   const { id } = useParams();
 
   const datosCurso = useQuery<ClasesRequest, Error>({

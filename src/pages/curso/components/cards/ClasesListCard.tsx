@@ -32,21 +32,13 @@ export const ClasesListCard = ({
   };
   /*
   const [idAction, setIdAction] = useState<number>(0);
-  const {
-    open: openDialogDelete,
-    handleOpen: handleOpenDialogDelete,
-    handleClose: handleCloseDialogDelete,
-  } = useHandleBoolean();
+  
   const {
     open: openDialogInfo,
     handleOpen: handleOpenDialogInfo,
     handleClose: handleCloseDialogInfo,
   } = useHandleBoolean();
-  const {
-    open: openDialogEdit,
-    handleOpen: handleOpenDialogEdit,
-    handleClose: handleCloseDialogEdit,
-  } = useHandleBoolean();*/
+;*/
 
   const {
     open: openDialogAsistencia,
@@ -154,23 +146,6 @@ export const ClasesListCard = ({
           />
         </Stack>
       </Box>
-      {/* <DialogDeleteClase
-        handleOpenToast={handleOpenToast}
-        open={openDialogDelete}
-        handleClose={handleCloseDialogDelete}
-        url={url}
-        id={idAction}
-        updateData={updateData}
-        updateCountClases={updateCountClases}
-      />
-      <ModalEditClase
-        clase={claseAction}
-        handleClose={handleCloseDialogEdit}
-        handleOpenToast={handleOpenToast}
-        url={url}
-        open={openDialogEdit}
-        updateListClases={updateData}
-      /> */}
       <DialogAsistencia
         dataAlumnos={datosAlumnos.data ? datosAlumnos.data : []}
         handleClose={handleCloseDialogAsistencia}

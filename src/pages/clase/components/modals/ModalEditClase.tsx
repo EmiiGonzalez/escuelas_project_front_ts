@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import SendIcon from "@mui/icons-material/Send";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -19,9 +20,10 @@ import { styleModal } from "../../../../util/shared/styles/modal/modalStyle";
 import dayjs, { Dayjs } from "dayjs";
 import { customNumberInputStyles } from "../../../../util/shared/styles/input/numberScroll";
 import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest";
-import { putClase } from "../../util/putClase";
+import { putClase } from "../../../clase/util/putClase";
+import React from "react";
 
-export const ModalEditClase = ({
+export const ModalEditClase = React.memo(({
   open,
   handleClose,
   url,
@@ -30,6 +32,8 @@ export const ModalEditClase = ({
   clase,
 }: PropsModalEditEscuela) => {
   const { tema } = useThemeStore();
+
+  dayjs.extend(customParseFormat);
 
   const {
     string: claseDescripcion,
@@ -42,11 +46,16 @@ export const ModalEditClase = ({
     setClaseDescripcion(clase.contenido);
   }, [clase, setClaseDescripcion]);
 
-  const [numeroDeClase, setNumeroDeClase] = useState<number>(clase.numeroDeClase);
+  const [numeroDeClase, setNumeroDeClase] = useState<number>(
+    clase.numeroDeClase
+  );
 
   const [fecha, setFecha] = useState<Dayjs | null>(
-    dayjs(clase.fecha));
+    dayjs(clase.fecha, "DD-MM-YYYY", true)
+  );
 
+  console.log(clase);
+  
   const cursoRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
@@ -189,9 +198,7 @@ export const ModalEditClase = ({
                 mb: 2,
                 ...customNumberInputStyles,
               }}
-              helperText={
-                "Por defecto, se mantendra el mismo número de clase"
-              }
+              helperText={"Por defecto, se mantendra el mismo número de clase"}
               value={clase.numeroDeClase || ""}
               autoComplete="off"
               onChange={(event) => {
@@ -216,7 +223,7 @@ export const ModalEditClase = ({
       </Fade>
     </Modal>
   );
-};
+});
 
 interface PropsModalEditEscuela {
   open: boolean;
