@@ -54,8 +54,6 @@ export const ModalEditClase = React.memo(({
     dayjs(clase.fecha, "DD-MM-YYYY", true)
   );
 
-  console.log(clase);
-  
   const cursoRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({

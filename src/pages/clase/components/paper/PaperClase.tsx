@@ -98,10 +98,10 @@ export const PaperClase = React.memo(({
               marginLeft: "5rem",
             }}
           >
-            <IconButton color="primary" onClick={handleOpenDialogEdit}>
+            <IconButton color="primary" onClick={handleOpenDialogEdit} aria-hidden="true">
               <EditIcon />
             </IconButton>
-            <IconButton color="error" onClick={handleOpenDialogDelete}>
+            <IconButton color="error" onClick={handleOpenDialogDelete} aria-hidden="true">
               <DeleteIcon />
             </IconButton>
           </Grid>
