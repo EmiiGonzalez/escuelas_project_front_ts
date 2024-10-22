@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { motion } from "framer-motion";
 import { PaperClase } from "./components/paper/PaperClase";
+import { CardDescriptionClase } from "./components/cards/CardDescriptionClase";
 
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
@@ -31,6 +32,7 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
       }}
     >
      <PaperClase url={url} handleOpenToast={handleOpenToast} datosCurso={datosCurso} /> 
+     <CardDescriptionClase datosClase={datosCurso} />
     </Box>
     </motion.div>
   );
