@@ -13,6 +13,7 @@ import { Box } from "@mui/material";
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { CardCurso } from "./components/card/CardCurso";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
   useEffect(() => {
@@ -55,7 +56,12 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
     );
 
   return (
-    <>
+    <motion.div
+    style={{ minHeight: "100vh", width: "100%" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
       <Box sx={{ minHeight: "100vh", bgcolor: "background.default", width: "100%" }}>
         <EscuelaCard datosEscuela={datosEscuela.data} />
         <Grid container spacing={3} justifyContent="center">
@@ -80,7 +86,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
         updateDataCursos={updateDataCursos}
         setTema={setTema}
       />
-    </>
+    </motion.div>
   );
 };
 

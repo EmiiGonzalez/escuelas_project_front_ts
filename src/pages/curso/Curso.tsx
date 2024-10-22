@@ -20,6 +20,7 @@ import { Page } from "../../util/interfaces/PageInterface";
 import { ClasesCountRequest } from "../../util/interfaces/clases/ClasesCountInterface";
 import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
 import { fetchAlumnos } from "./util/fetchAlumno";
+import { motion } from "framer-motion";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   useEffect(() => {
@@ -80,6 +81,12 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
   }
 
   return (
+    <motion.div
+    style={{ minHeight: "100vh", width: "100%" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
     <Box
       sx={{
         width: "100%",
@@ -120,6 +127,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
       </Grid>
       <SpeedDialCursoCustom curso={datosCurso.data} handleOpenToast={handleOpenToast} setTema={setTema} tema={tema} updateDataCurso={() => datosCurso.refetch()} url={url}/>
     </Box>
+    </motion.div>
   );
 };
 

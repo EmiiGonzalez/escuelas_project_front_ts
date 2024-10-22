@@ -42,6 +42,7 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
       style={{ minHeight: "100vh", width: "100%" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
       <Box
         sx={{
