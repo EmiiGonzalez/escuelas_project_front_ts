@@ -4,4 +4,5 @@ export interface ClasesRequest {
     contenido: string
     numeroDeClase : number
     asistencia : boolean
+    idCurso : number
 }

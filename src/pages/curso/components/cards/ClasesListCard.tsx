@@ -32,14 +32,7 @@ export const ClasesListCard = ({
   };
   /*
   const [idAction, setIdAction] = useState<number>(0);
-  
-  const {
-    open: openDialogInfo,
-    handleOpen: handleOpenDialogInfo,
-    handleClose: handleCloseDialogInfo,
-  } = useHandleBoolean();
 ;*/
-
   const {
     open: openDialogAsistencia,
     handleOpen: handleOpenDialogAsistencia,

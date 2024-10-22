@@ -6,7 +6,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 
 export const CardDescriptionClase = ( { datosClase }: PropsCardDescriptionClase ) => {
   return (
-      <Card elevation={3} sx={{ height: '100%', borderRadius: '15px' , p: 2, my: 2, width: '95%' }}>
+      <Card elevation={3} sx={{ height: '100%', borderRadius: '15px' , p: 2, my: 2}}>
         <CardContent>
           <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
             <EventIcon sx={{ mr: 1 }} /> Información de la Clase

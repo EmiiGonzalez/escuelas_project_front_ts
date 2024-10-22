@@ -21,7 +21,7 @@ import React from "react";
 export const PaperClase = React.memo(({
   url,
   handleOpenToast,
-  datosCurso,
+  datosClase,
 }: PropsPaperClase) => {
   const {
     open: openDialogDelete,
@@ -35,11 +35,11 @@ export const PaperClase = React.memo(({
     handleClose: handleCloseDialogEdit,
   } = useHandleBoolean();
 
-  if (datosCurso.isLoading) {
+  if (datosClase.isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (datosCurso.isError || !datosCurso.data) {
+  if (datosClase.isError || !datosClase.data) {
     return <div>Error</div>;
   }
 
@@ -75,15 +75,15 @@ export const PaperClase = React.memo(({
             </Avatar>
             <Box>
               <Typography variant="h4" gutterBottom>
-                Clase #{datosCurso.data?.numeroDeClase}
+                Clase #{datosClase.data?.numeroDeClase}
               </Typography>
               <Chip
                 label={
-                  datosCurso.data?.asistencia
+                  datosClase.data?.asistencia
                     ? "Asistencia Tomada"
                     : "Asistencia Pendiente"
                 }
-                color={datosCurso.data?.asistencia ? "success" : "warning"}
+                color={datosClase.data?.asistencia ? "success" : "warning"}
                 variant="outlined"
               />
             </Box>
@@ -112,16 +112,16 @@ export const PaperClase = React.memo(({
         open={openDialogDelete}
         handleClose={handleCloseDialogDelete}
         url={url}
-        id={datosCurso.data?.id}
-        updateData={datosCurso.refetch}
+        id={datosClase.data?.id}
+        updateData={datosClase.refetch}
       />
       <ModalEditClase
-        clase={datosCurso.data}
+        clase={datosClase.data}
         handleClose={handleCloseDialogEdit}
         handleOpenToast={handleOpenToast}
         url={url}
         open={openDialogEdit}
-        updateListClases={datosCurso.refetch}
+        updateListClases={datosClase.refetch}
       />
     </>
   );
@@ -130,5 +130,5 @@ export const PaperClase = React.memo(({
 interface PropsPaperClase {
   url: string;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
-  datosCurso: UseQueryResult<ClasesRequest, Error>;
+  datosClase: UseQueryResult<ClasesRequest, Error>;
 }
