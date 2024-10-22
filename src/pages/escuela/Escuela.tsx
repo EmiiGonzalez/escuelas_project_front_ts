@@ -18,8 +18,8 @@ import { motion } from "framer-motion";
 export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  })
-  
+  });
+
   const { escuelaId, year } = useParams();
   const { tema, setTema } = useThemeStore();
 
@@ -56,27 +56,35 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
     );
 
   return (
-    <motion.div
-    style={{ minHeight: "100vh", width: "100%" }}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-      <Box sx={{ minHeight: "100vh", bgcolor: "background.default", width: "100%" }}>
-        <EscuelaCard datosEscuela={datosEscuela.data} />
-        <Grid container spacing={3} justifyContent="center">
-          {datosCursos.data?.map((course) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={course.id}>
-              <CardCurso
-                materia={course.materia}
-                id={course.id}
-                nombre={course.nombre}
-                escuela={course.escuela}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+    <>
+      <motion.div
+        style={{ minHeight: "100vh", width: "100%" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <Box
+          sx={{
+            minHeight: "100vh",
+            bgcolor: "background.default",
+            width: "100%",
+          }}
+        >
+          <EscuelaCard datosEscuela={datosEscuela.data} />
+          <Grid container spacing={3} justifyContent="center">
+            {datosCursos.data?.map((course) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={course.id}>
+                <CardCurso
+                  materia={course.materia}
+                  id={course.id}
+                  nombre={course.nombre}
+                  escuela={course.escuela}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </motion.div>
       <SpeedDialCustom
         escuela={datosEscuela.data}
         url={url}
@@ -86,7 +94,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
         updateDataCursos={updateDataCursos}
         setTema={setTema}
       />
-    </motion.div>
+    </>
   );
 };
 

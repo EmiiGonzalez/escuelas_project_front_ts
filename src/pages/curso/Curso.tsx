@@ -1,6 +1,9 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { CursosRequest } from "../../util/interfaces/cursos/CursoInterface";
-import { fetchCountClasesForCurso, fetchCurso } from "../../util/shared/fetchCurso";
+import {
+  fetchCountClasesForCurso,
+  fetchCurso,
+} from "../../util/shared/fetchCurso";
 import { useParams } from "react-router-dom";
 import { AlertColor, Box, CircularProgress, Typography } from "@mui/material";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
@@ -25,8 +28,8 @@ import { motion } from "framer-motion";
 export const Curso = ({ url, handleOpenToast }: Props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  })
-  
+  });
+
   const { id } = useParams();
   const { tema, setTema } = useThemeStore();
 
@@ -56,13 +59,13 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
   const listClases = useQuery<Page<ClasesRequest>, Error>({
     queryKey: ["clases", pageNumber],
     queryFn: () => fetchClases(url, Number(id), pageNumber),
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
   });
 
   const cantClases = useQuery<ClasesCountRequest, Error>({
     queryKey: ["cursoCantClases", id],
     queryFn: () => fetchCountClasesForCurso(url, Number(id)),
-  });  
+  });
 
   const refetchListClases = useMemo(() => listClases.refetch, [listClases]);
   useEffect(() => {
@@ -81,53 +84,76 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
   }
 
   return (
-    <motion.div
-    style={{ minHeight: "100vh", width: "100%" }}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <Box>
-        <CursoCard curso={datosCurso.data} />
-      </Box>
-      <Grid
-        container
-        spacing={2}
-        sx={{ width: "100%" }}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+    <>
+      <motion.div
+        style={{ minHeight: "100vh", width: "100%" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
       >
-        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-        <CardGeneric
-          children={
-            <DashBoardCard
-              cantClases={cantClases}
-              url={url}
-              idCurso={Number(id)}
-              handleOpenToast={handleOpenToast}
-              updateListClases={() => listClases.refetch()}
-            />
-          }
-        />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-        {listClases.isLoading && <ClasesListCardSkeleton />}
-        {listClases.data && (
-          <CardGeneric children={<ClasesListCard datosAlumnos={datosAlumnos} url={url} updateCountClases={() => cantClases.refetch()} updateData={() => listClases.refetch()} handleOpenToast={handleOpenToast} data={listClases.data.content} pageNumber={pageNumber} totalPages={listClases.data.totalPages} setPageNumber={setPageNumber} />} />
-        )}
-        </Grid>
-      </Grid>
-      <SpeedDialCursoCustom curso={datosCurso.data} handleOpenToast={handleOpenToast} setTema={setTema} tema={tema} updateDataCurso={() => datosCurso.refetch()} url={url}/>
-    </Box>
-    </motion.div>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          <Box>
+            <CursoCard curso={datosCurso.data} />
+          </Box>
+          <Grid
+            container
+            spacing={2}
+            sx={{ width: "100%" }}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+              <CardGeneric
+                children={
+                  <DashBoardCard
+                    cantClases={cantClases}
+                    url={url}
+                    idCurso={Number(id)}
+                    handleOpenToast={handleOpenToast}
+                    updateListClases={() => listClases.refetch()}
+                  />
+                }
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+              {listClases.isLoading && <ClasesListCardSkeleton />}
+              {listClases.data && (
+                <CardGeneric
+                  children={
+                    <ClasesListCard
+                      datosAlumnos={datosAlumnos}
+                      url={url}
+                      updateCountClases={() => cantClases.refetch()}
+                      updateData={() => listClases.refetch()}
+                      handleOpenToast={handleOpenToast}
+                      data={listClases.data.content}
+                      pageNumber={pageNumber}
+                      totalPages={listClases.data.totalPages}
+                      setPageNumber={setPageNumber}
+                    />
+                  }
+                />
+              )}
+            </Grid>
+          </Grid>
+        </Box>
+      </motion.div>
+      <SpeedDialCursoCustom
+        curso={datosCurso.data}
+        handleOpenToast={handleOpenToast}
+        setTema={setTema}
+        tema={tema}
+        updateDataCurso={() => datosCurso.refetch()}
+        url={url}
+      />
+    </>
   );
 };
 
