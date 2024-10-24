@@ -7,7 +7,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { AlertColor, IconButton } from "@mui/material";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
-import { DialogAsistencia } from "../dialog/DialogAsistencia";
+import { DialogAsistencia } from "../../../../components/shared/dialog/DialogAsistencia";
 import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
 import { UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
@@ -20,19 +20,19 @@ export const ClasesListCard = ({
   setPageNumber,
   url,
   datosAlumnos,
+  handleOpenToast,
 }: ClasesListCardProps) => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
   };
   const [claseAction, setClaseAction] = useState<number>(0);
+
   const navigate = useNavigate();
 
   const handleInfoClase = (id: number): void => {
     navigate("/clase/" + id);
   };
-  /*
-  const [idAction, setIdAction] = useState<number>(0);
-;*/
+
   const {
     open: openDialogAsistencia,
     handleOpen: handleOpenDialogAsistencia,
@@ -105,16 +105,18 @@ export const ClasesListCard = ({
                   {" "}
                   <InfoIcon />{" "}
                 </IconButton>
-                <IconButton
-                  aria-label="asistencia"
-                  onClick={() => {
-                    setClaseAction(clase.id);
-                    handleOpenDialogAsistencia();
-                  }}
-                  sx={{ color: "whitesmoke" }}
-                >
-                  <ChecklistRtlIcon />
-                </IconButton>
+                {!clase.asistencia && (
+                  <IconButton
+                    aria-label="asistencia"
+                    onClick={() => {
+                      setClaseAction(clase.id);
+                      handleOpenDialogAsistencia();
+                    }}
+                    sx={{ color: "whitesmoke" }}
+                  >
+                    <ChecklistRtlIcon />
+                  </IconButton>
+                )}
               </Box>
             </Box>
           ))
@@ -145,6 +147,8 @@ export const ClasesListCard = ({
         open={openDialogAsistencia}
         url={url}
         idClase={claseAction}
+        handleOpenToast={handleOpenToast}
+        updateData={datosAlumnos.refetch}
       />
     </>
   );

@@ -1,4 +1,5 @@
 import {
+  AlertColor,
   Box,
   Button,
   Dialog,
@@ -11,13 +12,16 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
-import { useIncremental } from "../../../../util/hooks/useIncremental";
-import { AsistenciaRecord } from "../../../../util/interfaces/asistencia/AsistenciaResponse";
+import { AlumnoResponseDtoWithAsistencia } from "../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { useIncremental } from "../../../util/hooks/useIncremental";
+import { AsistenciaRecord } from "../../../util/interfaces/asistencia/AsistenciaResponse";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { postAsistencia } from "../../../util/shared/postAsistencia";
+import { AxiosError } from "axios";
 
 export const DialogAsistencia = ({
   open,
@@ -25,6 +29,8 @@ export const DialogAsistencia = ({
   url,
   idClase,
   dataAlumnos,
+  handleOpenToast,
+  updateData,
 }: PropsDialogAsistencia) => {
   const {
     count: index,
@@ -63,8 +69,26 @@ export const DialogAsistencia = ({
     reset();
   };
 
+  const mutation = useMutation({
+    mutationFn: postAsistencia,
+    onSuccess: () => {
+      handleOpenToast("success", "Asistencia agregada con éxito");
+      updateData();
+      handleClose();
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        handleOpenToast("error", error.response?.data.message ? error.response?.data.message : "Error al agregar la escuela");
+      }
+    },
+  });
+
   const handleSubmit = () => {
-    console.log(asistenciaRecord);
+    mutation.mutate({
+      url,
+      id: idClase,
+      asistencia: asistenciaRecord,
+    });
   };
 
   return (
@@ -135,4 +159,6 @@ interface PropsDialogAsistencia {
   url: string;
   dataAlumnos: AlumnoResponseDtoWithAsistencia[];
   idClase: number;
+  updateData: () => void;
+  handleOpenToast: (variante: AlertColor, msg: string) => void;
 }

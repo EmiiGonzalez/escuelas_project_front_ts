@@ -10,11 +10,20 @@ import CheckIcon from "@mui/icons-material/Check";
 import { UseQueryResult } from "@tanstack/react-query";
 import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest";
 import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { useState } from "react";
 
 export const CardDashboardAsistencia = ({
   datosClase,
-  handleOpenDialogAsistencia
+  handleOpenDialogAsistencia,
 }: PropsCardDashboardAsistencia) => {
+
+  const [hasAsistencia, setHasAsistencia] = useState<boolean>(datosClase.data?.asistencia ? true : false);
+
+  const handleAsistencia = () => {
+    setHasAsistencia(true);
+    handleOpenDialogAsistencia();
+  }
+
   return (
     <>
       <Card
@@ -49,15 +58,17 @@ export const CardDashboardAsistencia = ({
           )}
         </CardContent>
         <CardActions sx={{ justifyContent: "flex-end", p: 2 }}>
-          <Button
-            startIcon={<CheckIcon />}
-            variant="outlined"
-            color={"success"}
-            sx={{ borderRadius: "20px" }}
-            onClick={handleOpenDialogAsistencia}
-          >
-            {"Pasar Asistencia"}
-          </Button>
+          {hasAsistencia ? (
+            <Button
+              startIcon={<CheckIcon />}
+              variant="outlined"
+              color={"success"}
+              sx={{ borderRadius: "20px" }}
+              onClick={handleAsistencia}
+            >
+              {"Pasar Asistencia"}
+            </Button>
+          ) : null}
         </CardActions>
       </Card>
     </>

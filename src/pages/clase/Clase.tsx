@@ -12,7 +12,7 @@ import { CardDashboardAsistencia } from "./components/cards/CardDashboardAsisten
 import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
 import { fetchAlumnos } from "../curso/util/fetchAlumno";
 import { useHandleBoolean } from "../../util/hooks/useHandleBoolean";
-import { DialogAsistencia } from "../curso/components/dialog/DialogAsistencia";
+import { DialogAsistencia } from "../../components/shared/dialog/DialogAsistencia";
 
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
@@ -73,6 +73,8 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
         open={openDialogAsistencia}
         url={url}
         idClase={Number(id)}
+        handleOpenToast={handleOpenToast}
+        updateData={datosAlumnos.refetch}
       />
       </Box>
     </motion.div>
