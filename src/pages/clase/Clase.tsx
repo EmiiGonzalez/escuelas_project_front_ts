@@ -1,4 +1,4 @@
-import { AlertColor, Box, Grid2 } from "@mui/material";
+import { Alert, AlertColor, Box, Grid2 } from "@mui/material";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchClase } from "../../util/shared/fetchClase";
@@ -13,6 +13,8 @@ import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/Al
 import { fetchAlumnos } from "../curso/util/fetchAlumno";
 import { useHandleBoolean } from "../../util/hooks/useHandleBoolean";
 import { DialogAsistencia } from "../../components/shared/dialog/DialogAsistencia";
+import { ClaseSkeleton } from "./skeleton/ClaseSkeleton";
+import { AxiosError } from "axios";
 
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
@@ -28,14 +30,29 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   const datosAlumnos = useQuery<AlumnoResponseDtoWithAsistencia[], Error>({
     queryKey: ["alumnos", id],
     queryFn: () => fetchAlumnos(url, Number(datosClase.data?.idCurso)),
-    enabled: !!datosClase.data
-  })
+    enabled: !!datosClase.data,
+  });
 
   const {
     open: openDialogAsistencia,
     handleOpen: handleOpenDialogAsistencia,
     handleClose: handleCloseDialogAsistencia,
   } = useHandleBoolean();
+
+  if (datosClase.isLoading) {
+    return (
+      <ClaseSkeleton />
+    );
+  }
+
+  if (datosClase.isError || !datosClase.data) {
+    if (datosClase.error instanceof AxiosError) {
+      return <Alert severity="error">{datosClase.error.response?.data.message ? datosClase.error.response?.data.message : datosAlumnos.error?.message }</Alert>;
+    }
+    return <motion.div>
+      <Alert severity="error">Ocurrio un error al cargar la clase</Alert>
+    </motion.div>;
+  }
 
   return (
     <motion.div
@@ -64,18 +81,22 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
             <CardDescriptionClase datosClase={datosClase} />
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 7, md: 8 }}>
-            <CardDashboardAsistencia datosClase={datosClase} datosAlumnos={datosAlumnos} handleOpenDialogAsistencia={handleOpenDialogAsistencia}/>
+            <CardDashboardAsistencia
+              datosClase={datosClase}
+              datosAlumnos={datosAlumnos}
+              handleOpenDialogAsistencia={handleOpenDialogAsistencia}
+            />
           </Grid2>
         </Grid2>
         <DialogAsistencia
-        dataAlumnos={datosAlumnos.data ? datosAlumnos.data : []}
-        handleClose={handleCloseDialogAsistencia}
-        open={openDialogAsistencia}
-        url={url}
-        idClase={Number(id)}
-        handleOpenToast={handleOpenToast}
-        updateData={datosAlumnos.refetch}
-      />
+          dataAlumnos={datosAlumnos.data ? datosAlumnos.data : []}
+          handleClose={handleCloseDialogAsistencia}
+          open={openDialogAsistencia}
+          url={url}
+          idClase={Number(id)}
+          handleOpenToast={handleOpenToast}
+          updateData={datosAlumnos.refetch}
+        />
       </Box>
     </motion.div>
   );

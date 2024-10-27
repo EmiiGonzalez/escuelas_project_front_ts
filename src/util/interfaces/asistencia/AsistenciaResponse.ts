@@ -1,3 +1,5 @@
+import { AsistioEnum } from "./AsistenciaPost";
+
 /**
  * @param id
  * @param claseNumero
@@ -8,7 +10,7 @@ export interface AsistenciaResponseDto {
   id: number;
   claseNumero: number;
   fecha: string;
-  asistio: boolean;
+  asistio: string;
 }
 
 /**
@@ -17,5 +19,5 @@ export interface AsistenciaResponseDto {
  */
 export interface AsistenciaRecord{
   id: number;
-  asistio: boolean;
+  asistio: AsistioEnum;
 }

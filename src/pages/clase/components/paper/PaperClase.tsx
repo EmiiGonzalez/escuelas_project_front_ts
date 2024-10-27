@@ -113,7 +113,7 @@ export const PaperClase = React.memo(({
         handleClose={handleCloseDialogDelete}
         url={url}
         id={datosClase.data?.id}
-        updateData={datosClase.refetch}
+        idCurso={datosClase.data?.idCurso}
       />
       <ModalEditClase
         clase={datosClase.data}

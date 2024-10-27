@@ -10,17 +10,22 @@ import CheckIcon from "@mui/icons-material/Check";
 import { UseQueryResult } from "@tanstack/react-query";
 import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest";
 import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const CardDashboardAsistencia = ({
   datosClase,
   handleOpenDialogAsistencia,
 }: PropsCardDashboardAsistencia) => {
 
-  const [hasAsistencia, setHasAsistencia] = useState<boolean>(datosClase.data?.asistencia ? true : false);
+  const [hasAsistencia, setHasAsistencia] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (datosClase.data?.asistencia != null || datosClase.data?.asistencia != undefined) {
+      setHasAsistencia(datosClase.data?.asistencia);
+    }
+  }, [datosClase.data?.asistencia]);
 
   const handleAsistencia = () => {
-    setHasAsistencia(true);
     handleOpenDialogAsistencia();
   }
 
@@ -47,7 +52,7 @@ export const CardDashboardAsistencia = ({
             <CheckIcon sx={{ mr: 1 }} /> Dashboard de Asistencia
           </Typography>
           <Divider sx={{ my: 2 }} />
-          {datosClase.data?.asistencia ? (
+          {hasAsistencia ? (
             <Typography sx={{ mb: 2 }}>
               La asistencia ya ha sido registrada para esta clase.
             </Typography>
@@ -58,7 +63,7 @@ export const CardDashboardAsistencia = ({
           )}
         </CardContent>
         <CardActions sx={{ justifyContent: "flex-end", p: 2 }}>
-          {hasAsistencia ? (
+          {!hasAsistencia && (
             <Button
               startIcon={<CheckIcon />}
               variant="outlined"
@@ -68,7 +73,7 @@ export const CardDashboardAsistencia = ({
             >
               {"Pasar Asistencia"}
             </Button>
-          ) : null}
+          )}
         </CardActions>
       </Card>
     </>

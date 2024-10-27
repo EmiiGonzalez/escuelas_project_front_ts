@@ -22,6 +22,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postAsistencia } from "../../../util/shared/postAsistencia";
 import { AxiosError } from "axios";
+import { AsistioEnum, convertStringToAsistioEnum } from "../../../util/interfaces/asistencia/AsistenciaPost";
 
 export const DialogAsistencia = ({
   open,
@@ -44,7 +45,7 @@ export const DialogAsistencia = ({
 
   const currentAlumno = dataAlumnos[index];
 
-  const handleAttendance = (asistio: boolean) => {
+  const handleAttendance = (asistio: AsistioEnum) => {
     if (asistenciaRecord[index]) {
       asistenciaRecord[index].asistio = asistio;
       increment();
@@ -108,14 +109,14 @@ export const DialogAsistencia = ({
                 <Box sx={{ display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center", flexWrap: "wrap", width: "40%" }} >
                   <IconButton
                     color="primary"
-                    onClick={() => handleAttendance(true)}
+                    onClick={() => handleAttendance(convertStringToAsistioEnum("PRESENTE"))}
                     sx={{ width: "1.5rem", height: "1.5rem" }}
                   >
                     <CheckIcon />
                   </IconButton>
                   <IconButton
                     color="secondary"
-                    onClick={() => handleAttendance(false)}
+                    onClick={() => handleAttendance(convertStringToAsistioEnum("AUSENTE"))}
                   >
                     <CloseIcon />
                   </IconButton>

@@ -5,4 +5,6 @@ export interface ClasesRequest {
     numeroDeClase : number
     asistencia : boolean
     idCurso : number
+    message? : string
+    errorCode? : number
 }
