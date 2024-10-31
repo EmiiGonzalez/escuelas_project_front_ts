@@ -56,7 +56,7 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
         <Alert severity="error">
           {datosClase.error.response?.data.message
             ? datosClase.error.response?.data.message
-            : datosAlumnos.error?.message}
+            : datosAlumnos.error?.message || "Ocurrio un error al cargar la clase"}
         </Alert>
       );
     }
