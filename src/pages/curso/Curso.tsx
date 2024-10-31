@@ -25,11 +25,12 @@ import { ClasesCountRequest } from "../../util/interfaces/clases/ClasesCountInte
 import { fetchAlumnos } from "./util/fetchAlumno";
 import { motion } from "framer-motion";
 import { AlumnoRequest } from "../../util/interfaces/alumno/AlumnoRequest";
+import { AlumnosListCard } from "./components/cards/AlumnosListCard";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   const { id } = useParams();
   const { tema, setTema } = useThemeStore();
@@ -139,6 +140,18 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
               )}
             </Grid>
           </Grid>
+          <Box sx={{ width: "100%", marginTop: "1.5rem" }}>
+            <CardGeneric
+              children={
+                <AlumnosListCard
+                  url={url}
+                  data={datosAlumnos.data || []}
+                  handleOpenToast={handleOpenToast}
+                  updateAlumnos={datosAlumnos.refetch}
+                />
+              }
+            />
+          </Box>
         </Box>
       </motion.div>
       <SpeedDialCursoCustom
