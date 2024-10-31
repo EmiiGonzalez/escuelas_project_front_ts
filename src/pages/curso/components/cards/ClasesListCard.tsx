@@ -8,7 +8,7 @@ import { AlertColor, IconButton } from "@mui/material";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import { DialogAsistencia } from "../../../../components/shared/dialog/DialogAsistencia";
-import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDto";
 import { UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

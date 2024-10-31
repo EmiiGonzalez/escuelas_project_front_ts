@@ -12,7 +12,6 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { AlumnoResponseDtoWithAsistencia } from "../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
 import { useIncremental } from "../../../util/hooks/useIncremental";
 import { AsistenciaRecord } from "../../../util/interfaces/asistencia/AsistenciaResponse";
 import CheckIcon from "@mui/icons-material/Check";
@@ -23,6 +22,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postAsistencia } from "../../../util/shared/postAsistencia";
 import { AxiosError } from "axios";
 import { AsistioEnum, convertStringToAsistioEnum } from "../../../util/interfaces/asistencia/AsistenciaPost";
+import { AlumnoRequest } from "../../../util/interfaces/alumno/AlumnoRequest";
 
 export const DialogAsistencia = ({
   open,
@@ -158,7 +158,7 @@ interface PropsDialogAsistencia {
   open: boolean;
   handleClose: () => void;
   url: string;
-  dataAlumnos: AlumnoResponseDtoWithAsistencia[];
+  dataAlumnos: AlumnoRequest[];
   idClase: number;
   updateData: () => void;
   handleOpenToast: (variante: AlertColor, msg: string) => void;

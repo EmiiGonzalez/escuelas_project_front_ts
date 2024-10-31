@@ -21,7 +21,7 @@ import { SpeedDialCursoCustom } from "./components/speedDial/SpeedDialCursoCusto
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { Page } from "../../util/interfaces/PageInterface";
 import { ClasesCountRequest } from "../../util/interfaces/clases/ClasesCountInterface";
-import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDto";
 import { fetchAlumnos } from "./util/fetchAlumno";
 import { motion } from "framer-motion";
 

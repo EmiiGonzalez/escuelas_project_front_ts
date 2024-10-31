@@ -4,17 +4,18 @@ import { useParams } from "react-router-dom";
 import { fetchClase } from "../../util/shared/fetchClase";
 import { ClasesRequest } from "../../util/interfaces/clases/ClasesRequest";
 import { useQuery } from "@tanstack/react-query";
-
 import { motion } from "framer-motion";
 import { PaperClase } from "./components/paper/PaperClase";
 import { CardDescriptionClase } from "./components/cards/CardDescriptionClase";
 import { CardDashboardAsistencia } from "./components/cards/CardDashboardAsistencia";
-import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
 import { fetchAlumnos } from "../curso/util/fetchAlumno";
 import { useHandleBoolean } from "../../util/hooks/useHandleBoolean";
 import { DialogAsistencia } from "../../components/shared/dialog/DialogAsistencia";
-import { ClaseSkeleton } from "./skeleton/ClaseSkeleton";
+import { ClaseSkeleton } from "./components/skeleton/ClaseSkeleton";
 import { AxiosError } from "axios";
+import { AlumnoRequest } from "../../util/interfaces/alumno/AlumnoRequest";
+import { AsistenciaStats } from "../../util/interfaces/asistencia/AsistenciaStats";
+import { fetchAsistenciaStats } from "./util/fetchAsistenciaStats";
 
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
@@ -27,10 +28,16 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
     queryFn: () => fetchClase(url, Number(id)),
   });
 
-  const datosAlumnos = useQuery<AlumnoResponseDtoWithAsistencia[], Error>({
+  const datosAlumnos = useQuery<AlumnoRequest[], Error>({
     queryKey: ["alumnos", id],
     queryFn: () => fetchAlumnos(url, Number(datosClase.data?.idCurso)),
     enabled: !!datosClase.data,
+  });
+
+  const datosAsistenciaStats = useQuery<AsistenciaStats[], Error>({
+    queryKey: ["asistencia-stats", id],
+    queryFn: () => fetchAsistenciaStats(url, Number(id)),
+    enabled: !!datosClase.data && !!datosClase.data?.asistencia,
   });
 
   const {
@@ -40,18 +47,24 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   } = useHandleBoolean();
 
   if (datosClase.isLoading) {
-    return (
-      <ClaseSkeleton />
-    );
+    return <ClaseSkeleton />;
   }
 
   if (datosClase.isError || !datosClase.data) {
     if (datosClase.error instanceof AxiosError) {
-      return <Alert severity="error">{datosClase.error.response?.data.message ? datosClase.error.response?.data.message : datosAlumnos.error?.message }</Alert>;
+      return (
+        <Alert severity="error">
+          {datosClase.error.response?.data.message
+            ? datosClase.error.response?.data.message
+            : datosAlumnos.error?.message}
+        </Alert>
+      );
     }
-    return <motion.div>
-      <Alert severity="error">Ocurrio un error al cargar la clase</Alert>
-    </motion.div>;
+    return (
+      <motion.div>
+        <Alert severity="error">Ocurrio un error al cargar la clase</Alert>
+      </motion.div>
+    );
   }
 
   return (
@@ -82,6 +95,7 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 7, md: 8 }}>
             <CardDashboardAsistencia
+            datosStats={datosAsistenciaStats}
               datosClase={datosClase}
               datosAlumnos={datosAlumnos}
               handleOpenDialogAsistencia={handleOpenDialogAsistencia}

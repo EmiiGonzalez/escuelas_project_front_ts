@@ -3,31 +3,36 @@ import {
   CardContent,
   Typography,
   Divider,
-  CardActions,
   Button,
+  Box,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { UseQueryResult } from "@tanstack/react-query";
 import { ClasesRequest } from "../../../../util/interfaces/clases/ClasesRequest";
-import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
 import { useEffect, useState } from "react";
+import { AlumnoRequest } from "../../../../util/interfaces/alumno/AlumnoRequest";
+import { AsistenciaStats } from "../../../../util/interfaces/asistencia/AsistenciaStats";
+import { PieChartAsistenciaClase } from "../charts/PieChartAsistenciaClase";
 
 export const CardDashboardAsistencia = ({
   datosClase,
   handleOpenDialogAsistencia,
+  datosStats,
 }: PropsCardDashboardAsistencia) => {
-
   const [hasAsistencia, setHasAsistencia] = useState<boolean>(true);
 
   useEffect(() => {
-    if (datosClase.data?.asistencia != null || datosClase.data?.asistencia != undefined) {
+    if (
+      datosClase.data?.asistencia != null ||
+      datosClase.data?.asistencia != undefined
+    ) {
       setHasAsistencia(datosClase.data?.asistencia);
     }
   }, [datosClase.data?.asistencia]);
 
   const handleAsistencia = () => {
     handleOpenDialogAsistencia();
-  }
+  };
 
   return (
     <>
@@ -43,7 +48,7 @@ export const CardDashboardAsistencia = ({
           justifyContent: "space-between",
         }}
       >
-        <CardContent>
+        <CardContent sx={{ display: "flex", flexDirection: "column" }}>
           <Typography
             variant="h6"
             gutterBottom
@@ -51,30 +56,51 @@ export const CardDashboardAsistencia = ({
           >
             <CheckIcon sx={{ mr: 1 }} /> Dashboard de Asistencia
           </Typography>
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 2, width: "100%" }} component="div" />
           {hasAsistencia ? (
-            <Typography sx={{ mb: 2 }}>
-              La asistencia ya ha sido registrada para esta clase.
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: "100%",
+              }}
+            >
+              <Typography sx={{ mb: 2 }}>
+                Estadisticas de Asistencia de la Clase
+              </Typography>
+              <PieChartAsistenciaClase
+                dataStats={datosStats}
+              ></PieChartAsistenciaClase>
+            </Box>
           ) : (
-            <Typography sx={{ mb: 2 }}>
-              La asistencia aún no ha sido registrada para esta clase.
-            </Typography>
+            <Box sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "space-around",
+              height: "100%",
+            }}>
+              <Typography sx={{ mb: 2 }}>
+                La asistencia aún no ha sido registrada para esta clase.
+              </Typography>
+              {!hasAsistencia && (
+                <Button
+                  startIcon={<CheckIcon />}
+                  variant="outlined"
+                  color={"success"}
+                  sx={{ borderRadius: "20px" }}
+                  onClick={handleAsistencia}
+                >
+                  {"Pasar Asistencia"}
+                </Button>
+              )}
+            </Box>
           )}
         </CardContent>
-        <CardActions sx={{ justifyContent: "flex-end", p: 2 }}>
-          {!hasAsistencia && (
-            <Button
-              startIcon={<CheckIcon />}
-              variant="outlined"
-              color={"success"}
-              sx={{ borderRadius: "20px" }}
-              onClick={handleAsistencia}
-            >
-              {"Pasar Asistencia"}
-            </Button>
-          )}
-        </CardActions>
       </Card>
     </>
   );
@@ -82,6 +108,7 @@ export const CardDashboardAsistencia = ({
 
 interface PropsCardDashboardAsistencia {
   datosClase: UseQueryResult<ClasesRequest, Error>;
-  datosAlumnos: UseQueryResult<AlumnoResponseDtoWithAsistencia[], Error>;
+  datosAlumnos: UseQueryResult<AlumnoRequest[], Error>;
   handleOpenDialogAsistencia: () => void;
+  datosStats: UseQueryResult<AsistenciaStats[], Error>;
 }

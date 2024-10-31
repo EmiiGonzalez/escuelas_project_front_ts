@@ -1,5 +1,5 @@
 import axiosInstance from "../../../api/axiosInstance";
-import { AlumnoResponseDtoWithAsistencia } from "../../../util/interfaces/alumno/AlumnoResponseDtoWithAsistencia";
+import { AlumnoResponseDtoWithAsistencia } from "../../../util/interfaces/alumno/AlumnoResponseDto";
 
 
 /**
