@@ -10,6 +10,6 @@ export enum AsistioEnum {
   NOENLISTADO = "NOENLISTADO",
 }
 
-export const convertStringToAsistioEnum = (asistio: string): AsistioEnum => {
+export const convertStringToAsistioEnum = (asistio: "PRESENTE" | "AUSENTE" | "JUSTIFICADO" | "NOENLISTADO"): AsistioEnum => {
   return AsistioEnum[asistio as keyof typeof AsistioEnum];
 };

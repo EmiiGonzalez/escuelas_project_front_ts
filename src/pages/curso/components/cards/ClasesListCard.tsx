@@ -8,10 +8,10 @@ import { AlertColor, IconButton } from "@mui/material";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import { DialogAsistencia } from "../../../../components/shared/dialog/DialogAsistencia";
-import { AlumnoResponseDtoWithAsistencia } from "../../../../util/interfaces/alumno/AlumnoResponseDto";
 import { UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AlumnoRequest } from "../../../../util/interfaces/alumno/AlumnoRequest";
 
 export const ClasesListCard = ({
   data,
@@ -21,6 +21,7 @@ export const ClasesListCard = ({
   url,
   datosAlumnos,
   handleOpenToast,
+  updateClase,
 }: ClasesListCardProps) => {
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
@@ -142,13 +143,14 @@ export const ClasesListCard = ({
         </Stack>
       </Box>
       <DialogAsistencia
+        updateClase={updateClase}
         dataAlumnos={datosAlumnos.data ? datosAlumnos.data : []}
         handleClose={handleCloseDialogAsistencia}
         open={openDialogAsistencia}
         url={url}
         idClase={claseAction}
         handleOpenToast={handleOpenToast}
-        updateData={datosAlumnos.refetch}
+        updateAlumnos={datosAlumnos.refetch}
       />
     </>
   );
@@ -161,7 +163,7 @@ interface ClasesListCardProps {
   setPageNumber: (pageNumber: number) => void;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   url: string;
-  updateData: () => void;
+  updateClase: () => void;
   updateCountClases: () => void;
-  datosAlumnos: UseQueryResult<AlumnoResponseDtoWithAsistencia[], Error>;
+  datosAlumnos: UseQueryResult<AlumnoRequest[], Error>;
 }

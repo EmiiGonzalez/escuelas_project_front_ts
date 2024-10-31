@@ -109,7 +109,8 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
           url={url}
           idClase={Number(id)}
           handleOpenToast={handleOpenToast}
-          updateData={datosAlumnos.refetch}
+          updateClase={datosClase.refetch}
+          updateAlumnos={datosAlumnos.refetch}
         />
       </Box>
     </motion.div>

@@ -9,7 +9,7 @@ import { AlertColor, Box, CircularProgress, Typography } from "@mui/material";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { CursoCard } from "./components/cards/CursoCard";
 import { AxiosError } from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { CardGeneric } from "./components/cards/CardGeneric";
 import { DashBoardCard } from "./components/cards/DashBoardCard";
 import Grid from "@mui/material/Grid2";
@@ -21,9 +21,10 @@ import { SpeedDialCursoCustom } from "./components/speedDial/SpeedDialCursoCusto
 import { useThemeStore } from "../../util/context/useThemeStore";
 import { Page } from "../../util/interfaces/PageInterface";
 import { ClasesCountRequest } from "../../util/interfaces/clases/ClasesCountInterface";
-import { AlumnoResponseDtoWithAsistencia } from "../../util/interfaces/alumno/AlumnoResponseDto";
+
 import { fetchAlumnos } from "./util/fetchAlumno";
 import { motion } from "framer-motion";
+import { AlumnoRequest } from "../../util/interfaces/alumno/AlumnoRequest";
 
 export const Curso = ({ url, handleOpenToast }: Props) => {
   useEffect(() => {
@@ -38,7 +39,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     queryFn: () => fetchCurso(url, Number(id)),
   });
 
-  const datosAlumnos = useQuery<AlumnoResponseDtoWithAsistencia[], Error>({
+  const datosAlumnos = useQuery<AlumnoRequest[], Error>({
     queryKey: ["alumnos", id],
     queryFn: () => fetchAlumnos(url, Number(id)),
   });
@@ -66,11 +67,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     queryKey: ["cursoCantClases", id],
     queryFn: () => fetchCountClasesForCurso(url, Number(id)),
   });
-
-  const refetchListClases = useMemo(() => listClases.refetch, [listClases]);
-  useEffect(() => {
-    refetchListClases();
-  }, [pageNumber, refetchListClases]);
 
   if (!id || datosCurso.isLoading) return <CircularProgress />;
 
@@ -131,7 +127,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
                       datosAlumnos={datosAlumnos}
                       url={url}
                       updateCountClases={() => cantClases.refetch()}
-                      updateData={() => listClases.refetch()}
+                      updateClase={listClases.refetch}
                       handleOpenToast={handleOpenToast}
                       data={listClases.data.content}
                       pageNumber={pageNumber}

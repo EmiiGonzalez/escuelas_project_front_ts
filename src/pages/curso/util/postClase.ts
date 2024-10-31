@@ -8,7 +8,6 @@ export const postClase = async ({
   numeroDeClase,
   fecha
 }: PostCursoParams) => {
-  console.log(numeroDeClase);
   if (fecha) {
     
     const response = await axiosInstance.post(

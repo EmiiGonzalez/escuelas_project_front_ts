@@ -16,6 +16,7 @@ import { useIncremental } from "../../../util/hooks/useIncremental";
 import { AsistenciaRecord } from "../../../util/interfaces/asistencia/AsistenciaResponse";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -31,7 +32,8 @@ export const DialogAsistencia = ({
   idClase,
   dataAlumnos,
   handleOpenToast,
-  updateData,
+  updateAlumnos,
+  updateClase,
 }: PropsDialogAsistencia) => {
   const {
     count: index,
@@ -74,7 +76,8 @@ export const DialogAsistencia = ({
     mutationFn: postAsistencia,
     onSuccess: () => {
       handleOpenToast("success", "Asistencia agregada con éxito");
-      updateData();
+      updateClase();
+      updateAlumnos();
       handleClose();
     },
     onError: (error) => {
@@ -105,12 +108,11 @@ export const DialogAsistencia = ({
             </Typography>
             <List>
               <ListItem sx={{ display: "flex", justifyContent: "space-between", backgroundColor: "background.paper", color: "text.primary", borderRadius: "0.5rem", width: "100%" }}>
-                <ListItemText primary="¿Asistió a clase?" sx={{ width: "60%" }} />
-                <Box sx={{ display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center", flexWrap: "wrap", width: "40%" }} >
+                <ListItemText primary="¿Asistió a clase?" sx={{ width: "55%" }} />
+                <Box sx={{ display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center", flexWrap: "nowrap", width: "45%" }}>
                   <IconButton
                     color="primary"
                     onClick={() => handleAttendance(convertStringToAsistioEnum("PRESENTE"))}
-                    sx={{ width: "1.5rem", height: "1.5rem" }}
                   >
                     <CheckIcon />
                   </IconButton>
@@ -119,6 +121,12 @@ export const DialogAsistencia = ({
                     onClick={() => handleAttendance(convertStringToAsistioEnum("AUSENTE"))}
                   >
                     <CloseIcon />
+                  </IconButton>
+                  <IconButton
+                    color="warning"
+                    onClick={() => handleAttendance(convertStringToAsistioEnum("JUSTIFICADO"))}
+                  >
+                    <MedicalInformationIcon />
                   </IconButton>
                 </Box>
               </ListItem>
@@ -160,6 +168,7 @@ interface PropsDialogAsistencia {
   url: string;
   dataAlumnos: AlumnoRequest[];
   idClase: number;
-  updateData: () => void;
+  updateAlumnos: () => void;
+  updateClase: () => void;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
 }
