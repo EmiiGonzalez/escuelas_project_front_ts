@@ -73,7 +73,7 @@ export const CardDashboardAsistencia = ({
               </Typography>
               <PieChartAsistenciaClase
                 dataStats={datosStats}
-              ></PieChartAsistenciaClase>
+              />
             </Box>
           ) : (
             <Box sx={{

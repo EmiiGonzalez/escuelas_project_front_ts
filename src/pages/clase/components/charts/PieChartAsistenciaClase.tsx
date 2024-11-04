@@ -1,19 +1,11 @@
 import { UseQueryResult } from "@tanstack/react-query";
 import { AsistenciaStats } from "../../../../util/interfaces/asistencia/AsistenciaStats";
 import { pieArcLabelClasses, PieChart } from "@mui/x-charts";
-import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import { Alert, Skeleton } from "@mui/material";
 
 export const PieChartAsistenciaClase = ({ dataStats }: PropsPaperClase) => {
-  const [totalAsistencias, setTotalAsistencias] = useState<number>(0);
-  useEffect(() => {
-    if (dataStats.data) {
-      dataStats.data.forEach((item) => {
-        setTotalAsistencias((prev) => prev + item.total);
-      });
-    }
-  }, [dataStats.data]);
+  const totalAsistencias = dataStats.data ? dataStats.data.reduce((sum, item) => sum + item.total, 0) : 0;
 
   if (dataStats.isLoading) {
     return <Skeleton variant="circular" height={150} />;
@@ -25,15 +17,15 @@ export const PieChartAsistenciaClase = ({ dataStats }: PropsPaperClase) => {
         <Alert severity="error">
           {dataStats.error.response?.data.message
             ? dataStats.error.response?.data.message
-            : dataStats.error?.message || "Ocurrio un error"}
+            : dataStats.error?.message || "Ocurrió un error"}
         </Alert>
       );
     }
-    return <Alert severity="error">Ocurrio un error al traer los datos</Alert>;
+    return <Alert severity="error">Ocurrió un error al traer los datos</Alert>;
   }
 
   const data = dataStats.data.map((item) => ({
-    label: item.asistio.toLowerCase(),
+    label: item.asistio.toLowerCase()[0].toUpperCase() + item.asistio.slice(1).toLowerCase(),
     value: item.total,
   }));
 
@@ -46,7 +38,7 @@ export const PieChartAsistenciaClase = ({ dataStats }: PropsPaperClase) => {
           outerRadius: 50,
           paddingAngle: 2,
           cornerRadius: 4,
-          arcLabel: (item) => `${(100 * item.value) / totalAsistencias}%`,
+          arcLabel: (item) => `${Math.round((100 * item.value) / totalAsistencias)}%`,
           arcLabelMinAngle: 35,
           arcLabelRadius: "60%",
         },
