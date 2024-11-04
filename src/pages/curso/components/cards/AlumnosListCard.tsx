@@ -13,6 +13,9 @@ import {
 import { AlumnoRequest } from "../../../../util/interfaces/alumno/AlumnoRequest";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ModalEditAlumno } from "../../../../components/shared/modal/ModalEditAlumno";
+import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
+import { useState } from "react";
 
 export const AlumnosListCard = ({
   url,
@@ -20,6 +23,14 @@ export const AlumnosListCard = ({
   handleOpenToast,
   updateAlumnos,
 }: AlumnosListCardProps) => {
+
+  const {open: openModalEdit, handleOpen: handleOpenModalEdit, handleClose: handleCloseModalEdit } = useHandleBoolean();
+
+  const [ currentAlumno, setCurrentAlumno ] = useState<AlumnoRequest>({
+    id: 0,
+    nombre: "",
+    telefono: ""});
+
   return (
     <>
       <Typography variant="h5" color={"text.primary"} sx={{userSelect: "none", mb: 2}}>Lista de alumnos</Typography>
@@ -43,7 +54,8 @@ export const AlumnosListCard = ({
                     color="success" 
                     aria-label="editar"
                     onClick={() => {
-                      handleOpenToast("info", "En construccion");
+                      setCurrentAlumno(alumno);
+                      handleOpenModalEdit();
                     }}
                   >
                     <EditIcon />
@@ -64,6 +76,14 @@ export const AlumnosListCard = ({
         </TableBody>
         </Table>
       </TableContainer>
+      <ModalEditAlumno
+      alumnoData={currentAlumno!}
+      open={openModalEdit}
+      handleClose={handleCloseModalEdit}
+      url={url}
+      handleOpenToast={handleOpenToast}
+      update={updateAlumnos}
+      />
     </>
   );
 };
