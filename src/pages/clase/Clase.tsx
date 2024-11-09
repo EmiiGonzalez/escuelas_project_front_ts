@@ -15,12 +15,14 @@ import { ClaseSkeleton } from "./components/skeleton/ClaseSkeleton";
 import { AxiosError } from "axios";
 import { AlumnoRequest } from "../../util/interfaces/alumno/AlumnoRequest";
 import { AsistenciaStats } from "../../util/interfaces/asistencia/AsistenciaStats";
-import { fetchAsistenciaStats } from "./util/fetchAsistenciaStats";
+import { fetchAsistenciaStats, fetchAsistenciaWithState } from "./util/fetchAsistenciaStats";
+import { CardListAlumnos } from "./components/cards/CardListAlumnos";
+import { AsistenciaResponseWhitState } from "../../util/interfaces/asistencia/AsistenciaResponseWhitState";
 
 export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   const { id } = useParams();
 
   const datosClase = useQuery<ClasesRequest, Error>({
@@ -39,6 +41,18 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
     queryFn: () => fetchAsistenciaStats(url, Number(id)),
     enabled: !!datosClase.data && !!datosClase.data?.asistencia,
   });
+
+
+  const datosAsistencia = useQuery<AsistenciaResponseWhitState[], Error>({
+    queryKey: ["asistencia-with-state-for-clase", id],
+    queryFn: () => fetchAsistenciaWithState(url, Number(id)),
+    enabled: !!datosClase.data && !!datosClase.data?.asistencia,
+  });
+
+  const refetchData = () => {
+    datosAsistenciaStats.refetch();
+    datosAsistencia.refetch();
+  };
 
   const {
     open: openDialogAsistencia,
@@ -102,6 +116,11 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
             />
           </Grid2>
         </Grid2>
+        <CardListAlumnos 
+        url={url}
+        updateData={refetchData}
+        datosAlumnos={datosAsistencia}
+        handleOpenToast={handleOpenToast} />
         <DialogAsistencia
           dataAlumnos={datosAlumnos.data ? datosAlumnos.data : []}
           handleClose={handleCloseDialogAsistencia}
