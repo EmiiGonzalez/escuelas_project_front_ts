@@ -31,7 +31,7 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
   });
 
   const datosAlumnos = useQuery<AlumnoRequest[], Error>({
-    queryKey: ["alumnos", id],
+    queryKey: ["alumno-for-clase", id],
     queryFn: () => fetchAlumnos(url, Number(datosClase.data?.idCurso)),
     enabled: !!datosClase.data,
   });
@@ -83,10 +83,10 @@ export const Clase = ({ url, handleOpenToast }: PropsClase) => {
 
   return (
     <motion.div
-      style={{ minHeight: "100vh", width: "100%" }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+    style={{ minHeight: "100vh", width: "95%" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
     >
       <Box
         sx={{

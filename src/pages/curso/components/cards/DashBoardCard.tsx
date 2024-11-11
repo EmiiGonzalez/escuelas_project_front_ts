@@ -14,6 +14,7 @@ export const DashBoardCard = ({
   handleOpenToast,
   updateListClases,
   cantClases,
+  updateListAlumnos,
 }: PropsDashBoardCard) => {
   const {
     open: openModalAddClase,
@@ -109,6 +110,7 @@ export const DashBoardCard = ({
         updateListClases={updateListClases}
       />
       <ModalAddAlumno
+      updateData={updateListAlumnos}
         handleClose={handleCloseModalAddAlumno}
         open={openModalAddAlumno}
         url={url}
@@ -124,5 +126,6 @@ interface PropsDashBoardCard {
   idCurso: number;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
   updateListClases: () => void;
+  updateListAlumnos: () => void;
   cantClases: UseQueryResult<ClasesCountRequest, Error>;
 }

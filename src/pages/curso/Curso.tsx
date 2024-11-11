@@ -41,7 +41,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
   });
 
   const datosAlumnos = useQuery<AlumnoRequest[], Error>({
-    queryKey: ["alumnos", id],
+    queryKey: ["alumnos-for-curso", id],
     queryFn: () => fetchAlumnos(url, Number(id)),
   });
 
@@ -80,10 +80,13 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     );
   }
 
+  console.log("listAlumnos", datosAlumnos.data);
+  
+
   return (
     <>
       <motion.div
-        style={{ minHeight: "100vh", width: "100%" }}
+        style={{ minHeight: "100vh", width: "95%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -91,6 +94,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
         <Box
           sx={{
             width: "100%",
+            maxWidth: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -110,6 +114,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
               <CardGeneric
                 children={
                   <DashBoardCard
+                  updateListAlumnos={() => datosAlumnos.refetch()}
                     cantClases={cantClases}
                     url={url}
                     idCurso={Number(id)}
@@ -144,10 +149,7 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
             <CardGeneric
               children={
                 <AlumnosListCard
-                  url={url}
                   data={datosAlumnos.data || []}
-                  handleOpenToast={handleOpenToast}
-                  updateAlumnos={datosAlumnos.refetch}
                 />
               }
             />

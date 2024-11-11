@@ -58,7 +58,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
   return (
     <>
       <motion.div
-        style={{ minHeight: "100vh", width: "100%" }}
+        style={{ minHeight: "100vh", width: "95%" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -73,7 +73,7 @@ export const Escuela = ({ url, handleOpenToast }: PropsEscuela) => {
           <EscuelaCard datosEscuela={datosEscuela.data} />
           <Grid container spacing={3} justifyContent="center">
             {datosCursos.data?.map((course) => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={course.id}>
+              <Grid size={{ xs: 11, sm: 6, md: 4 }} key={course.id}>
                 <CardCurso
                   materia={course.materia}
                   id={course.id}

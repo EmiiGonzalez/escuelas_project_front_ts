@@ -1,5 +1,4 @@
 import {
-  AlertColor,
   Box,
   IconButton,
   Table,
@@ -11,86 +10,78 @@ import {
   Typography,
 } from "@mui/material";
 import { AlumnoRequest } from "../../../../util/interfaces/alumno/AlumnoRequest";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { ModalEditAlumno } from "../../../../components/shared/modal/ModalEditAlumno";
-import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
-import { useState } from "react";
+import InfoIcon from "@mui/icons-material/Info";
+import { useNavigate } from "react-router-dom";
 
 export const AlumnosListCard = ({
-  url,
   data,
-  handleOpenToast,
-  updateAlumnos,
 }: AlumnosListCardProps) => {
+  const navigate = useNavigate();
 
-  const {open: openModalEdit, handleOpen: handleOpenModalEdit, handleClose: handleCloseModalEdit } = useHandleBoolean();
-
-  const [ currentAlumno, setCurrentAlumno ] = useState<AlumnoRequest>({
-    id: 0,
-    nombre: "",
-    telefono: ""});
+  const handleInfoAlumno = (id: number): void => {
+    navigate("/alumno/" + id);
+  };
 
   return (
     <>
-      <Typography variant="h5" color={"text.primary"} sx={{userSelect: "none", mb: 2}}>Lista de alumnos</Typography>
-      <TableContainer sx={{ width: "100%", overflow: "hidden", backgroundColor: "rgba(0, 0, 0, .65)" }}>
+      <Typography
+        variant="h5"
+        color={"text.primary"}
+        sx={{ userSelect: "none", mb: 2 }}
+      >
+        Lista de alumnos
+      </Typography>
+      <TableContainer
+        sx={{
+          width: "100%",
+          height: "100%",
+          overflow: "auto",
+          backgroundColor: "rgba(0, 0, 0, .65)",
+        }}
+      >
         <Table stickyHeader aria-label="sticky table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">Nombre</TableCell>
-            <TableCell align="center">Telefono</TableCell>
-            <TableCell align="center">Accion</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((alumno: AlumnoRequest) => (
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Nombre</TableCell>
+              <TableCell align="center">Telefono</TableCell>
+              <TableCell align="center">Info</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((alumno: AlumnoRequest) => (
               <TableRow hover role="checkbox" key={alumno.id}>
-                <TableCell align="center" sx={{ color: "primary.contrastText"}}>{alumno.nombre}</TableCell>
-                <TableCell align="center" sx={{ color: "primary.contrastText"}}>{alumno.telefono}</TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ color: "primary.contrastText" }}
+                >
+                  {alumno.nombre}
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ color: "primary.contrastText" }}
+                >
+                  {alumno.telefono}
+                </TableCell>
                 <TableCell align="center">
-                 <Box>
-                 <IconButton 
-                    color="success" 
-                    aria-label="editar"
-                    onClick={() => {
-                      setCurrentAlumno(alumno);
-                      handleOpenModalEdit();
-                    }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    color="error"
-                    aria-label="borrar"
-                    onClick={() => {
-                      handleOpenToast("info", "En construccion");
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                 </Box>
+                  <Box>
+                    <IconButton
+                      color="info"
+                      aria-label="info"
+                      onClick={() => handleInfoAlumno(alumno.id)}
+                    >
+                      <InfoIcon />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
-          ))}
-        </TableBody>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
-      <ModalEditAlumno
-      alumnoData={currentAlumno!}
-      open={openModalEdit}
-      handleClose={handleCloseModalEdit}
-      url={url}
-      handleOpenToast={handleOpenToast}
-      update={updateAlumnos}
-      />
     </>
   );
 };
 
 interface AlumnosListCardProps {
-  url: string;
   data: AlumnoRequest[];
-  handleOpenToast: (variante: AlertColor, msg: string) => void;
-  updateAlumnos: () => void;
 }

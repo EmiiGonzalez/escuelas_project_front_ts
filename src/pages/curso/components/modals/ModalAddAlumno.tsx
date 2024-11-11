@@ -23,6 +23,7 @@ export const ModalAddAlumno = ({
   url,
   idCurso,
   handleOpenToast,
+  updateData,
 }: PropsModalEditEscuela) => {
   const { tema } = useThemeStore();
 
@@ -48,6 +49,7 @@ export const ModalAddAlumno = ({
       handleOpenToast("success", "Alumno agregado con éxito");
       setAlumno("");
       setTelefono("");
+      updateData();
       handleClose();
     },
     onError: (error) => {
@@ -223,5 +225,6 @@ interface PropsModalEditEscuela {
   handleClose: () => void;
   idCurso: number;
   url: string;
+  updateData: () => void;
   handleOpenToast: (variante: AlertColor, msg: string) => void;
 }

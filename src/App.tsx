@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import { themeOptions } from "./util/themeOptions";
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { AlertCustom } from "./components/shared/alerts/AlertCustom";
 import { useOpenToast } from "./util/hooks/useOpenToast";
@@ -14,6 +14,7 @@ import { esES } from "@mui/x-date-pickers/locales/esES";
 import 'dayjs/locale/es-mx';
 import { AnimatePresence } from "framer-motion";
 import { Clase } from "./pages/clase/Clase";
+import { Alumno } from "./pages/alumno/Alumno";
 
 function App() {
   const { tema } = useThemeStore();
@@ -26,17 +27,16 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es-mx" localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}>
     <ThemeProvider theme={temaOptions}>
       <AnimatePresence mode="sync">
-      <Container
+      <Box
         sx={{
-          border: "1px solid black",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           bgcolor: "background.default",
           minHeight: "100vh",
+          
         }}
-        maxWidth="xl"
       >
         <Router>
           <Routes>
@@ -52,9 +52,10 @@ function App() {
             />
             <Route path="/curso/:id" element={<Curso url={url} handleOpenToast={handleOpenToast}/>}/>
             <Route path="/clase/:id" element={<Clase url={url} handleOpenToast={handleOpenToast}/>}/>
+            <Route path='/alumno/:id' element={<Alumno url={url} handleOpenToast={handleOpenToast}/>}/>
           </Routes>
         </Router>
-      </Container>
+      </Box>
       <AlertCustom
         openToast={openToast}
         variante={variante}
