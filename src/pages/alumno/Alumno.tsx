@@ -1,4 +1,4 @@
-import { Alert, AlertColor, Box, CircularProgress } from "@mui/material";
+import { Alert, AlertColor, Box, CircularProgress, Grid2 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { fetchAlumnoFullData } from "./util/fetchAlumnoFullData";
@@ -7,6 +7,8 @@ import { AlumnoFullDataRequest } from "../../util/interfaces/alumno/AlumnoFullDa
 import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { PaperAlumno } from "./components/paper/CardDescriptionAlumno";
+import { CardDashboardAsistenciaAlumno } from "./components/cards/CardDashboardAsistenciaAlumno";
+import { CardListAsistenciaAlumno } from "./components/cards/CardListAsistenciaAlumno";
 
 export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
   useEffect(() => {
@@ -69,6 +71,23 @@ export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
             update={datosFullAlumno.refetch}
             url={url}
           />
+          <Grid2 spacing={2} container sx={{ width: "95%" }}>
+            <Grid2 size={{ xs: 12, sm: 5, md: 4 }}>
+              <CardDashboardAsistenciaAlumno
+                datosAlumnos={datosFullAlumno.data.alumno}
+                datosStats={datosFullAlumno.data.stats}
+              />
+            </Grid2>
+            <Grid2 size={{ xs: 12, sm: 7, md: 8 }}>
+              <CardListAsistenciaAlumno
+                datosAsistencia={datosFullAlumno.data.asistencias}
+                handleOpenToast={handleOpenToast}
+                updateData={datosFullAlumno.refetch}
+                url={url}
+                datosAlumno={datosFullAlumno.data.alumno}
+              />
+            </Grid2>
+          </Grid2>
         </Box>
       </motion.div>
     </>

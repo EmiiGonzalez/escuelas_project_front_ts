@@ -47,7 +47,7 @@ export const CardListAlumnos = ({
   }
 
   if (datosAlumnos.isError || !datosAlumnos.data) {
-    return <div>Error</div>;
+    return;
   }
 
   return (
