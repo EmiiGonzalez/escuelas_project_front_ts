@@ -1,6 +1,5 @@
 import {
   AlertColor,
-  Box,
   Card,
   CardContent,
   Divider,
@@ -15,7 +14,7 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { AsistenciaResponseWhitState } from "../../../../util/interfaces/asistencia/AsistenciaResponseWhitState";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
 import { useHandleBoolean } from "../../../../util/hooks/useHandleBoolean";
 
@@ -24,6 +23,7 @@ import { ModalEditAsistencia } from "../../../clase/components/modals/ModalEditA
 import { asistenciaMapColor } from "../../../clase/util/asistenciaUtils/asistenciaMapColor";
 import { AsistenciaResponseDto } from "../../../../util/interfaces/asistencia/AsistenciaResponse";
 import { AlumnoRequest } from "../../../../util/interfaces/alumno/AlumnoRequest";
+import dayjs from "dayjs";
 
 export const CardListAsistenciaAlumno = ({
   datosAsistencia,
@@ -46,23 +46,22 @@ export const CardListAsistenciaAlumno = ({
       asistio: AsistioEnum.PRESENTE,
     });
 
-    const [asistenciaRecord, setAsistenciaRecord] = useState<AsistenciaResponseWhitState>({
+  const [asistenciaRecord, setAsistenciaRecord] =
+    useState<AsistenciaResponseWhitState>({
       id: currentAsistencia.id,
-            asistio: currentAsistencia.asistio,
-            alumno: datosAlumno.nombre,
+      asistio: currentAsistencia.asistio,
+      alumno: datosAlumno.nombre,
     });
 
-    useEffect(() => {
-      if (currentAsistencia) {
-        setAsistenciaRecord(
-          {
-            id: currentAsistencia.id,
-            asistio: currentAsistencia.asistio,
-            alumno: datosAlumno.nombre,
-          },
-        );
-      }
-    }, [currentAsistencia, datosAlumno.nombre]);
+  useEffect(() => {
+    if (currentAsistencia) {
+      setAsistenciaRecord({
+        id: currentAsistencia.id,
+        asistio: currentAsistencia.asistio,
+        alumno: datosAlumno.nombre,
+      });
+    }
+  }, [currentAsistencia, datosAlumno.nombre]);
 
   return (
     <>
@@ -98,7 +97,7 @@ export const CardListAsistenciaAlumno = ({
           <TableContainer
             sx={{
               width: "100%",
-              overflow: "hidden",
+              overflow: "auto",
               backgroundColor: "rgba(0, 0, 0, .65)",
             }}
           >
@@ -120,7 +119,9 @@ export const CardListAsistenciaAlumno = ({
                     >
                       {asistencia.claseNumero}
                     </TableCell>
-                    <TableCell align="center">{asistencia.fecha}</TableCell>
+                    <TableCell align="center" sx={{ color: "primary.contrastText" }}>
+                      {dayjs(asistencia.fecha).format("DD-MM")}
+                    </TableCell>
                     <TableCell
                       align="center"
                       sx={{ color: asistenciaMapColor(asistencia.asistio) }}

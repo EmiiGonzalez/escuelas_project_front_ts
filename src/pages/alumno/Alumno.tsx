@@ -9,6 +9,7 @@ import { AxiosError } from "axios";
 import { PaperAlumno } from "./components/paper/CardDescriptionAlumno";
 import { CardDashboardAsistenciaAlumno } from "./components/cards/CardDashboardAsistenciaAlumno";
 import { CardListAsistenciaAlumno } from "./components/cards/CardListAsistenciaAlumno";
+import { SpeedDialCustomTheme } from "./components/speedDial/SpeedDialCustomTheme";
 
 export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
   useEffect(() => {
@@ -26,14 +27,7 @@ export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
     return <CircularProgress />;
   }
 
-  if (datosFullAlumno.isError || !datosFullAlumno.data) {
-    if (!datosFullAlumno.data) {
-      return (
-        <Alert severity="error">
-          Ocurrio un error al cargar los datos del alumno
-        </Alert>
-      );
-    }
+  if (datosFullAlumno.isError) {
     if (datosFullAlumno.error instanceof AxiosError) {
       return (
         <Alert severity="error">
@@ -46,7 +40,16 @@ export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
     }
   }
 
-  console.log(datosFullAlumno.data);
+  if (!datosFullAlumno.data || datosFullAlumno.isLoading) {
+    if (datosFullAlumno.isLoading) {
+      return <CircularProgress />;
+    }
+    return (
+      <Alert severity="error">
+        Ocurrio un error al cargar los datos del alumno
+      </Alert>
+    );
+  }
 
   return (
     <>
@@ -62,7 +65,8 @@ export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            minHeight: "100vh",
+            minHeight: "100%",
+            pb: "5rem",
           }}
         >
           <PaperAlumno
@@ -72,13 +76,13 @@ export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
             url={url}
           />
           <Grid2 spacing={2} container sx={{ width: "95%" }}>
-            <Grid2 size={{ xs: 12, sm: 5, md: 4 }}>
+            <Grid2 size={{ xs: 12, sm: 12, md: 4 }}>
               <CardDashboardAsistenciaAlumno
                 datosAlumnos={datosFullAlumno.data.alumno}
                 datosStats={datosFullAlumno.data.stats}
               />
             </Grid2>
-            <Grid2 size={{ xs: 12, sm: 7, md: 8 }}>
+            <Grid2 size={{ xs: 12, sm: 12, md: 8 }}>
               <CardListAsistenciaAlumno
                 datosAsistencia={datosFullAlumno.data.asistencias}
                 handleOpenToast={handleOpenToast}
@@ -90,6 +94,7 @@ export const Alumno = ({ url, handleOpenToast }: PropsAlumno) => {
           </Grid2>
         </Box>
       </motion.div>
+      <SpeedDialCustomTheme />
     </>
   );
 };

@@ -80,9 +80,6 @@ export const Curso = ({ url, handleOpenToast }: Props) => {
     );
   }
 
-  console.log("listAlumnos", datosAlumnos.data);
-  
-
   return (
     <>
       <motion.div
